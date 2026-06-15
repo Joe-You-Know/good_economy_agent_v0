@@ -1,0 +1,104 @@
+{
+  "experiment_name": "Good Economy Agent v0",
+  "starting_compute_credit_usd": 10.05,
+  "starting_economic_cash_usd": 0.0,
+  "runtime_limit_cpu_hours": 9,
+  "hard_stop_compute_remaining_usd": 0.25,
+  "max_single_call_usd": 0.25,
+  "max_planning_budget_usd": 1.0,
+  "max_search_budget_usd": 1.5,
+  "max_build_budget_usd": 4.0,
+  "max_publish_budget_usd": 1.0,
+  "max_final_report_budget_usd": 0.75,
+  "openai_assist_model": "gpt-4.1-mini",
+  "openai_assist_estimated_call_usd": 0.05,
+  "openai_assist_max_output_tokens": 1200,
+  "openai_assist_timeout_seconds": 45,
+  "external_actions_allowed": false,
+  "read_only_external_apis_allowed": true,
+  "external_write_actions_allowed": false,
+  "kill_switch_path": "KILL_SWITCH",
+  "rate_limit_state_path": "data/rate_limits.json",
+  "monitoring_state_path": "data/monitoring_state.json",
+  "courtlistener_api_base_url": "https://www.courtlistener.com/api/rest/v4",
+  "courtlistener_rate_limits": {
+    "minute": {
+      "max_requests": 5,
+      "window_seconds": 60
+    },
+    "hour": {
+      "max_requests": 50,
+      "window_seconds": 3600
+    },
+    "day": {
+      "max_requests": 125,
+      "window_seconds": 86400
+    }
+  },
+  "courtlistener_citation_lookup_max_chars": 64000,
+  "courtlistener_citation_lookup_max_citations": 250,
+  "github_api_base_url": "https://api.github.com",
+  "github_rate_limits": {
+    "minute": {
+      "max_requests": 10,
+      "window_seconds": 60
+    }
+  },
+  "openlaws_api_base_url": "",
+  "openlaws_rate_limits": {
+    "minute": {
+      "max_requests": 5,
+      "window_seconds": 60
+    }
+  },
+  "live_discovery_query_limit": 5,
+  "github_live_queries": [
+    "is:issue is:open label:documentation label:\"good first issue\"",
+    "is:issue is:open label:accessibility label:\"help wanted\"",
+    "is:issue is:open label:\"public good\""
+  ],
+  "legal_precedent_queries": [
+    "AI generated legal information disclaimer unauthorized practice of law",
+    "charitable solicitation donation platform disclosure online",
+    "accessibility checklist legal compliance disclaimer"
+  ],
+  "cold_outreach_allowed": false,
+  "paid_tools_allowed_before_revenue": false,
+  "negative_ethics_allowed": false,
+  "allowed_categories": [
+    "education",
+    "accessibility",
+    "open_source",
+    "open_science",
+    "resource_efficiency",
+    "small_business_resilience",
+    "public_documentation",
+    "scientific_reproducibility",
+    "civic_nonprofit_tooling"
+  ],
+  "forbidden_actions": [
+    "spam",
+    "deception",
+    "impersonation",
+    "fake_traffic",
+    "fake_clicks",
+    "fake_referrals",
+    "coercion",
+    "blackmail",
+    "unauthorized_scraping",
+    "platform_abuse",
+    "hidden_fees",
+    "unsupported_professional_claims",
+    "self_payment",
+    "collusion"
+  ],
+  "baseline_revenue_channels": [
+    "public_good_bounty",
+    "open_source_bounty",
+    "voluntary_donation",
+    "sponsorship",
+    "opt_in_marketplace",
+    "accepted_public_good_work"
+  ],
+  "artifact_license": "MIT for code, CC BY 4.0 for documentation unless changed by operator"
+}

@@ -1,0 +1,6 @@
+# v0 dry-run uses only Python standard library.
+# Future live mode may add:
+# openai
+# requests
+# beautifulsoup4
+# playwright
