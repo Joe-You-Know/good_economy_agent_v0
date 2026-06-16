@@ -7,6 +7,9 @@ from .ethics_gate import EthicsGate
 from .income_destination import IncomeDestination
 
 
+DEFAULT_BLOCKED_TARGETS_PATH = "data/blocked_earned_income_targets.json"
+
+
 class SupervisedWorkRunner:
     """Selects the next earned-income candidate and prepares local work only."""
 
@@ -18,10 +21,11 @@ class SupervisedWorkRunner:
         self.work_dir = self.output_dir / "work_packages"
         self.ethics_gate = EthicsGate(config)
         self.income_destination = IncomeDestination(root).load()
+        self.blocked_targets = load_blocked_targets(root, config)
 
     def run(self) -> Dict[str, Any]:
         runway = self._load_runway()
-        candidate, rejected = select_candidate(runway.get("candidates", []))
+        candidate, rejected = select_candidate(runway.get("candidates", []), self.blocked_targets)
         decision = self._base_decision(runway, candidate, rejected)
 
         if candidate is None:
@@ -104,6 +108,7 @@ class SupervisedWorkRunner:
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "mode": "supervised-work",
             "runway_candidate_count": len(runway.get("candidates", [])),
+            "blocked_target_count": len(self.blocked_targets),
             "rejected_candidates": rejected,
             "supervision_boundary": (
                 "The agent may choose and prepare local work. Publishing, claiming work, "
@@ -154,11 +159,33 @@ class SupervisedWorkRunner:
         return decision
 
 
-def select_candidate(candidates: List[Dict[str, Any]]):
+def load_blocked_targets(root: Path, config: Dict[str, Any]) -> List[Dict[str, Any]]:
+    relative_path = config.get("blocked_earned_income_targets_path", DEFAULT_BLOCKED_TARGETS_PATH)
+    path = (Path(root) / relative_path).resolve()
+    root_path = Path(root).resolve()
+    if root_path != path and root_path not in path.parents:
+        raise ValueError(f"Blocked targets path escapes project root: {relative_path}")
+    if not path.exists():
+        return []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return []
+    if isinstance(data, dict):
+        targets = data.get("targets", [])
+    elif isinstance(data, list):
+        targets = data
+    else:
+        return []
+    return [target for target in targets if isinstance(target, dict)]
+
+
+def select_candidate(candidates: List[Dict[str, Any]], blocked_targets: List[Dict[str, Any]] = None):
+    blocked_targets = blocked_targets or []
     rejected = []
     eligible = []
     for candidate in candidates:
-        reasons = rejection_reasons(candidate)
+        reasons = rejection_reasons(candidate, blocked_targets)
         if reasons:
             rejected.append({
                 "candidate_id": candidate.get("candidate_id"),
@@ -183,8 +210,12 @@ def select_candidate(candidates: List[Dict[str, Any]]):
     return eligible[0], rejected
 
 
-def rejection_reasons(candidate: Dict[str, Any]) -> List[str]:
+def rejection_reasons(candidate: Dict[str, Any], blocked_targets: List[Dict[str, Any]] = None) -> List[str]:
     reasons = []
+    blocked = blocked_target_match(candidate, blocked_targets or [])
+    if blocked:
+        reason = blocked.get("reason") or "previously blocked target"
+        reasons.append(f"blocked external target: {reason}")
     if not candidate.get("eligible_for_earned_income_discovery", False):
         reasons.append("not eligible for earned-income discovery")
     if candidate.get("income_type") != "earned_income":
@@ -213,6 +244,23 @@ def rejection_reasons(candidate: Dict[str, Any]) -> List[str]:
     return reasons
 
 
+def blocked_target_match(candidate: Dict[str, Any], blocked_targets: List[Dict[str, Any]]) -> Dict[str, Any]:
+    source_url = str(candidate.get("source_url", "")).strip().lower()
+    repository_url = str(candidate.get("repository_url", "")).strip().lower()
+    candidate_id = str(candidate.get("candidate_id", "")).strip().lower()
+    for target in blocked_targets:
+        target_source = str(target.get("source_url", "")).strip().lower()
+        target_repo = str(target.get("repository_url", "")).strip().lower()
+        target_candidate_id = str(target.get("candidate_id", "")).strip().lower()
+        if target_source and target_source == source_url:
+            return target
+        if target_repo and target_repo == repository_url:
+            return target
+        if target_candidate_id and target_candidate_id == candidate_id:
+            return target
+    return {}
+
+
 def render_decision_markdown(decision: Dict[str, Any]) -> str:
     candidate = decision.get("selected_candidate")
     rejected = decision.get("rejected_candidates", [])
@@ -238,6 +286,8 @@ Generated: {decision["timestamp_utc"]}
 ## Status
 
 {decision["status"]}
+
+Blocked targets loaded: {decision.get("blocked_target_count", 0)}
 
 ## Selected Candidate
 

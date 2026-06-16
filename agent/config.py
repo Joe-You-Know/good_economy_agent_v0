@@ -136,6 +136,7 @@ def validate_config(config: Dict[str, Any]) -> Dict[str, Any]:
     validated.setdefault("kill_switch_path", "KILL_SWITCH")
     validated.setdefault("rate_limit_state_path", "data/rate_limits.json")
     validated.setdefault("monitoring_state_path", "data/monitoring_state.json")
+    validated.setdefault("blocked_earned_income_targets_path", "data/blocked_earned_income_targets.json")
     validated.setdefault("courtlistener_api_base_url", "https://www.courtlistener.com/api/rest/v4")
     validated.setdefault(
         "courtlistener_rate_limits",
