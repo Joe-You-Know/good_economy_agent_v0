@@ -61,6 +61,28 @@ class EarnedIncomeTests(unittest.TestCase):
         self.assertFalse(candidate["eligible_for_earned_income_discovery"])
         self.assertIn("reward points", candidate["risk_signals"])
 
+    def test_query_word_does_not_create_bounty_signal(self):
+        candidate = classify_github_issue({
+            "title": "Workflow selector accessibility",
+            "html_url": "https://github.com/example/repo/issues/5",
+            "repository_url": "https://api.github.com/repos/example/repo",
+            "labels": ["accessibility"],
+            "body_excerpt": "Port to accessible select component.",
+        }, query="is:issue is:open bounty label:accessibility")
+        self.assertFalse(candidate["eligible_for_earned_income_discovery"])
+        self.assertEqual(candidate["earned_income_signals"], [])
+
+    def test_unfunded_bounty_backer_prompt_is_not_candidate(self):
+        candidate = classify_github_issue({
+            "title": "Feature: Internationalize CLI output",
+            "html_url": "https://github.com/example/repo/issues/6",
+            "repository_url": "https://api.github.com/repos/example/repo",
+            "labels": ["accessibility"],
+            "body_excerpt": "Want to back this issue? Post a bounty on it.",
+        })
+        self.assertFalse(candidate["eligible_for_earned_income_discovery"])
+        self.assertTrue(candidate["passive_bounty_prompt"])
+
     def test_runway_writes_reports(self):
         github_results = [{
             "query": "bounty accessibility",

@@ -63,6 +63,7 @@ The live path is split into read-only discovery and write actions.
 ```powershell
 py run_agent.py --config config.json --mode live-preflight --reset-logs
 py run_agent.py --config config.json --mode live-discovery
+py run_agent.py --config config.json --mode supervised-work
 py run_agent.py --config config.json --mode monitor
 py run_agent.py --config config.json --mode revenue-verify --revenue-event path\to\settled_earned_revenue_event.json
 ```
@@ -70,6 +71,10 @@ py run_agent.py --config config.json --mode revenue-verify --revenue-event path\
 `live-preflight` checks configuration, environment variables, earned-revenue/support readiness, kill switch state, and live-action boundaries.
 
 `live-discovery` may call read-only public APIs such as CourtListener, GitHub issue search, and a configured OpenLaws search endpoint. It writes local snapshots, ledgers, and an earned-income runway only.
+
+`supervised-work` lets the agent choose from the current earned-income runway
+and prepare a local work package. It does not publish, claim work, submit a pull
+request, invoice, or collect payment.
 
 `monitor` writes a local health snapshot covering kill switch state, rate-limit state, ledger counts, and output presence.
 

@@ -34,3 +34,15 @@ py run_agent.py --config config.json --mode revenue-verify --revenue-event path\
 The event must include earned income type, value exchange, traceability, consent,
 net-of-fees reporting, and settlement evidence. Support inflows and template
 placeholder events fail validation.
+
+## Supervised Work Selection
+
+After `live-discovery`, run:
+
+```powershell
+py run_agent.py --config config.json --mode supervised-work
+```
+
+The agent chooses the cleanest current candidate and creates a local work
+package, or refuses with reasons if no candidate survives the filters. External
+submission remains a separate reviewed write action.

@@ -72,10 +72,13 @@ HIGH_RISK_TERMS = {
     "phish",
     "phishing",
     "financial advice",
+    "game",
+    "payments",
     "smart contract",
     "stellar",
     "stripe",
     "scrape",
+    "security",
     "spam",
     "token",
     "traffic",
@@ -162,18 +165,20 @@ def classify_github_issue(issue: Dict[str, Any], query: str = "") -> Dict[str, A
         issue.get("repository_url", ""),
         issue.get("html_url", ""),
         " ".join(labels),
-        query,
     ])
     earned_signals = _matching_terms(text, EARNED_INCOME_TERMS)
     support_signals = _matching_terms(text, SUPPORT_INFLOW_TERMS)
     benefit_signals = _matching_terms(text, PUBLIC_BENEFIT_TERMS)
     risk_signals = _matching_terms(text, HIGH_RISK_TERMS)
     amount = _extract_usd_amount(text)
+    passive_bounty_prompt = _has_passive_bounty_prompt(text)
+    funded_signal = "funded on issuehunt" in text or "backers total" in text
 
     strong_earned_signals = [term for term in earned_signals if term != "reward"]
     has_earned_signal = bool(strong_earned_signals or amount or ("reward" in earned_signals and amount))
     support_only = bool(support_signals) and not has_earned_signal
-    eligible = has_earned_signal and not support_only and not risk_signals
+    passive_unfunded = passive_bounty_prompt and not amount and not funded_signal
+    eligible = has_earned_signal and not support_only and not passive_unfunded and not risk_signals
     score = _score_candidate(
         has_earned_signal=has_earned_signal,
         amount=amount,
@@ -191,6 +196,8 @@ def classify_github_issue(issue: Dict[str, Any], query: str = "") -> Dict[str, A
         reasons.append("public-benefit signal found")
     if support_only:
         reasons.append("support-only inflow signal is not revenue")
+    if passive_unfunded:
+        reasons.append("passive bounty/backer prompt is not earned revenue")
     if risk_signals:
         reasons.append("high-risk term requires rejection or human review")
     if not has_earned_signal:
@@ -213,6 +220,7 @@ def classify_github_issue(issue: Dict[str, Any], query: str = "") -> Dict[str, A
         "support_inflow_signals": support_signals,
         "public_benefit_signals": benefit_signals,
         "risk_signals": risk_signals,
+        "passive_bounty_prompt": passive_bounty_prompt,
         "reasons": reasons,
         "next_steps": [
             "Verify the issue or platform states payment, bounty, contract, product, or license terms.",
@@ -312,6 +320,16 @@ def _extract_usd_amount(text: str) -> float:
         except ValueError:
             continue
     return max(amounts) if amounts else 0.0
+
+
+def _has_passive_bounty_prompt(text: str) -> bool:
+    markers = (
+        "post a bounty",
+        "want to back this issue",
+        "become a backer",
+        "add your repositories",
+    )
+    return any(marker in text for marker in markers)
 
 
 def _candidate_id(value: str) -> str:
