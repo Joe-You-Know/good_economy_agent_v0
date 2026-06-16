@@ -13,6 +13,7 @@ data/continuous_agent.stop
 data/blocked_earned_income_targets.json
 outputs/approval_requests/
 outputs/asset_work/
+outputs/listing_payment_setup/
 outputs/*.md
 outputs/*.json
 outputs/work_packages/
