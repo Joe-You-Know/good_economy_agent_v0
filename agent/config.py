@@ -184,6 +184,21 @@ def validate_config(config: Dict[str, Any]) -> Dict[str, Any]:
     validated.setdefault("openai_assist_estimated_call_usd", 0.05)
     validated.setdefault("openai_assist_max_output_tokens", 1200)
     validated.setdefault("openai_assist_timeout_seconds", 45)
+    validated.setdefault(
+        "asset_income_source_paths",
+        [
+            r"C:\ConstructiveRT",
+            r"C:\Users\josep\OneDrive\Documents\Causal Impedance Model\papers\pdf",
+        ],
+    )
+    validated.setdefault("asset_income_max_items_per_source", 80)
+    validated.setdefault(
+        "trading_policy",
+        {
+            "paper_trading_allowed": True,
+            "real_money_trading_allowed": False,
+        },
+    )
     validated.setdefault("artifact_license", "MIT for code, CC BY 4.0 for documentation unless changed by operator")
     return validated
 

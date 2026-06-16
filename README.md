@@ -63,6 +63,8 @@ The live path is split into read-only discovery and write actions.
 ```powershell
 py run_agent.py --config config.json --mode live-preflight --reset-logs
 py run_agent.py --config config.json --mode live-discovery
+py run_agent.py --config config.json --mode asset-discovery
+py run_agent.py --config config.json --mode asset-work
 py run_agent.py --config config.json --mode supervised-work
 py run_agent.py --config config.json --mode monitor
 py run_agent.py --config config.json --mode revenue-verify --revenue-event path\to\settled_earned_revenue_event.json
@@ -72,6 +74,15 @@ py run_agent.py --config config.json --mode revenue-verify --revenue-event path\
 
 `live-discovery` may call read-only public APIs such as CourtListener, GitHub issue search, and a configured OpenLaws search endpoint. It writes local snapshots, ledgers, and an earned-income runway only.
 
+`asset-discovery` inventories configured local owned-asset folders, such as
+ConstructiveRT packages and Causal Impedance Model research PDFs, then writes a
+local product/license/service runway. It does not modify those folders, create
+listings, send offers, connect payment, or trade.
+
+`asset-work` turns the strongest current local asset candidate into a local
+product/service package draft, QA checklist, and approval note. It still does
+not publish, list, message, invoice, or collect payment.
+
 `supervised-work` lets the agent choose from the current earned-income runway
 and prepare a local work package. It does not publish, claim work, submit a pull
 request, invoice, or collect payment.
@@ -79,6 +90,11 @@ request, invoice, or collect payment.
 `monitor` writes a local health snapshot covering kill switch state, rate-limit state, ledger counts, and output presence.
 
 The v0 agent still cannot publish, send outbound messages, submit pull requests, charge money, create subscriptions, or collect payment. Those are live write actions and remain disabled.
+
+Real-money trading is disabled by default. The agent may prepare read-only
+market research, paper-trade simulations, or risk-policy drafts, but it may not
+connect brokerage accounts, move funds, place orders, or make investment claims
+without fresh explicit approval and a written risk policy.
 
 `revenue-verify` validates a settled earned-income event from a local JSON file. It does not move money and rejects support inflows or template placeholders as revenue.
 
