@@ -4,8 +4,13 @@ __pycache__/
 *.pyc
 .pytest_cache/
 logs/*.jsonl
+logs/*.log
 data/rate_limits.json
 data/monitoring_state.json
+data/continuous_agent_status.json
+data/continuous_agent.pid
+data/continuous_agent.stop
+outputs/approval_requests/
 outputs/*.md
 outputs/*.json
 outputs/work_packages/
