@@ -14,6 +14,8 @@ EARNED_INCOME_TERMS = {
     "reward",
     "compensation",
     "contract",
+    "funded",
+    "issuehunt",
     "commission",
     "invoice",
     "license",
@@ -172,13 +174,22 @@ def classify_github_issue(issue: Dict[str, Any], query: str = "") -> Dict[str, A
     risk_signals = _matching_terms(text, HIGH_RISK_TERMS)
     amount = _extract_usd_amount(text)
     passive_bounty_prompt = _has_passive_bounty_prompt(text)
+    submitted_pull_requests = _has_submitted_pull_requests(text)
+    in_progress_signal = _has_in_progress_signal(text)
     funded_signal = "funded on issuehunt" in text or "backers total" in text
 
     strong_earned_signals = [term for term in earned_signals if term != "reward"]
     has_earned_signal = bool(strong_earned_signals or amount or ("reward" in earned_signals and amount))
     support_only = bool(support_signals) and not has_earned_signal
     passive_unfunded = passive_bounty_prompt and not amount and not funded_signal
-    eligible = has_earned_signal and not support_only and not passive_unfunded and not risk_signals
+    eligible = (
+        has_earned_signal
+        and not support_only
+        and not passive_unfunded
+        and not submitted_pull_requests
+        and not in_progress_signal
+        and not risk_signals
+    )
     score = _score_candidate(
         has_earned_signal=has_earned_signal,
         amount=amount,
@@ -198,6 +209,10 @@ def classify_github_issue(issue: Dict[str, Any], query: str = "") -> Dict[str, A
         reasons.append("support-only inflow signal is not revenue")
     if passive_unfunded:
         reasons.append("passive bounty/backer prompt is not earned revenue")
+    if submitted_pull_requests:
+        reasons.append("funded issue already lists submitted pull requests")
+    if in_progress_signal:
+        reasons.append("issue appears already in progress")
     if risk_signals:
         reasons.append("high-risk term requires rejection or human review")
     if not has_earned_signal:
@@ -221,6 +236,9 @@ def classify_github_issue(issue: Dict[str, Any], query: str = "") -> Dict[str, A
         "public_benefit_signals": benefit_signals,
         "risk_signals": risk_signals,
         "passive_bounty_prompt": passive_bounty_prompt,
+        "passive_unfunded": passive_unfunded,
+        "submitted_pull_requests": submitted_pull_requests,
+        "in_progress_signal": in_progress_signal,
         "reasons": reasons,
         "next_steps": [
             "Verify the issue or platform states payment, bounty, contract, product, or license terms.",
@@ -328,6 +346,24 @@ def _has_passive_bounty_prompt(text: str) -> bool:
         "want to back this issue",
         "become a backer",
         "add your repositories",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _has_submitted_pull_requests(text: str) -> bool:
+    markers = (
+        "submitted pull requests",
+        "submitted pull request",
+        "this pull request has been submitted",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _has_in_progress_signal(text: str) -> bool:
+    markers = (
+        "in progress",
+        "work in progress",
+        "already assigned",
     )
     return any(marker in text for marker in markers)
 

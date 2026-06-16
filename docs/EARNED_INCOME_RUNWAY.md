@@ -32,8 +32,16 @@ py run_agent.py --config config.json --mode revenue-verify --revenue-event path\
 ```
 
 The event must include earned income type, value exchange, traceability, consent,
-net-of-fees reporting, and settlement evidence. Support inflows and template
-placeholder events fail validation.
+an explicit income destination, net-of-fees reporting, and settlement evidence.
+Support inflows and template placeholder events fail validation.
+
+The local private destination file is:
+
+```text
+private/income_destination.json
+```
+
+It is intentionally gitignored. The current local destination is PayPal in USD.
 
 ## Supervised Work Selection
 

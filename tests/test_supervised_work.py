@@ -32,9 +32,31 @@ class SupervisedWorkTests(unittest.TestCase):
         self.assertIsNone(candidate)
         self.assertEqual(len(rejected), 1)
 
+    def test_select_candidate_rejects_missing_amount(self):
+        candidate, rejected = select_candidate([
+            {
+                "candidate_id": "c1",
+                "title": "Funded but amount unknown",
+                "eligible_for_earned_income_discovery": True,
+                "income_type": "earned_income",
+                "source_url": "https://example.test/1",
+                "earned_income_signals": ["funded"],
+                "public_benefit_signals": ["documentation"],
+                "expected_liquid_revenue_usd": 0.0,
+            }
+        ])
+        self.assertIsNone(candidate)
+        self.assertIn("missing positive parsed earned-income amount", rejected[0]["reasons"])
+
     def test_runner_prepares_package_for_clean_candidate(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
+            private = root / "private"
+            private.mkdir()
+            (private / "income_destination.json").write_text(
+                '{"method":"PayPal","account":"person@example.test","currency":"USD"}',
+                encoding="utf-8",
+            )
             outputs = root / "outputs"
             outputs.mkdir()
             (outputs / "earned_income_runway.json").write_text(
@@ -48,6 +70,7 @@ class SupervisedWorkTests(unittest.TestCase):
                     "income_type": "earned_income",
                     "risk_signals": [],
                     "support_inflow_signals": [],
+                    "public_benefit_signals": ["documentation"],
                     "earned_income_signals": ["bounty"],
                     "expected_liquid_revenue_usd": 25.0,
                     "score": 0.8

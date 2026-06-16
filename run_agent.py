@@ -7,6 +7,7 @@ from agent.artifact_builder import ArtifactBuilder
 from agent.config import environment_capabilities, load_env_file, load_json_config, public_support_links
 from agent.env_manager import EnvManager
 from agent.ethics_gate import EthicsGate
+from agent.income_destination import IncomeDestination
 from agent.ledger import JsonlLedger
 from agent.live_discovery import LiveDiscovery
 from agent.live_readiness import LiveReadiness
@@ -446,11 +447,15 @@ def _run_revenue_verify(root: Path, output_dir: Path, ledger: JsonlLedger, reven
 
     tracker = RevenueTracker()
     result = tracker.validate_revenue_event(event)
+    income_destination = IncomeDestination(root).load()
     ledger.append("revenue", result)
 
     output_dir.mkdir(parents=True, exist_ok=True)
     report_path = output_dir / "revenue_validation_report.md"
-    report_path.write_text(_render_revenue_validation_report(event_path, result), encoding="utf-8")
+    report_path.write_text(
+        _render_revenue_validation_report(event_path, result, income_destination),
+        encoding="utf-8",
+    )
     ledger.append("actions", {
         "action": "revenue_event_validated",
         "revenue_event_path": str(event_path),
@@ -478,7 +483,7 @@ def _run_supervised_work(root: Path, config, ledger: JsonlLedger):
     return decision
 
 
-def _render_revenue_validation_report(event_path: Path, result) -> str:
+def _render_revenue_validation_report(event_path: Path, result, income_destination) -> str:
     event = result.get("event", {})
     evidence = event.get("evidence", [])
     if isinstance(evidence, dict):
@@ -501,6 +506,8 @@ Event file: `{event_path}`
 - Classification: {event.get("classification", "")}
 - Source: {event.get("source", "")}
 - Caused by action id: {event.get("caused_by_action_id", "")}
+- Event destination: {event.get("destination", "")}
+- Configured destination: {income_destination["display"]}
 
 ## Evidence
 

@@ -184,7 +184,7 @@ def _normalize_github_issue(item: Dict[str, Any]) -> Dict[str, Any]:
         "repository_url": item.get("repository_url"),
         "state": item.get("state"),
         "labels": [label.get("name") for label in item.get("labels", []) if isinstance(label, dict)],
-        "body_excerpt": str(item.get("body") or "")[:500],
+        "body_excerpt": str(item.get("body") or "")[:4000],
         "comments": item.get("comments"),
         "created_at": item.get("created_at"),
         "updated_at": item.get("updated_at"),

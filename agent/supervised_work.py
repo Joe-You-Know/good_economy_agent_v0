@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from .ethics_gate import EthicsGate
+from .income_destination import IncomeDestination
 
 
 class SupervisedWorkRunner:
@@ -16,6 +17,7 @@ class SupervisedWorkRunner:
         self.output_dir = self.root / "outputs"
         self.work_dir = self.output_dir / "work_packages"
         self.ethics_gate = EthicsGate(config)
+        self.income_destination = IncomeDestination(root).load()
 
     def run(self) -> Dict[str, Any]:
         runway = self._load_runway()
@@ -32,6 +34,15 @@ class SupervisedWorkRunner:
                     "low-risk, and evidence-readiness filters."
                 ),
                 "recommended_discovery_queries": self.config.get("earned_income_live_queries", []),
+            })
+            return self._write_decision(decision)
+
+        if not self.income_destination["configured"]:
+            decision.update({
+                "status": "blocked_missing_income_destination",
+                "selected_candidate": candidate,
+                "next_autonomous_step": "configure_earned_income_destination",
+                "reason": "The agent cannot start payable work until the earned-income destination is explicit.",
             })
             return self._write_decision(decision)
 
@@ -77,6 +88,7 @@ class SupervisedWorkRunner:
             "next_autonomous_step": "inspect_target_repository_locally_before_external_write",
             "external_write_actions_taken": False,
             "revenue_recorded": False,
+            "income_destination": self.income_destination,
         })
         return self._write_decision(decision)
 
@@ -97,6 +109,7 @@ class SupervisedWorkRunner:
                 "The agent may choose and prepare local work. Publishing, claiming work, "
                 "submitting pull requests, invoicing, or collecting payment remains a reviewed external write action."
             ),
+            "income_destination": self.income_destination,
         }
 
     def _write_work_package(self, candidate: Dict[str, Any], ethics: Dict[str, Any]) -> Dict[str, str]:
@@ -120,6 +133,7 @@ class SupervisedWorkRunner:
                 "payer/platform receipt",
                 "net amount after fees",
             ],
+            "income_destination": self.income_destination,
         }
         json_path.write_text(json.dumps(package, indent=2, sort_keys=True), encoding="utf-8")
         md_path.write_text(render_work_brief(package), encoding="utf-8")
@@ -179,12 +193,23 @@ def rejection_reasons(candidate: Dict[str, Any]) -> List[str]:
         reasons.append("risk signals require rejection or review")
     if candidate.get("support_inflow_signals"):
         reasons.append("support inflow signal is not revenue")
-    if candidate.get("passive_bounty_prompt"):
+    if candidate.get("passive_unfunded") or (
+        candidate.get("passive_bounty_prompt")
+        and float(candidate.get("expected_liquid_revenue_usd", 0.0)) <= 0.0
+    ):
         reasons.append("passive bounty/backer prompt is not earned revenue")
+    if candidate.get("submitted_pull_requests"):
+        reasons.append("funded issue already lists submitted pull requests")
+    if candidate.get("in_progress_signal"):
+        reasons.append("issue appears already in progress")
     if not candidate.get("source_url"):
         reasons.append("missing source URL")
     if not candidate.get("earned_income_signals"):
         reasons.append("missing issue-side earned-income signal")
+    if not candidate.get("public_benefit_signals"):
+        reasons.append("missing public-benefit signal")
+    if float(candidate.get("expected_liquid_revenue_usd", 0.0)) <= 0.0:
+        reasons.append("missing positive parsed earned-income amount")
     return reasons
 
 
@@ -226,6 +251,10 @@ Generated: {decision["timestamp_utc"]}
 
 {decision["supervision_boundary"]}
 
+## Income Destination
+
+{(decision.get("income_destination") or {}).get("display", "not configured")}
+
 ## Next Autonomous Step
 
 {decision.get("next_autonomous_step", "none")}
@@ -244,6 +273,7 @@ def render_work_brief(package: Dict[str, Any]) -> str:
 - Source: {candidate.get("source_url")}
 - Repository: {candidate.get("repository_url")}
 - Expected earned revenue: ${float(candidate.get("expected_liquid_revenue_usd", 0.0)):.2f}
+- Income destination: {package["income_destination"]["display"]}
 
 ## Local Work Steps
 

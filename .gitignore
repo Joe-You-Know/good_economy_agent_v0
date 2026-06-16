@@ -8,5 +8,6 @@ data/rate_limits.json
 data/monitoring_state.json
 outputs/*.md
 outputs/*.json
+outputs/work_packages/
 outputs/public_artifact/
 workspaces/

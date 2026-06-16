@@ -4,6 +4,7 @@ from typing import Any, Dict, List
 
 from .config import environment_capabilities
 from .controls import KillSwitch, RateLimiter
+from .income_destination import IncomeDestination
 from .payment_gateway import PaymentGateway
 
 
@@ -18,6 +19,7 @@ class LiveReadiness:
     def evaluate(self) -> Dict[str, Any]:
         kill_status = self.kill_switch.status()
         payment_status = self.payment_gateway.readiness()
+        income_destination = IncomeDestination(self.root).load()
         capabilities = environment_capabilities()
 
         blockers: List[str] = []
@@ -40,6 +42,8 @@ class LiveReadiness:
                 "No valid donation or sponsorship support URL is configured. "
                 "Support is not revenue and this does not block earned revenue."
             )
+        if not income_destination["configured"]:
+            warnings.append("Earned-income destination is not configured; revenue validation should not settle.")
 
         return {
             "ready_for_read_only_live_discovery": not blockers,
@@ -56,6 +60,7 @@ class LiveReadiness:
                 "support_excluded_from_revenue": True,
                 "write_actions_enabled": bool(self.config.get("external_write_actions_allowed", False)),
                 "valid_revenue_channels": list(self.config.get("baseline_revenue_channels", [])),
+                "income_destination": income_destination,
             },
             "rate_limit_state_path": str(self.root / self.config["rate_limit_state_path"]),
             "monitoring_state_path": str(self.root / self.config["monitoring_state_path"]),
@@ -118,6 +123,8 @@ def _render_readiness_report(readiness: Dict[str, Any]) -> str:
 - Support excluded from revenue: {earned_income["support_excluded_from_revenue"]}
 - External write actions enabled: {earned_income["write_actions_enabled"]}
 - Valid revenue channels: {_inline(earned_income["valid_revenue_channels"])}
+- Income destination: {earned_income["income_destination"]["display"]}
+- Destination source: {earned_income["income_destination"]["source"]}
 
 ## Kill Switch
 

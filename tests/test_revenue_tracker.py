@@ -14,6 +14,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "income_type": "earned_income",
             "value_exchange": True,
             "evidence": ["accepted bounty receipt", "merged pull request"],
+            "destination": "PayPal: payout@recipient.test (USD)",
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -30,6 +31,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "income_type": "earned_income",
             "value_exchange": True,
             "evidence": ["accepted bounty receipt"],
+            "destination": "PayPal: payout@recipient.test (USD)",
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -47,6 +49,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "income_type": "earned_income",
             "value_exchange": True,
             "evidence": ["accepted bounty receipt"],
+            "destination": "PayPal: payout@recipient.test (USD)",
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -63,6 +66,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "income_type": "donation",
             "value_exchange": False,
             "evidence": ["support receipt"],
+            "destination": "PayPal: payout@recipient.test (USD)",
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -80,6 +84,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "income_type": "earned_income",
             "value_exchange": False,
             "evidence": ["support receipt"],
+            "destination": "PayPal: payout@recipient.test (USD)",
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -96,6 +101,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "income_type": "earned_income",
             "value_exchange": True,
             "evidence": [],
+            "destination": "PayPal: payout@recipient.test (USD)",
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -113,12 +119,30 @@ class RevenueTrackerTests(unittest.TestCase):
             "income_type": "earned_income",
             "value_exchange": True,
             "evidence": ["URL or receipt proving payment"],
+            "destination": "PayPal: payout@recipient.test (USD)",
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
         })
         self.assertFalse(result["valid"])
         self.assertIn("template placeholders", result["reason"])
+
+    def test_destination_required(self):
+        tracker = RevenueTracker()
+        result = tracker.validate_revenue_event({
+            "amount_usd": 5.0,
+            "source": "public-good bounty",
+            "caused_by_action_id": "run:000001",
+            "classification": "clean",
+            "income_type": "earned_income",
+            "value_exchange": True,
+            "evidence": ["accepted bounty receipt"],
+            "traceable": True,
+            "consent_verified": True,
+            "net_of_fees": True,
+        })
+        self.assertFalse(result["valid"])
+        self.assertIn("destination", result["reason"])
 
 
 if __name__ == "__main__":

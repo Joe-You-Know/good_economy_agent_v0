@@ -82,6 +82,29 @@ class EarnedIncomeTests(unittest.TestCase):
         })
         self.assertFalse(candidate["eligible_for_earned_income_discovery"])
         self.assertTrue(candidate["passive_bounty_prompt"])
+        self.assertTrue(candidate["passive_unfunded"])
+
+    def test_issue_with_submitted_pull_requests_is_not_candidate(self):
+        candidate = classify_github_issue({
+            "title": "Visualization for stores, events and relationships",
+            "html_url": "https://github.com/example/repo/issues/7",
+            "repository_url": "https://api.github.com/repos/example/repo",
+            "labels": [":dollar: Funded on Issuehunt"],
+            "body_excerpt": "Backers (Total: $110.00). Submitted pull Requests: #1334.",
+        })
+        self.assertFalse(candidate["eligible_for_earned_income_discovery"])
+        self.assertTrue(candidate["submitted_pull_requests"])
+
+    def test_issue_in_progress_is_not_candidate(self):
+        candidate = classify_github_issue({
+            "title": "Improve docs",
+            "html_url": "https://github.com/example/repo/issues/8",
+            "repository_url": "https://api.github.com/repos/example/repo",
+            "labels": ["docs", "funded on IssueHunt", "in progress"],
+            "body_excerpt": "Backers (Total: $50.00)",
+        })
+        self.assertFalse(candidate["eligible_for_earned_income_discovery"])
+        self.assertTrue(candidate["in_progress_signal"])
 
     def test_runway_writes_reports(self):
         github_results = [{

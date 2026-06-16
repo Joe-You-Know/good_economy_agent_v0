@@ -38,6 +38,7 @@ class RevenueTracker:
             "income_type",
             "value_exchange",
             "evidence",
+            "destination",
             "traceable",
             "consent_verified",
             "net_of_fees",
@@ -65,6 +66,9 @@ class RevenueTracker:
 
         if _looks_placeholder(event.get("source")) or _looks_placeholder(event.get("caused_by_action_id")):
             return self._invalid(event, "Revenue source and causal action id must be real, not template placeholders.")
+
+        if _looks_placeholder(event.get("destination")) or not str(event.get("destination", "")).strip():
+            return self._invalid(event, "Revenue destination must be explicitly stated and non-placeholder.")
 
         if not event.get("value_exchange", False):
             return self._invalid(event, "Revenue requires a value exchange, not patronage or goodwill support.")

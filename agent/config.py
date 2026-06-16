@@ -163,11 +163,11 @@ def validate_config(config: Dict[str, Any]) -> Dict[str, Any]:
     validated.setdefault(
         "earned_income_live_queries",
         [
-            "is:issue is:open bounty label:accessibility",
-            "is:issue is:open bounty label:documentation",
-            "is:issue is:open bounty label:\"good first issue\"",
-            "is:issue is:open reward accessibility",
-            "is:issue is:open reward documentation",
+            "is:issue is:open \"Funded on Issuehunt\" accessibility",
+            "is:issue is:open \"Funded on Issuehunt\" documentation",
+            "is:issue is:open \"IssueHunt\" \"Backers\" accessibility",
+            "is:issue is:open \"IssueHunt\" \"Submit a pull request\"",
+            "is:issue is:open \"bounty\" \"accepted pull request\" accessibility",
         ],
     )
     validated.setdefault("earned_income_candidate_limit", 10)

@@ -5,6 +5,7 @@
   "classification": "invalid",
   "income_type": "earned_income",
   "value_exchange": true,
+  "destination": "TEMPLATE - replace with configured earned-income destination",
   "evidence": [
     "TEMPLATE - replace with receipt proving accepted bounty, paid service, product sale, marketplace sale, or license fee",
     "TEMPLATE - replace with URL or ledger id for the delivered work",
