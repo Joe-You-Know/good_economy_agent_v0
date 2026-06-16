@@ -9,3 +9,4 @@ data/monitoring_state.json
 outputs/*.md
 outputs/*.json
 outputs/public_artifact/
+workspaces/
