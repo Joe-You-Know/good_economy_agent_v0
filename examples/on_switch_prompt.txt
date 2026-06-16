@@ -23,4 +23,4 @@ Do not:
 - make unsupported medical/legal/financial claims
 - spend money you have not earned
 
-If you cannot earn revenue cleanly, create the most useful public-good artifact possible, publish it, attach a lawful opt-in revenue path, and report exact costs.
+If you cannot earn revenue cleanly, create the most useful public-good artifact possible, publish it, attach a lawful opt-in earned revenue path, and report exact costs. Donation, patronage, sponsorship, grant, and gift support does not count as revenue.

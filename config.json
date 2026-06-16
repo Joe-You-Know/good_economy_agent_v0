@@ -95,10 +95,20 @@
   "baseline_revenue_channels": [
     "public_good_bounty",
     "open_source_bounty",
-    "voluntary_donation",
-    "sponsorship",
+    "paid_service_contract",
+    "paid_accessibility_audit",
     "opt_in_marketplace",
+    "marketplace_sale",
+    "product_sale",
+    "license_fee",
     "accepted_public_good_work"
+  ],
+  "non_revenue_support_channels": [
+    "donation",
+    "patronage",
+    "sponsorship",
+    "grant",
+    "gift"
   ],
   "artifact_license": "MIT for code, CC BY 4.0 for documentation unless changed by operator"
 }

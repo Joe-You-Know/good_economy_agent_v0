@@ -4,11 +4,11 @@ from typing import Any, Dict
 
 
 class PaymentGateway:
-    """Readiness checks for lawful opt-in revenue paths.
+    """Readiness checks for support and future payment infrastructure.
 
     v0 deliberately does not initiate charges, invoices, subscriptions, or
     payouts. It only validates that configured support paths are explicit,
-    voluntary, and safe to disclose.
+    voluntary, non-revenue, and safe to disclose.
     """
 
     def __init__(self, env=None):
@@ -37,18 +37,21 @@ class PaymentGateway:
         donation = self.donation_status()
         sponsorship = self.sponsorship_status()
         provider = self.payment_provider_status()
-        valid_public_paths = [
+        valid_support_paths = [
             item for item in (donation, sponsorship)
             if item["configured"] and item["valid"]
         ]
         return {
-            "valid_public_paths": valid_public_paths,
+            "valid_support_paths": valid_support_paths,
             "donation": donation,
             "sponsorship": sponsorship,
             "payment_provider": provider,
             "clean_revenue_boundary": (
-                "Only voluntary opt-in donation/sponsorship links are enabled. "
-                "No payment collection is executed by the agent."
+                "Donation, patronage, sponsorship, grants, and gifts are support/funding inflows, "
+                "not revenue. No payment collection is executed by the agent."
+            ),
+            "support_boundary": (
+                "Configured donation/sponsorship links may be disclosed as non-revenue support paths only."
             ),
         }
 

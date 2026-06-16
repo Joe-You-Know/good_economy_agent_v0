@@ -10,7 +10,7 @@ Good Economy Agent v0 is live-capable for **read-only discovery**:
 - local monitoring snapshots,
 - local rate-limit accounting,
 - local kill switch enforcement,
-- donation/sponsorship URL validation.
+- non-revenue donation/sponsorship support URL validation.
 
 ## Deliberately Disabled
 
@@ -59,16 +59,16 @@ GET {OPENLAWS_API_BASE_URL}/search?q=...&limit=...
 
 If the actual OpenLaws API contract differs, update `agent/live_clients.py` rather than weakening the safety boundary.
 
-## Payment and Donation Integration
+## Payment and Support Integration
 
-The agent validates these public support links:
+The agent validates these public non-revenue support links:
 
 ```text
 DONATION_URL
 SPONSORSHIP_URL
 ```
 
-It may disclose valid links in local artifacts. It cannot charge a card, create an invoice, create a subscription, or treat a configured payment-provider key as revenue.
+It may disclose valid links in local artifacts as support only. It cannot charge a card, create an invoice, create a subscription, or treat a support link or configured payment-provider key as revenue.
 
 ## Kill Switch
 

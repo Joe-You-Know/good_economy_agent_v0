@@ -35,8 +35,11 @@ class LiveReadiness:
             warnings.append("GITHUB_TOKEN is not configured; GitHub search will use unauthenticated limits or be skipped by policy.")
         if not (os.environ.get("OPENLAWS_API_BASE_URL") or self.config.get("openlaws_api_base_url")):
             warnings.append("OpenLaws base URL is not configured; OpenLaws checks will be skipped.")
-        if not payment_status["valid_public_paths"]:
-            warnings.append("No valid donation or sponsorship URL is configured.")
+        if not payment_status["valid_support_paths"]:
+            warnings.append(
+                "No valid donation or sponsorship support URL is configured. "
+                "Support is not revenue and this does not block earned revenue."
+            )
 
         return {
             "ready_for_read_only_live_discovery": not blockers,
@@ -67,9 +70,9 @@ def _render_readiness_report(readiness: Dict[str, Any]) -> str:
     warnings = _lines(readiness["warnings"])
     capabilities = _capability_lines(readiness["environment_capabilities"])
     payment = readiness["payment"]
-    public_paths = _lines(
+    support_paths = _lines(
         f'{item["label"]}: {item["url"]}'
-        for item in payment["valid_public_paths"]
+        for item in payment["valid_support_paths"]
     )
 
     return f"""# Live Readiness Report
@@ -91,11 +94,12 @@ def _render_readiness_report(readiness: Dict[str, Any]) -> str:
 
 {capabilities}
 
-## Payment and Donation Boundary
+## Revenue and Support Boundary
 
-- Public support paths: {public_paths}
+- Public support paths: {support_paths}
 - Payment provider can charge: {payment["payment_provider"]["can_charge"]}
-- Boundary: {payment["clean_revenue_boundary"]}
+- Revenue boundary: {payment["clean_revenue_boundary"]}
+- Support boundary: {payment["support_boundary"]}
 
 ## Kill Switch
 

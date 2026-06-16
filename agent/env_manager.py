@@ -57,14 +57,14 @@ ENV_SPECS = [
     EnvSpec(
         "DONATION_URL",
         "public_url",
-        "voluntary opt-in donation path",
-        notes="Must be a public http(s) URL. The agent cannot create charges.",
+        "non-revenue voluntary donation support path",
+        notes="Must be a public http(s) URL. Support links are not counted as revenue.",
     ),
     EnvSpec(
         "SPONSORSHIP_URL",
         "public_url",
-        "voluntary opt-in sponsorship path",
-        notes="Must be a public http(s) URL. The agent cannot create subscriptions.",
+        "non-revenue voluntary sponsorship support path",
+        notes="Must be a public http(s) URL. Support links are not counted as revenue.",
     ),
 ]
 

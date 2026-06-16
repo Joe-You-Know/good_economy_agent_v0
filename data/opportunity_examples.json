@@ -12,9 +12,10 @@
     "runtime_cost_estimate_usd": 0.0,
     "platform_friction": 0.05,
     "legal_risk": 0.02,
-    "description": "Generate a reusable educational artifact that can later be listed or sponsored.",
+    "description": "Generate a reusable educational artifact that can later be listed, sold, licensed, or used to earn paid service work.",
     "risk_tags": [],
-    "revenue_channels": ["voluntary_donation", "sponsorship", "opt_in_marketplace"],
+    "revenue_channels": ["opt_in_marketplace", "marketplace_sale", "license_fee", "paid_service_contract"],
+    "support_channels": ["donation", "sponsorship"],
     "required_external_actions": [],
     "beneficiary": "educators and learners who need reusable worksheet structure",
     "evidence_notes": "The output can be locally inspected for usefulness, truthfulness, and limitations."
@@ -34,7 +35,8 @@
     "legal_risk": 0.01,
     "description": "Create an accessibility audit checklist for small public-good projects.",
     "risk_tags": [],
-    "revenue_channels": ["voluntary_donation", "sponsorship", "accepted_public_good_work"],
+    "revenue_channels": ["accepted_public_good_work", "paid_accessibility_audit", "paid_service_contract"],
+    "support_channels": ["donation", "sponsorship"],
     "required_external_actions": [],
     "beneficiary": "small public-good projects and their users",
     "evidence_notes": "The checklist gives observable checks and avoids claiming legal compliance."
@@ -54,7 +56,8 @@
     "legal_risk": 0.02,
     "description": "Create a practical template that helps families or small nonprofits reduce waste.",
     "risk_tags": [],
-    "revenue_channels": ["voluntary_donation", "sponsorship", "opt_in_marketplace"],
+    "revenue_channels": ["opt_in_marketplace", "marketplace_sale", "product_sale", "paid_service_contract"],
+    "support_channels": ["donation", "sponsorship"],
     "required_external_actions": [],
     "beneficiary": "households and small nonprofits managing limited resources",
     "evidence_notes": "The tracker is a simple local planning aid and avoids nutrition or food-safety claims."

@@ -37,11 +37,11 @@ class LiveReadinessTests(unittest.TestCase):
             self.assertFalse(report["ready_for_read_only_live_discovery"])
             self.assertIn("Kill switch is active.", report["blockers"])
 
-    def test_donation_url_appears_as_valid_public_path(self):
+    def test_donation_url_appears_as_valid_support_path(self):
         os.environ["DONATION_URL"] = "https://example.test/donate"
         with tempfile.TemporaryDirectory() as tmp:
             report = LiveReadiness(Path(tmp), dict(CONFIG)).evaluate()
-            self.assertEqual(report["payment"]["valid_public_paths"][0]["label"], "donation")
+            self.assertEqual(report["payment"]["valid_support_paths"][0]["label"], "donation")
 
 
 if __name__ == "__main__":

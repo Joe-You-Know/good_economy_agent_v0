@@ -46,8 +46,8 @@ Do not paste tokens into chat.
 | `OPENLAWS_API_BASE_URL` | OpenLaws API endpoint | No | Provider documentation |
 | `OPENLAWS_API_KEY` | OpenLaws auth, if required | Yes | Provider account |
 | `PAYMENT_PROVIDER_API_KEY` | Future payment-provider verification | Yes | Provider account |
-| `DONATION_URL` | Voluntary opt-in donation path | No | Donation platform |
-| `SPONSORSHIP_URL` | Voluntary opt-in sponsorship path | No | Sponsorship platform |
+| `DONATION_URL` | Non-revenue voluntary donation support path | No | Donation platform |
+| `SPONSORSHIP_URL` | Non-revenue voluntary sponsorship support path | No | Sponsorship platform |
 
 ## GitHub Token Scope
 
@@ -65,8 +65,8 @@ Do not create a broad classic token for convenience.
 ## Payment Boundary
 
 Payment variables do not enable charging in v0. The agent can validate donation
-and sponsorship URLs, but cannot charge a card, create invoices, create
-subscriptions, or move money.
+and sponsorship support URLs, but those links are not revenue. The agent cannot
+charge a card, create invoices, create subscriptions, or move money.
 
 ## CourtListener Boundary
 

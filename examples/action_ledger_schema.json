@@ -4,7 +4,7 @@
   "action_type": "build_public_good_artifact",
   "intended_effect": "create educational or accessibility value",
   "affected_parties": ["future users", "agent legal wrapper"],
-  "truth_claims": ["artifact is free", "revenue path is optional"],
+  "truth_claims": ["artifact is free", "earned revenue path is optional", "support is not revenue"],
   "consent_mechanism": "opt-in use only",
   "potential_harms": ["incorrect information", "low usefulness"],
   "mitigations": ["plain limitation statements", "no professional claims"],

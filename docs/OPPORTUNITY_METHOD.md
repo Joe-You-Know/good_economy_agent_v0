@@ -53,4 +53,4 @@ Reject immediately if the opportunity requires:
 
 ## Baseline Fallback
 
-If no clean revenue opportunity is found, create a useful free artifact and attach a lawful opt-in revenue path.
+If no clean earned revenue opportunity is found, create a useful free artifact and attach a lawful opt-in earned revenue path. Donation, patronage, sponsorship, grant, and gift links may be disclosed only as non-revenue support paths.

@@ -4,10 +4,11 @@ from agent.payment_gateway import PaymentGateway
 
 
 class PaymentGatewayTests(unittest.TestCase):
-    def test_valid_donation_url_is_public_path(self):
+    def test_valid_donation_url_is_support_path_not_revenue(self):
         gateway = PaymentGateway({"DONATION_URL": "https://example.test/donate"})
         readiness = gateway.readiness()
-        self.assertEqual(readiness["valid_public_paths"][0]["label"], "donation")
+        self.assertEqual(readiness["valid_support_paths"][0]["label"], "donation")
+        self.assertIn("not revenue", readiness["clean_revenue_boundary"])
         self.assertFalse(readiness["payment_provider"]["can_charge"])
 
     def test_invalid_url_rejected(self):

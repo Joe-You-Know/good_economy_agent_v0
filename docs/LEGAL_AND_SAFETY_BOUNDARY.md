@@ -38,7 +38,8 @@ The baseline agent must not:
 - open-science reproducibility aids,
 - local-only artifact generation,
 - public free tools,
-- voluntary donation/sponsorship links,
+- non-revenue donation/sponsorship support links,
+- paid service or audit work requested by the recipient,
 - opt-in marketplace listings.
 
 ## Accountability Model

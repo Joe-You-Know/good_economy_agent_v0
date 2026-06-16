@@ -220,7 +220,7 @@ feedback, and improving the next attempt.
 
 {limitation_lines}
 
-## Revenue Path
+## Earned Revenue Path
 
 {revenue_path}
 
@@ -231,15 +231,18 @@ feedback, and improving the next attempt.
 
     def _revenue_path(self) -> str:
         base = (
-            "This artifact is free. Valid future revenue paths are voluntary donation, "
-            "sponsorship, or opt-in paid customization requested by the recipient. "
+            "This artifact is free. Valid future revenue requires earned income from a "
+            "real value exchange, such as an accepted bounty, paid service contract, "
+            "paid accessibility audit requested by the recipient, marketplace sale, "
+            "product sale, or license fee. Donations, patronage, sponsorship, grants, "
+            "and gifts are support/funding inflows and do not count as revenue. "
             "No cold outreach, hidden fees, fake urgency, or unsupported claims are allowed."
         )
         if not self.support_links:
-            return base + " No public support links were configured for this dry run."
+            return base + " No public non-revenue support links were configured for this dry run."
 
         link_parts = [f"{label}: {url}" for label, url in sorted(self.support_links.items())]
-        return base + " Configured public support links: " + "; ".join(link_parts) + "."
+        return base + " Configured non-revenue support links: " + "; ".join(link_parts) + "."
 
     def _write_bundle_readme(
         self,
@@ -264,7 +267,7 @@ Primary artifact: [{artifact_filename}]({artifact_filename})
 
 {limitation_lines}
 
-## Revenue Path
+## Earned Revenue Path
 
 {revenue_path}
 
@@ -280,18 +283,19 @@ ethics gate, platform rules, and any relevant legal review.
     def _write_revenue_path(self, revenue_path: str) -> Path:
         path = self.public_dir / "revenue_path.md"
         path.write_text(
-            f"""# Revenue Path
+            f"""# Earned Revenue Path
 
 {revenue_path}
 
-## Valid Revenue Conditions
+## Valid Earned Revenue Conditions
 
 - The payer understands what is offered.
-- Payment is voluntary and opt-in.
+- Payment is voluntary, opt-in, and tied to delivered labor, a product, a service, a bounty, or a license.
 - The source is traceable.
 - The amount is reported net of fees.
 - The payment is not self-funded, collusive, fake, or bot-inflated.
 - The action that caused payment is present in the audit ledger.
+- Donations, patronage, sponsorship, grants, and gifts are tracked separately and do not count as revenue.
 """,
             encoding="utf-8",
         )

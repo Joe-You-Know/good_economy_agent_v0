@@ -19,6 +19,7 @@ class Opportunity:
     description: str
     risk_tags: List[str] = None
     revenue_channels: List[str] = None
+    support_channels: List[str] = None
     required_external_actions: List[str] = None
     beneficiary: str = "public"
     evidence_notes: str = ""
@@ -30,6 +31,7 @@ class Opportunity:
         opportunity = cls(**cleaned)
         opportunity.risk_tags = list(opportunity.risk_tags or [])
         opportunity.revenue_channels = list(opportunity.revenue_channels or [])
+        opportunity.support_channels = list(opportunity.support_channels or [])
         opportunity.required_external_actions = list(opportunity.required_external_actions or [])
         return opportunity
 

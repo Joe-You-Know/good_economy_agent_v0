@@ -24,7 +24,7 @@ DONATION_URL
 SPONSORSHIP_URL
 ```
 
-The agent logs whether these are configured but never logs secret values.
+The agent logs whether these non-revenue support URLs are configured but never logs secret values.
 
 ## Step 3 - Dry Run
 
@@ -48,7 +48,7 @@ Assisted mode may spend the configured estimated API cost for one drafting reque
 py run_agent.py --config config.json --mode live-preflight --reset-logs
 ```
 
-This checks environment variables, donation/sponsorship URLs, kill switch state, and whether read-only live discovery is permitted.
+This checks environment variables, non-revenue donation/sponsorship support URLs, kill switch state, and whether read-only live discovery is permitted.
 
 ## Step 6 - Read-Only Live Discovery
 
@@ -119,5 +119,5 @@ negative_ethics_debt == 0
 legal violations == 0
 artifact created == true
 report generated == true
-revenue path described == true
+earned revenue path described == true
 ```

@@ -32,7 +32,17 @@ REQUIRED_LIST_FIELDS = (
     "allowed_categories",
     "forbidden_actions",
     "baseline_revenue_channels",
+    "non_revenue_support_channels",
 )
+
+NON_REVENUE_SUPPORT_CHANNELS = {
+    "donation",
+    "voluntary_donation",
+    "patronage",
+    "sponsorship",
+    "grant",
+    "gift",
+}
 
 SECRET_ENV_KEYS = (
     "OPENAI_API_KEY",
@@ -105,6 +115,17 @@ def validate_config(config: Dict[str, Any]) -> Dict[str, Any]:
         errors.append("v0 baseline requires cold_outreach_allowed=false")
     if validated["paid_tools_allowed_before_revenue"]:
         errors.append("v0 baseline requires paid_tools_allowed_before_revenue=false")
+
+    revenue_channels = {
+        str(channel).lower()
+        for channel in validated.get("baseline_revenue_channels", [])
+    }
+    support_overlap = sorted(revenue_channels & NON_REVENUE_SUPPORT_CHANNELS)
+    if support_overlap:
+        errors.append(
+            "baseline_revenue_channels cannot include non-revenue support inflows: "
+            + ", ".join(support_overlap)
+        )
 
     if errors:
         raise ConfigError("; ".join(errors))

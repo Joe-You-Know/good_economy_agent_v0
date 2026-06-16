@@ -148,7 +148,7 @@ def run(config_path: Path, mode: str, reset_logs: bool = False):
         "makes_professional_claims": False,
         "public_benefit_score": best.public_benefit_score,
         "evidence_strength": best.verification_strength,
-        "truth_claims": ["artifact is free", "revenue path is optional", "limits are disclosed"],
+        "truth_claims": ["artifact is free", "earned revenue path is optional", "support is not revenue", "limits are disclosed"],
         "consent_mechanism": "voluntary opt-in use and voluntary opt-in support only",
         "revenue_path": True,
         "reversibility": "local artifact can be edited, corrected, withdrawn, or replaced",
@@ -189,7 +189,7 @@ def run(config_path: Path, mode: str, reset_logs: bool = False):
     })
 
     no_revenue = revenue_tracker.no_revenue_event(
-        "Dry-run and assist-run modes create a revenue path but do not collect external revenue."
+        "Dry-run and assist-run modes describe an earned revenue path but do not collect external revenue."
     )
     ledger.append("revenue", no_revenue)
 

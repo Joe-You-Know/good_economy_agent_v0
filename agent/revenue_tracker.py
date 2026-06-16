@@ -2,6 +2,14 @@ from typing import Dict, Any, List
 
 
 class RevenueTracker:
+    NON_REVENUE_INFLOW_TYPES = {
+        "donation",
+        "patronage",
+        "sponsorship",
+        "grant",
+        "gift",
+    }
+
     def __init__(self):
         self.events: List[Dict[str, Any]] = []
 
@@ -27,6 +35,8 @@ class RevenueTracker:
             "source",
             "caused_by_action_id",
             "classification",
+            "income_type",
+            "value_exchange",
             "traceable",
             "consent_verified",
             "net_of_fees",
@@ -41,6 +51,19 @@ class RevenueTracker:
 
         if event.get("amount_usd", 0) <= 0:
             return self._invalid(event, "Revenue amount must be positive.")
+
+        income_type = str(event.get("income_type", "")).lower()
+        if income_type in self.NON_REVENUE_INFLOW_TYPES:
+            return self._invalid(
+                event,
+                f"{income_type} is a support/funding inflow, not earned revenue.",
+            )
+
+        if income_type != "earned_income":
+            return self._invalid(event, "Revenue must be earned income derived from labor, product, service, or capital.")
+
+        if not event.get("value_exchange", False):
+            return self._invalid(event, "Revenue requires a value exchange, not patronage or goodwill support.")
 
         classification = event.get("classification")
         valid_classes = {"clean", "questionable", "tainted", "invalid"}
@@ -67,7 +90,7 @@ class RevenueTracker:
 
         result = {
             "valid": True,
-            "reason": "Revenue event passed v0 clean-revenue validation.",
+            "reason": "Revenue event passed v0 earned-income validation.",
             "event": event,
         }
         self.events.append(result)

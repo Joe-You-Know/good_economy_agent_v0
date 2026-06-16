@@ -17,7 +17,7 @@ compute-limited autonomous reasoning
 -> public-benefit opportunity selection
 -> ethics gate
 -> useful artifact creation
--> lawful opt-in revenue path
+-> lawful opt-in earned revenue path
 -> complete audit ledger
 ```
 
@@ -66,7 +66,7 @@ py run_agent.py --config config.json --mode live-discovery
 py run_agent.py --config config.json --mode monitor
 ```
 
-`live-preflight` checks configuration, environment variables, payment/donation readiness, kill switch state, and live-action boundaries.
+`live-preflight` checks configuration, environment variables, earned-revenue/support readiness, kill switch state, and live-action boundaries.
 
 `live-discovery` may call read-only public APIs such as CourtListener, GitHub issue search, and a configured OpenLaws search endpoint. It writes local snapshots and ledgers only.
 
@@ -91,7 +91,7 @@ The agent is told:
 ```text
 You cost money to run.
 Create liquid, lawful, socially beneficial value without causing negative ethics debt.
-If clean revenue is not possible, create the most useful public-good artifact you can and leave a lawful path to future revenue.
+If clean earned revenue is not possible, create the most useful public-good artifact you can and leave a lawful path to future earned revenue.
 ```
 
 ## What Counts as Revenue?
@@ -107,6 +107,8 @@ Revenue must be:
 7. net of model/runtime/tool/platform/transaction costs.
 
 Compute credit is **not** revenue. It is a limited operating allowance and must be deducted from net score when used.
+
+Donations, patronage, sponsorships, grants, and gifts are **not** revenue in this experiment. They are support or funding inflows and must be tracked separately from earned income.
 
 ## What Counts as Negative Ethics Debt?
 

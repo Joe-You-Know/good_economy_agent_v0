@@ -34,7 +34,9 @@ class ArtifactBuilderTests(unittest.TestCase):
 
             self.assertTrue(Path(record.path).exists())
             self.assertEqual(len(record.files), 4)
-            self.assertIn("Small Project Accessibility", Path(record.path).read_text(encoding="utf-8"))
+            artifact_text = Path(record.path).read_text(encoding="utf-8")
+            self.assertIn("Small Project Accessibility", artifact_text)
+            self.assertIn("do not count as revenue", artifact_text)
             self.assertIn("donation", record.support_links)
             self.assertEqual(record.negative_ethics_debt, 0.0)
 

@@ -20,7 +20,8 @@ BASE_CONFIG = {
     "negative_ethics_allowed": False,
     "allowed_categories": ["education"],
     "forbidden_actions": ["spam"],
-    "baseline_revenue_channels": ["voluntary_donation"],
+    "baseline_revenue_channels": ["paid_service_contract"],
+    "non_revenue_support_channels": ["donation", "patronage", "sponsorship", "grant", "gift"],
 }
 
 
@@ -39,6 +40,12 @@ class ConfigTests(unittest.TestCase):
     def test_negative_ethics_allowed_rejected_for_v0(self):
         config = dict(BASE_CONFIG)
         config["negative_ethics_allowed"] = True
+        with self.assertRaises(ConfigError):
+            validate_config(config)
+
+    def test_support_channels_rejected_as_revenue(self):
+        config = dict(BASE_CONFIG)
+        config["baseline_revenue_channels"] = ["voluntary_donation"]
         with self.assertRaises(ConfigError):
             validate_config(config)
 
