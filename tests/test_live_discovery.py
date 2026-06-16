@@ -10,7 +10,20 @@ from agent.live_discovery import LiveDiscovery
 class FakeHttp:
     def get_json(self, url, headers=None, params=None):
         if "github" in url:
-            return {"ok": True, "status": 200, "data": {"total_count": 0, "items": []}}
+            return {
+                "ok": True,
+                "status": 200,
+                "data": {
+                    "total_count": 1,
+                    "items": [{
+                        "title": "Bounty: fix accessibility docs",
+                        "html_url": "https://github.com/example/repo/issues/1",
+                        "repository_url": "https://api.github.com/repos/example/repo",
+                        "labels": [{"name": "accessibility"}],
+                        "body": "Pays $50 after accepted work.",
+                    }],
+                },
+            }
         return {"ok": True, "status": 200, "data": {"count": 0, "results": []}}
 
     def post_form_json(self, url, headers=None, form=None):
@@ -34,6 +47,8 @@ CONFIG = {
     "openlaws_api_base_url": "https://openlaws.test",
     "openlaws_rate_limits": {"minute": {"max_requests": 10, "window_seconds": 60}},
     "github_live_queries": ["is:issue is:open label:documentation"],
+    "earned_income_live_queries": ["is:issue is:open bounty"],
+    "earned_income_candidate_limit": 5,
     "legal_precedent_queries": ["test legal query"],
     "live_discovery_query_limit": 1,
     "openai_assist_timeout_seconds": 1,
@@ -58,7 +73,9 @@ class LiveDiscoveryTests(unittest.TestCase):
             discovery.http = FakeHttp()
             snapshot = discovery.run()
             self.assertEqual(snapshot["mode"], "live-discovery")
+            self.assertEqual(snapshot["earned_income"]["candidate_count"], 1)
             self.assertTrue((root / "outputs" / "live_discovery_snapshot.json").exists())
+            self.assertTrue((root / "outputs" / "earned_income_runway.md").exists())
 
 
 if __name__ == "__main__":

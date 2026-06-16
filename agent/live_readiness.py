@@ -49,6 +49,14 @@ class LiveReadiness:
             "kill_switch": kill_status,
             "environment_capabilities": capabilities,
             "payment": payment_status,
+            "earned_income": {
+                "discovery_queries": len(self.config.get("earned_income_live_queries", [])),
+                "candidate_limit": int(self.config.get("earned_income_candidate_limit", 10)),
+                "receipt_validator_available": True,
+                "support_excluded_from_revenue": True,
+                "write_actions_enabled": bool(self.config.get("external_write_actions_allowed", False)),
+                "valid_revenue_channels": list(self.config.get("baseline_revenue_channels", [])),
+            },
             "rate_limit_state_path": str(self.root / self.config["rate_limit_state_path"]),
             "monitoring_state_path": str(self.root / self.config["monitoring_state_path"]),
             "external_write_boundary": (
@@ -70,6 +78,7 @@ def _render_readiness_report(readiness: Dict[str, Any]) -> str:
     warnings = _lines(readiness["warnings"])
     capabilities = _capability_lines(readiness["environment_capabilities"])
     payment = readiness["payment"]
+    earned_income = readiness["earned_income"]
     support_paths = _lines(
         f'{item["label"]}: {item["url"]}'
         for item in payment["valid_support_paths"]
@@ -101,6 +110,15 @@ def _render_readiness_report(readiness: Dict[str, Any]) -> str:
 - Revenue boundary: {payment["clean_revenue_boundary"]}
 - Support boundary: {payment["support_boundary"]}
 
+## Earned Income Readiness
+
+- Discovery queries: {earned_income["discovery_queries"]}
+- Candidate limit: {earned_income["candidate_limit"]}
+- Receipt validator available: {earned_income["receipt_validator_available"]}
+- Support excluded from revenue: {earned_income["support_excluded_from_revenue"]}
+- External write actions enabled: {earned_income["write_actions_enabled"]}
+- Valid revenue channels: {_inline(earned_income["valid_revenue_channels"])}
+
 ## Kill Switch
 
 - Path: `{readiness["kill_switch"]["path"]}`
@@ -130,3 +148,8 @@ def _capability_lines(capabilities) -> str:
         status = "configured" if item.get("configured") else "not configured"
         lines.append(f'- {item.get("name")}: {status} ({item.get("classification")})')
     return "\n".join(lines)
+
+
+def _inline(values) -> str:
+    values = list(values or [])
+    return "; ".join(str(value) for value in values) if values else "none"

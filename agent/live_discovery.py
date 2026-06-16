@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from .controls import KillSwitch, RateLimiter
+from .earned_income import EarnedIncomeRunway
 from .ethics_gate import EthicsGate
 from .ledger import JsonlLedger
 from .live_clients import CourtListenerClient, GitHubClient, LiveHttpClient, OpenLawsClient
@@ -50,10 +51,17 @@ class LiveDiscovery:
         if not ethics.allowed:
             raise RuntimeError(f"Ethics gate blocked live discovery: {ethics.reasons}")
 
+        github = self._discover_github()
+        earned_income = EarnedIncomeRunway(self.output_dir).build_from_github_results(
+            github,
+            candidate_limit=int(self.config.get("earned_income_candidate_limit", 10)),
+        )
+
         snapshot = {
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "mode": "live-discovery",
-            "github": self._discover_github(),
+            "github": github,
+            "earned_income": earned_income,
             "courtlistener": self._check_courtlistener(),
             "openlaws": self._check_openlaws(),
             "external_write_actions": "disabled",
@@ -65,6 +73,7 @@ class LiveDiscovery:
             "action": "live_discovery_snapshot_written",
             "path": str(path),
             "github_queries": len(snapshot["github"]),
+            "earned_income_candidates": earned_income["candidate_count"],
             "courtlistener_queries": len(snapshot["courtlistener"]),
             "openlaws_queries": len(snapshot["openlaws"]),
         })
@@ -77,7 +86,9 @@ class LiveDiscovery:
             http=self.http,
         )
         results = []
-        for query in self.config.get("github_live_queries", []):
+        queries = list(self.config.get("github_live_queries", []))
+        queries.extend(self.config.get("earned_income_live_queries", []))
+        for query in queries:
             allowed = self.rate_limiter.check("github", self.config["github_rate_limits"])
             if not allowed["allowed"]:
                 results.append({"query": query, "ok": False, "rate_limited": allowed})

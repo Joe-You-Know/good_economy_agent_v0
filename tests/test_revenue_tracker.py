@@ -13,6 +13,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "classification": "clean",
             "income_type": "earned_income",
             "value_exchange": True,
+            "evidence": ["accepted bounty receipt", "merged pull request"],
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -28,6 +29,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "classification": "clean",
             "income_type": "earned_income",
             "value_exchange": True,
+            "evidence": ["accepted bounty receipt"],
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -44,6 +46,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "classification": "clean",
             "income_type": "earned_income",
             "value_exchange": True,
+            "evidence": ["accepted bounty receipt"],
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -59,6 +62,7 @@ class RevenueTrackerTests(unittest.TestCase):
             "classification": "clean",
             "income_type": "donation",
             "value_exchange": False,
+            "evidence": ["support receipt"],
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
@@ -75,11 +79,46 @@ class RevenueTrackerTests(unittest.TestCase):
             "classification": "clean",
             "income_type": "earned_income",
             "value_exchange": False,
+            "evidence": ["support receipt"],
             "traceable": True,
             "consent_verified": True,
             "net_of_fees": True,
         })
         self.assertFalse(result["valid"])
+
+    def test_settlement_evidence_required(self):
+        tracker = RevenueTracker()
+        result = tracker.validate_revenue_event({
+            "amount_usd": 5.0,
+            "source": "public-good bounty",
+            "caused_by_action_id": "run:000001",
+            "classification": "clean",
+            "income_type": "earned_income",
+            "value_exchange": True,
+            "evidence": [],
+            "traceable": True,
+            "consent_verified": True,
+            "net_of_fees": True,
+        })
+        self.assertFalse(result["valid"])
+        self.assertIn("settlement evidence", result["reason"])
+
+    def test_template_placeholder_rejected(self):
+        tracker = RevenueTracker()
+        result = tracker.validate_revenue_event({
+            "amount_usd": 5.0,
+            "source": "TEMPLATE - replace with real payer",
+            "caused_by_action_id": "run:record-id-for-the-accepted-work",
+            "classification": "clean",
+            "income_type": "earned_income",
+            "value_exchange": True,
+            "evidence": ["URL or receipt proving payment"],
+            "traceable": True,
+            "consent_verified": True,
+            "net_of_fees": True,
+        })
+        self.assertFalse(result["valid"])
+        self.assertIn("template placeholders", result["reason"])
 
 
 if __name__ == "__main__":

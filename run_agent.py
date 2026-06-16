@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 from pathlib import Path
 
@@ -18,7 +19,7 @@ from agent.revenue_tracker import RevenueTracker
 from agent.wallet import ComputeWallet, EconomicWallet
 
 
-def run(config_path: Path, mode: str, reset_logs: bool = False):
+def run(config_path: Path, mode: str, reset_logs: bool = False, revenue_event_path: Path = None):
     root = Path(__file__).resolve().parent
     config_path = _resolve_path(root, config_path)
     config = load_json_config(config_path)
@@ -82,6 +83,15 @@ def run(config_path: Path, mode: str, reset_logs: bool = False):
             "environment_capabilities": environment_capabilities(),
         })
         return _run_env_report(root, output_dir, ledger)
+    if mode == "revenue-verify":
+        ledger.append("actions", {
+            "action": "run_started",
+            "mode": mode,
+            "experiment_name": config["experiment_name"],
+            "config_path": str(config_path),
+            "environment_capabilities": environment_capabilities(),
+        })
+        return _run_revenue_verify(root, output_dir, ledger, revenue_event_path)
 
     compute_wallet = ComputeWallet(
         starting_credit_usd=float(config["starting_compute_credit_usd"]),
@@ -412,6 +422,74 @@ def _run_env_report(root: Path, output_dir: Path, ledger: JsonlLedger):
     return report
 
 
+def _run_revenue_verify(root: Path, output_dir: Path, ledger: JsonlLedger, revenue_event_path: Path = None):
+    if revenue_event_path is None:
+        raise SystemExit("revenue-verify requires --revenue-event path/to/event.json")
+
+    event_path = _resolve_path(root, Path(revenue_event_path))
+    if not event_path.exists():
+        raise SystemExit(f"Revenue event file does not exist: {event_path}")
+
+    event = json.loads(event_path.read_text(encoding="utf-8"))
+    if not isinstance(event, dict):
+        raise SystemExit("Revenue event file must contain a JSON object.")
+
+    tracker = RevenueTracker()
+    result = tracker.validate_revenue_event(event)
+    ledger.append("revenue", result)
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    report_path = output_dir / "revenue_validation_report.md"
+    report_path.write_text(_render_revenue_validation_report(event_path, result), encoding="utf-8")
+    ledger.append("actions", {
+        "action": "revenue_event_validated",
+        "revenue_event_path": str(event_path),
+        "valid": result["valid"],
+        "reason": result["reason"],
+        "report_path": str(report_path),
+    })
+
+    print("Revenue verification complete.")
+    print(f"Valid earned revenue: {result['valid']}")
+    print(f"Reason: {result['reason']}")
+    print(f"Report: {report_path}")
+    return result
+
+
+def _render_revenue_validation_report(event_path: Path, result) -> str:
+    event = result.get("event", {})
+    evidence = event.get("evidence", [])
+    if isinstance(evidence, dict):
+        evidence_lines = "\n".join(f"- {key}: {value}" for key, value in evidence.items())
+    elif isinstance(evidence, list):
+        evidence_lines = "\n".join(f"- {item}" for item in evidence)
+    else:
+        evidence_lines = f"- {evidence}" if evidence else "- none"
+
+    return f"""# Earned Revenue Validation Report
+
+Event file: `{event_path}`
+
+## Result
+
+- Valid earned revenue: {result["valid"]}
+- Reason: {result["reason"]}
+- Amount: ${float(event.get("amount_usd", 0.0)):.2f}
+- Income type: {event.get("income_type", "")}
+- Classification: {event.get("classification", "")}
+- Source: {event.get("source", "")}
+- Caused by action id: {event.get("caused_by_action_id", "")}
+
+## Evidence
+
+{evidence_lines}
+
+## Boundary
+
+Donation, patronage, sponsorship, grant, and gift inflows are not revenue. A valid event must be earned income from a real value exchange, traceable, consented, net of fees, and tied to logged agent work.
+"""
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Good Economy Agent v0.")
     parser.add_argument("--config", default="config.json", help="Path to config JSON.")
@@ -427,10 +505,17 @@ if __name__ == "__main__":
             "env-bootstrap",
             "env-sync",
             "env-report",
+            "revenue-verify",
         ],
         help="Execution mode.",
     )
     parser.add_argument("--reset-logs", action="store_true", help="Clear known v0 ledgers before the run.")
+    parser.add_argument("--revenue-event", default="", help="Path to a JSON event for revenue-verify mode.")
     args = parser.parse_args()
 
-    run(Path(args.config), args.mode, reset_logs=args.reset_logs)
+    run(
+        Path(args.config),
+        args.mode,
+        reset_logs=args.reset_logs,
+        revenue_event_path=Path(args.revenue_event) if args.revenue_event else None,
+    )

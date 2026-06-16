@@ -11,5 +11,6 @@
   "expected_adaptive_gain": "improved capability or access",
   "expected_adaptive_cost": "small time cost for voluntary reader",
   "reversibility": "artifact can be corrected, updated, or withdrawn",
-  "ethics_self_score": 0.9
+  "ethics_self_score": 0.9,
+  "earned_income_boundary": "support inflows are not revenue"
 }

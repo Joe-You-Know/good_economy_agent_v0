@@ -6,6 +6,7 @@ Good Economy Agent v0 is live-capable for **read-only discovery**:
 
 - CourtListener case-law and citation checks,
 - GitHub issue search for public-good/documentation/accessibility opportunities,
+- earned-income runway generation from explicit bounty/paid-work/value-exchange signals,
 - configurable OpenLaws search,
 - local monitoring snapshots,
 - local rate-limit accounting,
@@ -69,6 +70,14 @@ SPONSORSHIP_URL
 ```
 
 It may disclose valid links in local artifacts as support only. It cannot charge a card, create an invoice, create a subscription, or treat a support link or configured payment-provider key as revenue.
+
+## Earned Income Integration
+
+`live-discovery` may produce a local earned-income runway from public issue
+search results. The runway is not permission to claim work, submit work, invoice,
+or collect payment. A settled event counts only after `revenue-verify` validates
+earned income, value exchange, consent, traceability, net-of-fees accounting, and
+settlement evidence.
 
 ## Kill Switch
 

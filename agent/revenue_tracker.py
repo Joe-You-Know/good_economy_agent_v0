@@ -37,6 +37,7 @@ class RevenueTracker:
             "classification",
             "income_type",
             "value_exchange",
+            "evidence",
             "traceable",
             "consent_verified",
             "net_of_fees",
@@ -62,8 +63,14 @@ class RevenueTracker:
         if income_type != "earned_income":
             return self._invalid(event, "Revenue must be earned income derived from labor, product, service, or capital.")
 
+        if _looks_placeholder(event.get("source")) or _looks_placeholder(event.get("caused_by_action_id")):
+            return self._invalid(event, "Revenue source and causal action id must be real, not template placeholders.")
+
         if not event.get("value_exchange", False):
             return self._invalid(event, "Revenue requires a value exchange, not patronage or goodwill support.")
+
+        if not _has_evidence(event.get("evidence")):
+            return self._invalid(event, "Revenue requires settlement evidence tied to the value exchange.")
 
         classification = event.get("classification")
         valid_classes = {"clean", "questionable", "tainted", "invalid"}
@@ -104,3 +111,34 @@ class RevenueTracker:
         }
         self.events.append(result)
         return result
+
+
+def _has_evidence(value: Any) -> bool:
+    if isinstance(value, list):
+        return any(_usable_evidence_item(item) for item in value)
+    if isinstance(value, dict):
+        return any(_usable_evidence_item(item) for item in value.values())
+    return _usable_evidence_item(value)
+
+
+def _usable_evidence_item(value: Any) -> bool:
+    text = str(value or "").strip()
+    return bool(text) and not _looks_placeholder(text)
+
+
+def _looks_placeholder(value: Any) -> bool:
+    text = str(value or "").strip().lower()
+    if not text:
+        return False
+    placeholder_markers = (
+        "replace",
+        "placeholder",
+        "template",
+        "example",
+        "url or",
+        "receipt proving",
+        "record-id",
+        "path/to",
+        "todo",
+    )
+    return any(marker in text for marker in placeholder_markers)

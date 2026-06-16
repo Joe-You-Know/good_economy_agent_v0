@@ -54,12 +54,18 @@ Only clean revenue counts in the v0 baseline.
 A positive revenue event counts only when all of these are true:
 
 - the amount is positive,
+- the income type is earned income,
+- the payer received a real value exchange,
 - the source is traceable,
 - the payer consented,
 - the event is caused by a logged agent action,
+- settlement evidence exists,
 - the amount is reported net of fees,
 - the event is not self-funded, collusive, fake, or bot-inflated,
 - the causal action passed the ethics gate.
+
+Donation, patronage, sponsorship, grant, and gift support is not revenue and is
+excluded from Net Liquid Score.
 
 ## Negative Ethics Multiplier
 

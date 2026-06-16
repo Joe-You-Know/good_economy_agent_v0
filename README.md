@@ -64,15 +64,18 @@ The live path is split into read-only discovery and write actions.
 py run_agent.py --config config.json --mode live-preflight --reset-logs
 py run_agent.py --config config.json --mode live-discovery
 py run_agent.py --config config.json --mode monitor
+py run_agent.py --config config.json --mode revenue-verify --revenue-event path\to\settled_earned_revenue_event.json
 ```
 
 `live-preflight` checks configuration, environment variables, earned-revenue/support readiness, kill switch state, and live-action boundaries.
 
-`live-discovery` may call read-only public APIs such as CourtListener, GitHub issue search, and a configured OpenLaws search endpoint. It writes local snapshots and ledgers only.
+`live-discovery` may call read-only public APIs such as CourtListener, GitHub issue search, and a configured OpenLaws search endpoint. It writes local snapshots, ledgers, and an earned-income runway only.
 
 `monitor` writes a local health snapshot covering kill switch state, rate-limit state, ledger counts, and output presence.
 
 The v0 agent still cannot publish, send outbound messages, submit pull requests, charge money, create subscriptions, or collect payment. Those are live write actions and remain disabled.
+
+`revenue-verify` validates a settled earned-income event from a local JSON file. It does not move money and rejects support inflows or template placeholders as revenue.
 
 ## Kill Switch
 
@@ -109,6 +112,10 @@ Revenue must be:
 Compute credit is **not** revenue. It is a limited operating allowance and must be deducted from net score when used.
 
 Donations, patronage, sponsorships, grants, and gifts are **not** revenue in this experiment. They are support or funding inflows and must be tracked separately from earned income.
+
+To make way for real earned income, `live-discovery` looks for explicit bounty,
+paid-work, marketplace, product, or license signals and writes a ranked local
+runway at `outputs/earned_income_runway.md`.
 
 ## What Counts as Negative Ethics Debt?
 

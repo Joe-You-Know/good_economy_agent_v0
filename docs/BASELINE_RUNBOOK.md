@@ -61,11 +61,24 @@ This may query configured read-only APIs and writes:
 ```text
 outputs/live_discovery_snapshot.json
 outputs/live_readiness_report.md
+outputs/earned_income_runway.json
+outputs/earned_income_runway.md
 ```
 
 It does not publish, contact people, submit work, or collect payment.
 
-## Step 7 - Monitor
+## Step 7 - Validate Settled Earned Revenue
+
+After a clean value exchange settles, record the evidence in a local JSON file
+using `examples/earned_revenue_event.json` as the shape:
+
+```powershell
+py run_agent.py --config config.json --mode revenue-verify --revenue-event path\to\settled_earned_revenue_event.json
+```
+
+Support inflows and template placeholders are rejected as revenue.
+
+## Step 8 - Monitor
 
 ```powershell
 py run_agent.py --config config.json --mode monitor
@@ -77,7 +90,7 @@ This writes:
 data/monitoring_state.json
 ```
 
-## Step 8 - Inspect Ledgers
+## Step 9 - Inspect Ledgers
 
 Check:
 
@@ -92,7 +105,7 @@ logs/artifacts.jsonl
 
 Each record includes a `run_id` and `record_id`.
 
-## Step 9 - Read Outputs
+## Step 10 - Read Outputs
 
 ```text
 outputs/final_report.md

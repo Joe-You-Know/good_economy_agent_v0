@@ -161,6 +161,17 @@ def validate_config(config: Dict[str, Any]) -> Dict[str, Any]:
         ],
     )
     validated.setdefault(
+        "earned_income_live_queries",
+        [
+            "is:issue is:open bounty label:accessibility",
+            "is:issue is:open bounty label:documentation",
+            "is:issue is:open bounty label:\"good first issue\"",
+            "is:issue is:open reward accessibility",
+            "is:issue is:open reward documentation",
+        ],
+    )
+    validated.setdefault("earned_income_candidate_limit", 10)
+    validated.setdefault(
         "legal_precedent_queries",
         [
             "AI generated legal information disclaimer unauthorized practice of law",

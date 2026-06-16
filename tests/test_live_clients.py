@@ -60,6 +60,7 @@ class LiveClientsTests(unittest.TestCase):
                     "repository_url": "https://api.github.com/repos/example/repo",
                     "state": "open",
                     "labels": [{"name": "documentation"}],
+                    "body": "Bounty: $50 for a clean docs fix.",
                 }],
             },
         })
@@ -67,6 +68,7 @@ class LiveClientsTests(unittest.TestCase):
         result = client.search_issues("label:documentation", limit=1)
         self.assertTrue(result["ok"])
         self.assertEqual(result["results"][0]["labels"], ["documentation"])
+        self.assertIn("Bounty", result["results"][0]["body_excerpt"])
 
     def test_openlaws_missing_base_url_not_configured(self):
         client = OpenLawsClient("", token="")
