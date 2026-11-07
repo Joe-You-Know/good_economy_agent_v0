@@ -1,0 +1,62 @@
+name: Economy Agent - safe audit
+
+on:
+  pull_request:
+    paths:
+      - "agent/**"
+      - "tests/**"
+      - "run_agent.py"
+      - "config.json"
+      - ".github/workflows/economy-safe-audit.yml"
+  workflow_dispatch:
+    inputs:
+      run_read_only_discovery:
+        description: "Query public APIs and save a candidate report (never submit work or charge money)"
+        type: boolean
+        default: false
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: economy-safe-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests (offline, standard library)
+        run: python -m unittest discover -s tests -v
+      - name: Local baseline (no model API, no external writes)
+        run: python run_agent.py --config config.json --mode dry-run --reset-logs
+      - name: Optional read-only candidate discovery
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_read_only_discovery == true }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python run_agent.py --config config.json --mode live-discovery
+      - name: Save reports for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: economy-audit-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            outputs/
+            logs/
+            data/monitoring_state.json
+
+# No external write actions, payments, publication, deployment, API keys,
+# or schedules are enabled here. A manual read-only scan is opt-in.
