@@ -1,0 +1,61 @@
+[
+  {
+    "course_id": "claude_code_safety_hooks",
+    "title": "Claude Code Safety Hooks: Block Destructive Bash Commands Before They Execute",
+    "micro_problem": "AI coding agents can accidentally execute destructive shell commands unless a pre-execution hook blocks obvious high-risk patterns.",
+    "before_state": "The learner uses AI coding tools without a local safety hook for destructive Bash commands.",
+    "after_state": "The learner can install, test, and reason about a local PreToolUse-style Bash safety hook that blocks destructive patterns and logs attempts.",
+    "audience": "Developers and AI-assisted coders who use terminal-capable coding agents.",
+    "category": "education_product",
+    "revenue_mechanism": "beta_course",
+    "suggested_beta_price_usd": 49,
+    "future_price_ceiling_without_more_proof_usd": 97,
+    "problem_specificity": 0.94,
+    "learner_benefit": 0.9,
+    "public_good_safety_value": 0.92,
+    "build_feasibility": 0.88,
+    "evidence_basis": 0.82,
+    "revenue_feasibility": 0.55,
+    "negative_ethics_risk": 0.03,
+    "unsupported_claim_risk": 0.04,
+    "audience_dependency": 0.35,
+    "forbidden_claims": [
+      "This guarantees safety.",
+      "This prevents all destructive commands.",
+      "This will make you money.",
+      "This is official Claude documentation.",
+      "Students achieved results before any students exist."
+    ],
+    "positive_ethics_claim": "Teaches practical defensive tooling that can reduce accidental destructive command execution and improve developer agency.",
+    "revenue_path": "Free lesson first, optional paid beta course only for opt-in buyers, with clear limitations and refund policy."
+  },
+  {
+    "course_id": "zero_negative_ethics_agent_baseline",
+    "title": "Build a Zero-Negative-Ethics AI Agent Baseline",
+    "micro_problem": "People want autonomous agents but lack a practical ledger-first safety scaffold for experiments.",
+    "before_state": "The learner has an agent idea but no clean method for cost, ethics, action, and revenue ledgers.",
+    "after_state": "The learner can scaffold a local dry-run agent with separated positive/negative ethics and cost tracking.",
+    "audience": "AI builders, researchers, and indie developers.",
+    "category": "education_product",
+    "revenue_mechanism": "micro_product",
+    "suggested_beta_price_usd": 27,
+    "future_price_ceiling_without_more_proof_usd": 97,
+    "problem_specificity": 0.88,
+    "learner_benefit": 0.86,
+    "public_good_safety_value": 0.9,
+    "build_feasibility": 0.82,
+    "evidence_basis": 0.72,
+    "revenue_feasibility": 0.5,
+    "negative_ethics_risk": 0.04,
+    "unsupported_claim_risk": 0.05,
+    "audience_dependency": 0.45,
+    "forbidden_claims": [
+      "This makes your agent legally safe.",
+      "This guarantees ethical behavior.",
+      "This is legal advice.",
+      "This will make your agent profitable."
+    ],
+    "positive_ethics_claim": "Helps builders measure and constrain autonomous systems before external deployment.",
+    "revenue_path": "Free scaffold explanation first, optional paid templates or workshop only for opt-in buyers."
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "starting_economic_cash_usd": 0.0,
+  "starting_compute_credit_usd": 10.05,
+  "negative_ethics_allowed": false,
+  "external_actions_allowed": false,
+  "cold_outreach_allowed": false,
+  "testimonials_allowed_without_real_student_use": false,
+  "fake_urgency_allowed": false,
+  "earnings_claims_allowed": false,
+  "default_refund_window_days": 14,
+  "course_price_ladder_usd": {
+    "free_sample": 0,
+    "micro_product": 17,
+    "beta_course_low": 49,
+    "beta_course_target": 97,
+    "premium_course_future_only_after_proof": 197
+  },
+  "course_lane_weights": {
+    "problem_specificity": 1.0,
+    "learner_benefit": 1.25,
+    "public_good_safety_value": 1.25,
+    "build_feasibility": 1.0,
+    "evidence_basis": 1.0,
+    "revenue_feasibility": 0.75,
+    "negative_ethics_risk": 3.0,
+    "unsupported_claim_risk": 2.5,
+    "audience_dependency": 1.5
+  }
+}

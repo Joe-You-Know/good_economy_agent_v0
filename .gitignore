@@ -13,9 +13,16 @@ data/continuous_agent.stop
 data/blocked_earned_income_targets.json
 outputs/approval_requests/
 outputs/asset_work/
+outputs/bounty_submissions/
+outputs/course_bundle/
+outputs/course_product_upload/
+outputs/cycle_reports/
 outputs/listing_payment_setup/
+outputs/udemy_course_package/
 outputs/*.md
 outputs/*.json
 outputs/work_packages/
 outputs/public_artifact/
 workspaces/
+tools/jdk-25/
+tools/temurin-jdk25.zip

@@ -70,6 +70,32 @@ py run_agent.py --config config.json --mode monitor
 py run_agent.py --config config.json --mode revenue-verify --revenue-event path\to\settled_earned_revenue_event.json
 ```
 
+Course-building is a separate local-only lane for turning verified public-good
+knowledge into an opt-in education product:
+
+```powershell
+py build_course_lane.py --config config.course_lane.json
+```
+
+The course lane generates `outputs/course_bundle/` with a free lesson, beta
+course page draft, curriculum, worksheets, refund/testimonial policy, ethics
+review, and revenue path. It does not publish, message, collect payment, create
+testimonials, use fake urgency, or count revenue. Course income counts only
+after an external opt-in buyer pays for truthful delivered course value and all
+fees/costs are deducted.
+
+To prepare the same course for a Udemy-style marketplace course submission:
+
+```powershell
+py build_udemy_package.py --config config.udemy_lane.json
+```
+
+The Udemy lane generates `outputs/udemy_course_package/` with a submission
+checklist, landing-page copy, curriculum/video plan, lecture scripts,
+assignments, quizzes, AI/ethics disclosure, recording plan, and publish
+instructions. It does not upload videos, submit to Udemy, publish, collect
+payment, invent testimonials, create urgency, or count revenue.
+
 `live-preflight` checks configuration, environment variables, earned-revenue/support readiness, kill switch state, and live-action boundaries.
 
 `live-discovery` may call read-only public APIs such as CourtListener, GitHub issue search, and a configured OpenLaws search endpoint. It writes local snapshots, ledgers, and an earned-income runway only.
