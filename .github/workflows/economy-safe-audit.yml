@@ -5,8 +5,16 @@ on:
     paths:
       - "agent/**"
       - "tests/**"
+      - "tools/**"
+      - "data/**"
+      - "docs/**"
+      - "AGENTS.md"
+      - "README*.md"
       - "run_agent.py"
-      - "config.json"
+      - "build_*.py"
+      - "config*.json"
+      - "METHODOLOGY.md"
+      - "requirements.txt"
       - ".github/workflows/economy-safe-audit.yml"
   workflow_dispatch:
     inputs:
@@ -25,7 +33,11 @@ concurrency:
 
 jobs:
   audit:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 12
     env:
       PYTHONDONTWRITEBYTECODE: "1"
@@ -41,8 +53,10 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Local baseline (no model API, no external writes)
         run: python run_agent.py --config config.json --mode dry-run --reset-logs
+      - name: Self-contained research smoke test
+        run: python -m tools.observable_ecc_bench --outdir outputs/research_smoke
       - name: Optional read-only candidate discovery
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_read_only_discovery == true }}
+        if: ${{ runner.os == 'Linux' && github.event_name == 'workflow_dispatch' && inputs.run_read_only_discovery == true }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python run_agent.py --config config.json --mode live-discovery
@@ -50,7 +64,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: economy-audit-${{ github.run_id }}
+          name: economy-audit-${{ matrix.os }}-${{ github.run_id }}
           if-no-files-found: warn
           retention-days: 14
           path: |

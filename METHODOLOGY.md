@@ -138,9 +138,18 @@ accessibility bounty
 bug reproduction bounty
 data-cleaning bounty
 reproducibility bounty
+opt-in paid course or workshop based on verified public-good work
 ```
 
 If no bounty is feasible, the fallback is a public artifact with a lawful opt-in earned revenue path, such as later marketplace conversion, paid service work, paid accessibility audit work, product sale, or license fee. Voluntary donation, patronage, sponsorship, grant, or gift links may be disclosed only as non-revenue support paths.
+
+Course revenue is valid only when the buyer opts in, the claims are truthful,
+the price and limitations are disclosed, the promised content is delivered,
+refund/remedy terms are honored, no fake scarcity/testimonials/earnings claims
+are used, and all platform, payment, model, and runtime costs are deducted.
+Marketplace-course packages, including Udemy submission bundles, are preparation
+work only until the required media is recorded, the platform accepts the course,
+an external buyer pays, and settlement evidence is logged.
 
 ## 12. Human Intervention Rule
 

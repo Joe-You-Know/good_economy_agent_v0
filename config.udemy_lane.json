@@ -1,0 +1,22 @@
+{
+  "negative_ethics_allowed": false,
+  "external_actions_allowed": false,
+  "publish_to_udemy_allowed": false,
+  "fake_urgency_allowed": false,
+  "fake_testimonials_allowed": false,
+  "earnings_claims_allowed": false,
+  "unsupported_safety_guarantees_allowed": false,
+  "ai_use_disclosure_required": true,
+  "minimum_video_minutes": 30,
+  "minimum_lecture_count": 5,
+  "minimum_description_words": 200,
+  "required_video_quality": "HD 720p or 1080p",
+  "required_audio_quality": "clear stereo or dual-channel audio synced to video",
+  "suggested_udemy_base_price_usd": 49.99,
+  "payhip_beta_url": "https://payhip.com/b/pFYwh",
+  "official_reference_urls": [
+    "https://support.udemy.com/hc/en-us/articles/229604988-Udemy-Course-Quality-Checklist",
+    "https://support.udemy.com/hc/en-us/articles/229605008-Instructor-revenue-share",
+    "https://support.udemy.com/hc/en-us/articles/30999984483607-Course-Quality-Checklist-Use-of-AI"
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "course_id": "claude_code_safety_hooks_udemy_v1",
+  "title": "Claude Code Safety Hooks: Block Destructive Commands Before They Execute",
+  "subtitle": "Build and test a local defensive workflow for reviewing high-risk shell commands proposed by AI coding agents.",
+  "category": "Development",
+  "subcategory": "Software Development Tools",
+  "level": "Beginner to intermediate",
+  "language": "English",
+  "base_price_usd": 49.99,
+  "source_payhip_beta_url": "https://payhip.com/b/pFYwh",
+  "ai_disclosure": "AI tools were used to help draft and organize parts of this course package. The instructor is responsible for reviewing, recording, testing, correcting, and presenting the final course content. AI support does not replace instructor expertise or learner judgment.",
+  "official_disclaimer": "This independent course is not official Claude, Anthropic, Payhip, or Udemy documentation. It is not sponsored by or endorsed by Anthropic. It is not legal, financial, security, or professional advice.",
+  "safety_disclaimer": "This course does not guarantee safety or prevent every destructive command. It teaches a defensive pattern that can reduce some obvious risks. Learners remain responsible for their systems, backups, tools, credentials, command execution choices, and organization policies.",
+  "testimonial_disclaimer": "There are no student testimonials yet because this is a beta-derived first marketplace course package.",
+  "description": "AI-assisted coding tools can be useful, but terminal-capable workflows create a practical risk: a proposed shell command can delete files, rewrite history, damage data, or otherwise create work that is difficult to recover from. This course teaches a local defensive pattern for identifying, blocking, logging, and reviewing obvious high-risk shell-command patterns before execution. You will learn how to reason about destructive command families, design conservative review rules, test the rules in a disposable workspace, and adapt the pattern to your own workflow without claiming that any hook can make command execution perfectly safe. The course is intentionally narrow. It focuses on practical pre-execution review around shell commands, with examples such as recursive force deletion, destructive SQL, forced Git history rewrites, broad deletion, and risky filesystem operations. You will build a small policy mindset rather than memorize a universal list of forbidden strings. The course includes scripts, screen-recording plans, worksheets, quizzes, and a capstone exercise for creating your own command-risk inventory. By the end, you should be able to write a simple command-risk table, decide which actions should block or require review, test that decision in a disposable folder, and explain the limitation of your workflow in plain language. The emphasis is on reducing obvious accidental harm, improving pause points, and making review evidence visible before state-changing commands run. This independent course is not official Claude or Anthropic documentation and does not provide legal, security, financial, or professional advice.",
+  "what_you_will_learn": [
+    "Explain why terminal-capable AI coding workflows need local pre-execution review boundaries.",
+    "Identify common destructive command families and the evidence needed before allowing them.",
+    "Design conservative review rules for high-risk Bash and SQL-like command patterns.",
+    "Test a command-safety hook in a disposable local workspace before using it near real projects.",
+    "Log blocked attempts and use that evidence to improve policy without overclaiming safety.",
+    "Write a plain-language limitation statement for your own defensive workflow."
+  ],
+  "requirements": [
+    "Basic comfort using a terminal.",
+    "Basic familiarity with Git and shell commands.",
+    "A local machine or disposable development environment for practice.",
+    "No prior security-engineering background is required."
+  ],
+  "intended_learners": [
+    "Developers using terminal-capable AI coding agents.",
+    "Technical learners who want practical guardrails before allowing generated shell commands.",
+    "Indie hackers, researchers, and tool builders who want a local safety review workflow.",
+    "Team leads evaluating lightweight defensive practices for AI-assisted coding experiments."
+  ],
+  "not_for": [
+    "Learners seeking a certified security course.",
+    "Learners expecting a guarantee that destructive commands can always be prevented.",
+    "Learners seeking official Claude or Anthropic documentation.",
+    "Learners seeking legal, compliance, financial, or professional advice."
+  ],
+  "lectures": [
+    {
+      "number": 1,
+      "title": "The Risk Model: Why Pre-Execution Review Matters",
+      "estimated_minutes": 5,
+      "objective": "Learner can describe the risk created when AI-assisted tools can suggest or run shell commands.",
+      "screen_plan": "Show a blank terminal, a harmless project folder, and a short command-risk map. Do not run destructive commands.",
+      "script_points": [
+        "Welcome learners and define the course boundary.",
+        "Explain that the course teaches a local defensive pattern, not a safety guarantee.",
+        "Introduce command execution as a high-agency boundary: filesystem, Git history, databases, and deployment state.",
+        "Define pre-execution review as a pause point before a high-risk command changes state.",
+        "Preview the command families covered in later lectures."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Command Families Worth Blocking or Reviewing",
+      "estimated_minutes": 7,
+      "objective": "Learner can recognize several families of commands that deserve blocking, review, or extra evidence.",
+      "screen_plan": "Use a worksheet table. Fill in risk, evidence, and review action for each command family.",
+      "script_points": [
+        "Start with recursive force deletion and explain why scope matters.",
+        "Cover destructive SQL such as DROP, TRUNCATE, and DELETE without a WHERE clause.",
+        "Cover forced Git history rewrites and why remote branch context matters.",
+        "Cover broad filesystem moves, credential exposure, and production-looking commands.",
+        "Explain that pattern matching is conservative and context-sensitive, not perfect."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Designing a Conservative Hook Policy",
+      "estimated_minutes": 8,
+      "objective": "Learner can write a simple policy table for block, review, and allow decisions.",
+      "screen_plan": "Create a policy table with columns for pattern, reason, default action, allowed exception, and test case.",
+      "script_points": [
+        "Explain policy before code: decide what should happen before implementing a hook.",
+        "Define block, review, and allow outcomes.",
+        "Show how to avoid overbroad matching that blocks harmless commands unnecessarily.",
+        "Add explicit exception notes rather than silently bypassing risky patterns.",
+        "Connect every rule to a test case learners can run in a disposable folder."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Testing the Hook in a Disposable Workspace",
+      "estimated_minutes": 8,
+      "objective": "Learner can test command-review behavior without risking real project files.",
+      "screen_plan": "Create a disposable folder, run harmless commands, simulate blocked command strings without executing destructive actions, and inspect logs.",
+      "script_points": [
+        "Create a temporary test workspace and state why disposable context matters.",
+        "Run allow-list examples such as git status and simple directory listing.",
+        "Simulate high-risk command strings as dry-run inputs instead of executing them.",
+        "Show the expected block or review result.",
+        "Inspect a local log and verify the log avoids secrets and private data."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Logging, Review, and Iteration Without Overclaiming",
+      "estimated_minutes": 7,
+      "objective": "Learner can use logs to improve policy while preserving privacy and limitation statements.",
+      "screen_plan": "Review a sample blocked-command log and improve one rule based on false positive/false negative analysis.",
+      "script_points": [
+        "Explain why logs are for learning and review, not surveillance.",
+        "Show a minimal log format: timestamp, command family, decision, and reason.",
+        "Identify private data that should not be logged.",
+        "Walk through a false positive and how to narrow the rule.",
+        "Write a limitation statement that avoids guarantees."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Capstone: Build Your Own Command-Risk Inventory",
+      "estimated_minutes": 6,
+      "objective": "Learner can create a personal command-risk inventory and a short adoption checklist.",
+      "screen_plan": "Complete the worksheet using a sample developer workflow, then show next-step review checklist.",
+      "script_points": [
+        "Ask learners to list commands that could damage their own workflow.",
+        "Map each command to a review action and required evidence.",
+        "Choose three test cases to run in a disposable workspace.",
+        "Add a privacy note for logs and support questions.",
+        "Close with the course boundary: defensive pattern, not a guarantee."
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "title": "Command Risk Recognition",
+      "questions": [
+        {
+          "prompt": "Which command family usually deserves blocking or manual review before execution?",
+          "choices": ["Recursive force deletion", "Printing the current directory", "Listing files in the current folder", "Checking Git status"],
+          "answer": "Recursive force deletion"
+        },
+        {
+          "prompt": "Why should destructive command examples be simulated during practice?",
+          "choices": ["To reduce the chance of damaging real files or systems", "To make the course shorter", "To avoid writing policies", "To guarantee security"],
+          "answer": "To reduce the chance of damaging real files or systems"
+        }
+      ]
+    }
+  ],
+  "assignments": [
+    {
+      "title": "Create Your Command-Risk Inventory",
+      "instructions": "List five commands or command families that would be risky in your own workflow. For each one, describe why it is risky, what evidence should be required before it runs, and whether your default action should be block, review, or allow."
+    },
+    {
+      "title": "Write a Limitation Statement",
+      "instructions": "Write a plain-language limitation statement for your command-safety workflow. It must avoid guarantees, explain learner responsibility, and identify what the hook does not cover."
+    }
+  ],
+  "forbidden_claims": [
+    "This guarantees safety.",
+    "This prevents every destructive command.",
+    "This course is official Claude documentation.",
+    "This course is endorsed by Anthropic.",
+    "This course will make you money.",
+    "Students achieved results before actual students exist."
+  ]
+}
