@@ -65,6 +65,15 @@
     "is:issue is:open \"bounty\" \"accepted pull request\" accessibility"
   ],
   "earned_income_candidate_limit": 10,
+  "asset_income_source_paths": [
+    "C:\\ConstructiveRT",
+    "C:\\Users\\josep\\OneDrive\\Documents\\Causal Impedance Model\\papers\\pdf"
+  ],
+  "asset_income_max_items_per_source": 80,
+  "trading_policy": {
+    "paper_trading_allowed": true,
+    "real_money_trading_allowed": false
+  },
   "legal_precedent_queries": [
     "AI generated legal information disclaimer unauthorized practice of law",
     "charitable solicitation donation platform disclosure online",

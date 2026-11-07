@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 from agent.artifact_builder import ArtifactBuilder
+from agent.asset_income import AssetIncomeRunway, AssetWorkRunner
 from agent.config import environment_capabilities, load_env_file, load_json_config, public_support_links
 from agent.env_manager import EnvManager
 from agent.ethics_gate import EthicsGate
@@ -103,6 +104,24 @@ def run(config_path: Path, mode: str, reset_logs: bool = False, revenue_event_pa
             "environment_capabilities": environment_capabilities(),
         })
         return _run_supervised_work(root, config, ledger)
+    if mode == "asset-discovery":
+        ledger.append("actions", {
+            "action": "run_started",
+            "mode": mode,
+            "experiment_name": config["experiment_name"],
+            "config_path": str(config_path),
+            "environment_capabilities": environment_capabilities(),
+        })
+        return _run_asset_discovery(root, config, ledger)
+    if mode == "asset-work":
+        ledger.append("actions", {
+            "action": "run_started",
+            "mode": mode,
+            "experiment_name": config["experiment_name"],
+            "config_path": str(config_path),
+            "environment_capabilities": environment_capabilities(),
+        })
+        return _run_asset_work(root, config, ledger)
 
     compute_wallet = ComputeWallet(
         starting_credit_usd=float(config["starting_compute_credit_usd"]),
@@ -483,6 +502,25 @@ def _run_supervised_work(root: Path, config, ledger: JsonlLedger):
     return decision
 
 
+def _run_asset_discovery(root: Path, config, ledger: JsonlLedger):
+    report = AssetIncomeRunway(root, config, ledger).run()
+    print("Asset income discovery complete.")
+    print(f"Candidates: {report['candidate_count']}")
+    print(f"Report: {root / 'outputs' / 'asset_income_runway.md'}")
+    return report
+
+
+def _run_asset_work(root: Path, config, ledger: JsonlLedger):
+    decision = AssetWorkRunner(root, config, ledger).run()
+    print("Asset work decision complete.")
+    print(f"Status: {decision['status']}")
+    selected = decision.get("selected_candidate") or {}
+    if selected:
+        print(f"Selected: {selected.get('title')}")
+    print(f"Decision: {root / 'outputs' / 'asset_work_decision.md'}")
+    return decision
+
+
 def _render_revenue_validation_report(event_path: Path, result, income_destination) -> str:
     event = result.get("event", {})
     evidence = event.get("evidence", [])
@@ -536,6 +574,8 @@ if __name__ == "__main__":
             "env-report",
             "revenue-verify",
             "supervised-work",
+            "asset-discovery",
+            "asset-work",
         ],
         help="Execution mode.",
     )

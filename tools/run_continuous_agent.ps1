@@ -191,7 +191,7 @@ try {
         Write-AgentLog "Cycle $cycle started."
         Write-AgentStatus -State "running" -Message "Cycle $cycle started." -Cycle $cycle
 
-        $modes = @("live-preflight", "monitor")
+        $modes = @("live-preflight", "monitor", "asset-discovery", "asset-work")
         if (!(Test-Path $KillSwitchPath)) {
             $modes += @("live-discovery", "supervised-work")
         } else {
