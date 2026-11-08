@@ -1,0 +1,35 @@
+name: Constructive Runtime Native v0.22 Windows UCRT64 independent
+on:
+  pull_request:
+    branches: ['main']
+  push:
+    branches: ['experiments/constructive-runtime-native-v022-ci']
+jobs:
+  windows-ucrt64:
+    runs-on: windows-2025
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract exact source snapshot
+        shell: pwsh
+        run: |
+          Expand-Archive -LiteralPath "ci/constructive_runtime_native_v0_22_source.zip" -DestinationPath "native-src"
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-openssl
+            mingw-w64-ucrt-x86_64-sqlite3
+            mingw-w64-ucrt-x86_64-curl
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-python
+      - name: Build Windows-native C++ executable and test
+        shell: msys2 {0}
+        run: |
+          cmake -S native-src/constructive_runtime_native_v0_22 -B native-ucrt -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON
+          cmake --build native-ucrt --parallel 4
+          ctest --test-dir native-ucrt --output-on-failure
