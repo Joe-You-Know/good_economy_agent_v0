@@ -1,0 +1,52 @@
+name: Constructive Runtime Native v0.22 isolated CI
+on:
+  push:
+    branches: ['experiments/constructive-runtime-native-v022-ci']
+  workflow_dispatch:
+jobs:
+  windows-native:
+    name: Windows x64 MSVC native binaries and adversarial tests
+    runs-on: windows-2025
+    timeout-minutes: 85
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Extract verified C++20 source snapshot
+        shell: pwsh
+        run: |
+          Expand-Archive -LiteralPath "ci/constructive_runtime_native_v0_22_source.zip" -DestinationPath "native-src"
+          if (!(Test-Path "native-src/constructive_runtime_native_v0_22/CMakeLists.txt")) { throw "source missing" }
+      - name: Bootstrap vcpkg for OpenSSL SQLite libcurl
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/microsoft/vcpkg "$env:RUNNER_TEMP\vcpkg"
+          & "$env:RUNNER_TEMP\vcpkg\bootstrap-vcpkg.bat" -disableMetrics
+      - name: Configure native project
+        shell: pwsh
+        run: |
+          cmake -S "native-src/constructive_runtime_native_v0_22" -B native-build -G "Visual Studio 17 2022" -A x64 `
+            -DCMAKE_TOOLCHAIN_FILE="$env:RUNNER_TEMP/vcpkg/scripts/buildsystems/vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET=x64-windows-static -DBUILD_TESTING=ON
+      - name: Compile
+        shell: pwsh
+        run: cmake --build native-build --config Release --parallel 4
+      - name: Run actual Windows-native tests
+        shell: pwsh
+        run: ctest --test-dir native-build -C Release --output-on-failure
+  linux:
+    name: Linux x64 GCC after Windows success
+    needs: windows-native
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev libsqlite3-dev libcurl4-openssl-dev pkg-config
+      - run: |
+          unzip -q ci/constructive_runtime_native_v0_22_source.zip -d native-src
+          cmake -S native-src/constructive_runtime_native_v0_22 -B native-build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON
+          cmake --build native-build --parallel 4
+          ctest --test-dir native-build --output-on-failure
