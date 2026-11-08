@@ -12,7 +12,7 @@ permissions:
 jobs:
   windows:
     name: Windows MSVC x64 - native v0.22 three-suite tests
-    runs-on: windows-2022
+    runs-on: windows-latest
     timeout-minutes: 70
     steps:
       - uses: actions/checkout@v4
@@ -44,7 +44,9 @@ jobs:
       - name: Configure MSVC C++20 with static native dependencies
         shell: pwsh
         run: |
-          cmake -S "$env:CR_NATIVE_SOURCE" -B "$env:CR_NATIVE_BUILD" -G "Visual Studio 17 2022" -A x64 "-DCMAKE_TOOLCHAIN_FILE=$env:CR_VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows-static -DBUILD_TESTING=ON
+          $generator = if ((cmake --help | Out-String) -match 'Visual Studio 18 2026') { 'Visual Studio 18 2026' } else { 'Visual Studio 17 2022' }
+          Write-Host "CMake generator: $generator"
+          cmake -S "$env:CR_NATIVE_SOURCE" -B "$env:CR_NATIVE_BUILD" -G "$generator" -A x64 "-DCMAKE_TOOLCHAIN_FILE=$env:CR_VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows-static -DBUILD_TESTING=ON
           if ($LASTEXITCODE -ne 0) { throw 'configuration failed' }
       - name: Compile native engine
         shell: pwsh
