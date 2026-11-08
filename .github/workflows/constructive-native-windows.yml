@@ -1,0 +1,62 @@
+name: Constructive Runtime Native Windows-first CI
+on:
+  push:
+    branches: [experiments/constructive-runtime-native-v022]
+    paths:
+      - 'experiments/constructive_runtime_native/**'
+      - '.github/workflows/constructive-native-windows.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    name: Windows x64 MSVC / verified native core
+    runs-on: windows-2025
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Materialize pinned source package
+        shell: pwsh
+        run: |
+          $raw = (Get-Content -Raw 'experiments/constructive_runtime_native/v021_source.b64').Trim()
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\crnative.zip", [Convert]::FromBase64String($raw))
+          Expand-Archive "$env:RUNNER_TEMP\crnative.zip" -DestinationPath "$env:RUNNER_TEMP\native" -Force
+          $src = "$env:RUNNER_TEMP\native\constructive_runtime_native_v0_21"
+          $expected = "ef1fabd356f34b21216c0189bf694538c4f208714b7f23fe56510d82e2af6034"
+          if ((Get-FileHash "$env:RUNNER_TEMP\crnative.zip" -Algorithm SHA256).Hash.ToLower() -ne $expected) { throw "source checksum mismatch" }
+          Write-Output "SOURCE=$src" >> $env:GITHUB_ENV
+      - name: Bootstrap vcpkg
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/microsoft/vcpkg "$env:RUNNER_TEMP\vcpkg"
+          & "$env:RUNNER_TEMP\vcpkg\bootstrap-vcpkg.bat" -disableMetrics
+      - name: Configure and compile with MSVC
+        shell: pwsh
+        run: |
+          cmake -S "$env:SOURCE" -B "$env:RUNNER_TEMP\crnative-build" -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:RUNNER_TEMP\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows-static -DBUILD_TESTING=ON
+          cmake --build "$env:RUNNER_TEMP\crnative-build" --config Release --parallel 4
+      - name: Run full native tests
+        shell: pwsh
+        run: ctest --test-dir "$env:RUNNER_TEMP\crnative-build" -C Release --output-on-failure
+  linux:
+    name: Linux GCC / same source archive
+    needs: windows
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore and check source
+        run: |
+          base64 -d experiments/constructive_runtime_native/v021_source.b64 > /tmp/crnative.zip
+          echo "ef1fabd356f34b21216c0189bf694538c4f208714b7f23fe56510d82e2af6034  /tmp/crnative.zip" | sha256sum -c -
+          unzip -q /tmp/crnative.zip -d /tmp/native
+      - name: Install native dependencies
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev libsqlite3-dev
+      - name: Configure, build and test
+        run: |
+          cmake -S /tmp/native/constructive_runtime_native_v0_21 -B /tmp/build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON
+          cmake --build /tmp/build --parallel 4
+          ctest --test-dir /tmp/build --output-on-failure
