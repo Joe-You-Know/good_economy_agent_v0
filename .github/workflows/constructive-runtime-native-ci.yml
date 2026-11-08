@@ -3,6 +3,8 @@ on:
   push:
     branches: ['experiments/constructive-runtime-native-v022-ci']
   workflow_dispatch:
+  pull_request:
+    branches: ['main']
 jobs:
   windows-native:
     name: Windows x64 MSVC native binaries and adversarial tests
