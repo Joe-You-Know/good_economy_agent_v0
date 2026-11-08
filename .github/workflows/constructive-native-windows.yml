@@ -28,6 +28,17 @@ jobs:
           $expected = "ef1fabd356f34b21216c0189bf694538c4f208714b7f23fe56510d82e2af6034"
           if ((Get-FileHash "$env:RUNNER_TEMP\crnative.zip" -Algorithm SHA256).Hash.ToLower() -ne $expected) { throw "source checksum mismatch" }
           Write-Output "SOURCE=$src" >> $env:GITHUB_ENV
+      - name: Ensure SQLite Python test handles close on Windows
+        shell: pwsh
+        run: |
+          $file = Join-Path $env:SOURCE 'tests/cli_adversarial.py'
+          $s = [IO.File]::ReadAllText($file)
+          $s = $s.Replace('import sqlite3', "import sqlite3`nfrom contextlib import closing")
+          $pattern = 'with sqlite3\\.connect\\((.+)\\) as db:'
+          $matches = [regex]::Matches($s, $pattern)
+          if ($matches.Count -ne 5) { throw "Unexpected SQLite test fixture structure: $($matches.Count)" }
+          $s = [regex]::Replace($s, $pattern, 'with closing(sqlite3.connect($1)) as db:')
+          [IO.File]::WriteAllText($file, $s)
       - name: Bootstrap vcpkg
         shell: pwsh
         run: |
