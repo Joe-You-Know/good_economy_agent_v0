@@ -34,7 +34,7 @@ jobs:
           $file = Join-Path $env:SOURCE 'tests/cli_adversarial.py'
           $s = [IO.File]::ReadAllText($file)
           $s = $s.Replace('import sqlite3', "import sqlite3`nfrom contextlib import closing")
-          $pattern = 'with sqlite3\\.connect\\((.+)\\) as db:'
+          $pattern = 'with sqlite3\.connect\((.+)\) as db:'
           $matches = [regex]::Matches($s, $pattern)
           if ($matches.Count -ne 5) { throw "Unexpected SQLite test fixture structure: $($matches.Count)" }
           $s = [regex]::Replace($s, $pattern, 'with closing(sqlite3.connect($1)) as db:')
