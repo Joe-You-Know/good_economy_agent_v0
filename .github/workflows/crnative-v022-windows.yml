@@ -67,7 +67,6 @@ jobs:
           path: ${{ runner.temp }}/crnative-build/Testing/Temporary/**
   linux:
     name: Linux GCC x64 - native v0.22 parity
-    needs: windows
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
