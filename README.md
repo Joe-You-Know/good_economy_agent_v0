@@ -206,3 +206,9 @@ Positive ethics includes verified actions that improve:
 ## Baseline Philosophy
 
 This scaffold intentionally avoids cold outreach, ads, faucets, affiliate farming, or fake attention. Later experiments can test broader pathways under explicit approval and penalty systems, but the base example starts by doing real public-good work.
+
+## ConstructiveRT Native v0.23 research checkpoint
+
+A separate ConstructiveRT C++20 runtime research snapshot has now been validated on Windows and in a fresh Linux source build. The [November 10 validation checkpoint](docs/constructivert-native-v023-2026-11-10.md) and [structured benchmark record](docs/constructivert-native-v023-checkpoint.json) preserve test boundaries and the balanced WAN comparisons: 36/36 independently SHA-256-verified transfers; curl median 1943.249 ms, native full GET 1988.228 ms, native ranges 1999.053 ms. No performance speedup is claimed.
+
+The dedicated ConstructiveRT source package is being prepared separately; **these records do not constitute a v0.23 source release**. The earlier native v0.22 source remains confined to the draft CI-only PR #4. The Good Economy Agent references ConstructiveRT as a candidate owned engineering asset, not as an automatically sold product or proof of revenue.
