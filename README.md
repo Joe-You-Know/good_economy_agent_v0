@@ -23,6 +23,10 @@ compute-limited autonomous reasoning
 
 The default mode is **dry-run**, which spends no API credit, performs no external actions, creates a local public-good artifact bundle, and writes an audit report.
 
+## Current Project Record
+
+The [November 10, 2026 project status](docs/PROJECT_STATUS_2026-11-10.md) records what is on `main`, what remains in draft pull requests, and the separately tested Constructive Runtime Native v0.23 work.
+
 ## Quick Start
 
 From this folder:
