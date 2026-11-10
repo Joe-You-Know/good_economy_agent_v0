@@ -1,0 +1,43 @@
+{
+  "schema": "constructivert.native.v0.23.checkpoint.v1",
+  "recorded_date": "2026-11-10",
+  "evidence_origin": "user-supplied local ConstructiveRT archive; Linux source rebuild performed independently in current working environment",
+  "source_snapshot": {
+    "original_zip_sha256": "14ba998b296d9fbdeea33955cd3b0ebde0a8717fcd18de6d20ebacccf8cc0039",
+    "curated_zip_sha256": "34157385aaf87f863c7b53cf1aae1222be135642c3cd4574c2db7d3ccaeca7a7",
+    "curated_source_files_total": 137,
+    "release_manifest_checks_total": 27,
+    "release_manifest_checks_passed": 27,
+    "repo_source_pushed": false
+  },
+  "windows": {
+    "platform": "Windows x64",
+    "generator": "Visual Studio 17 2022",
+    "ctest_passed": 3,
+    "ctest_total": 3,
+    "exe_sha256": "755f1d692012cd11017269abcc1bde22ecbe683b971925269ce1278792a2564d"
+  },
+  "windows_balanced_wan": {
+    "rounds_per_method": 12,
+    "trials": 36,
+    "successes": 36,
+    "object": "numpy-2.1.3-cp312-cp312-win_amd64.whl",
+    "object_bytes": 12566858,
+    "method_median_ms": {
+      "curl": 1943.249,
+      "native-full": 1988.228,
+      "native-ranges": 1999.053
+    },
+    "interpretation": "no speedup demonstrated"
+  },
+  "linux_curated_source_rebuild": {
+    "build": "success",
+    "ctest_passed": 3,
+    "ctest_total": 3
+  },
+  "standalone_repo": {
+    "target": "Joe-You-Know/ConstructiveRT",
+    "created": false,
+    "why_not_created": "connected GitHub interface does not expose repository creation or upload of local source files"
+  }
+}
