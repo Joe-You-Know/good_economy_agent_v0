@@ -1,5 +1,12 @@
 # Good Economy Agent v0
 
+The canonical project record is the private
+[GitHub repository](https://github.com/Joe-You-Know/good_economy_agent_v0).
+See [GitHub workflow and reconciliation](docs/GITHUB_WORKFLOW.md) for current
+source coverage, remote verification, missing inputs, and the handoff from
+Economic Stability Strategy. See [distribution-first experiments](docs/DISTRIBUTION_FIRST.md)
+for the current product evaluation direction.
+
 Good Economy Agent v0 is a baseline scaffold for testing whether an autonomous AI system can begin from:
 
 - **$0 economic cash**

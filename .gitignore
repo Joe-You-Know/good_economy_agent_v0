@@ -1,4 +1,6 @@
 .env
+.env.*
+!.env.example
 private/
 __pycache__/
 *.pyc
@@ -23,6 +25,7 @@ outputs/*.md
 outputs/*.json
 outputs/work_packages/
 outputs/public_artifact/
+outputs/research_smoke/
 workspaces/
 tools/jdk-25/
 tools/temurin-jdk25.zip
