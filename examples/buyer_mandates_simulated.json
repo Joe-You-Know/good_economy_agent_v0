@@ -76,7 +76,7 @@
       "transfers_per_month": 100000000,
       "egress_usd_per_gb": 0.09,
       "cpu_usd_per_hour": 0.03,
-      "monthly_spend_authority_usd": 20,
+      "monthly_spend_authority_usd": 10,
       "max_verified_transfer_ms": 500,
       "integration_cost_usd_per_month": {
         "explicit": 0,
