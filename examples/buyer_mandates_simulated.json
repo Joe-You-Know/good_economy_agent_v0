@@ -1,0 +1,97 @@
+{
+  "purpose": "Synthetic counterfactual buyer mandates. ConstructiveRT offer proposed: $4.99 one-time permanent license for purchased version; optional $0.99/month updates, explicitly opt-in. No customer or transaction.",
+  "mandates": [
+    {
+      "name": "small_workload_rejects_paid_codec",
+      "profile": "bandwidth-limited",
+      "transfers_per_month": 1000000,
+      "egress_usd_per_gb": 0.09,
+      "cpu_usd_per_hour": 0.03,
+      "monthly_spend_authority_usd": 10,
+      "max_verified_transfer_ms": 500,
+      "integration_cost_usd_per_month": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 0
+      },
+      "one_time_purchase_prices_usd": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 4.99
+      },
+      "evaluation_horizon_months": 12,
+      "upfront_purchase_authority_usd": 10,
+      "opt_in_updates": false,
+      "optional_update_subscription_usd_per_month": 0.99
+    },
+    {
+      "name": "large_workload_may_justify_paid_codec",
+      "profile": "bandwidth-limited",
+      "transfers_per_month": 100000000,
+      "egress_usd_per_gb": 0.09,
+      "cpu_usd_per_hour": 0.03,
+      "monthly_spend_authority_usd": 10,
+      "max_verified_transfer_ms": 500,
+      "integration_cost_usd_per_month": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 0
+      },
+      "one_time_purchase_prices_usd": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 4.99
+      },
+      "evaluation_horizon_months": 12,
+      "upfront_purchase_authority_usd": 10,
+      "opt_in_updates": true,
+      "optional_update_subscription_usd_per_month": 0.99
+    },
+    {
+      "name": "fast_link_strict_sla_rejects_constructive",
+      "profile": "fast-clean",
+      "transfers_per_month": 100000000,
+      "egress_usd_per_gb": 0.09,
+      "cpu_usd_per_hour": 0.03,
+      "monthly_spend_authority_usd": 10,
+      "max_verified_transfer_ms": 210,
+      "integration_cost_usd_per_month": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 0
+      },
+      "one_time_purchase_prices_usd": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 4.99
+      },
+      "evaluation_horizon_months": 12,
+      "upfront_purchase_authority_usd": 10,
+      "opt_in_updates": false,
+      "optional_update_subscription_usd_per_month": 0.99
+    },
+    {
+      "name": "large_workload_integration_cost_rejects_constructive",
+      "profile": "bandwidth-limited",
+      "transfers_per_month": 100000000,
+      "egress_usd_per_gb": 0.09,
+      "cpu_usd_per_hour": 0.03,
+      "monthly_spend_authority_usd": 10,
+      "max_verified_transfer_ms": 500,
+      "integration_cost_usd_per_month": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 20
+      },
+      "one_time_purchase_prices_usd": {
+        "explicit": 0,
+        "gzip": 0,
+        "constructive": 4.99
+      },
+      "evaluation_horizon_months": 12,
+      "upfront_purchase_authority_usd": 10,
+      "opt_in_updates": false,
+      "optional_update_subscription_usd_per_month": 0.99
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "experiment": "Hugging Face Xet official reference codec comparators",
+  "date": "2026-11-11",
+  "source_repo": "https://huggingface.co/datasets/xet-team/xet-spec-reference-files",
+  "job_url": "https://huggingface.co/jobs/joe-you-know/6af48fe99737d9a9e0931296",
+  "environment": "Hugging Face CPU-basic; python:3.12-slim; lz4.frame; 3 local encode/decode repetitions",
+  "source_bytes": 63527244,
+  "source_sha256": "f41255b252f776125f2b657136654e4d4d5d2ccf8ef4db0ec186bd1981b69734",
+  "official_xorb_bytes": 14737817,
+  "xorb_chunk_count": 796,
+  "official_codec_counts": {
+    "none": 0,
+    "lz4": 796,
+    "bg4_lz4": 0
+  },
+  "xorb_trailer": "XETB",
+  "exact_official_xorb_reconstruction": true,
+  "alternate_same_chunk_exact_measurements": {
+    "raw": {
+      "bytes_with_chunk_headers": 63533612,
+      "median_encode_ms": 0.003,
+      "median_decode_ms": 0.001
+    },
+    "lz4": {
+      "bytes_with_chunk_headers": 14679039,
+      "median_encode_ms": 81.679,
+      "median_decode_ms": 44.619
+    },
+    "bg4_lz4": {
+      "bytes_with_chunk_headers": 23776165,
+      "median_encode_ms": 176.139,
+      "median_decode_ms": 7981.446
+    },
+    "gzip6": {
+      "bytes_with_chunk_headers": 9699360,
+      "median_encode_ms": 982.762,
+      "median_decode_ms": 142.528
+    }
+  },
+  "constructive_rt": {
+    "status": "unmeasured",
+    "reason": "No verified compatible CRTC2 encoder/decoder for arbitrary reference CSV in current supplied artifacts"
+  },
+  "buyer_policy": {
+    "unchanged": true,
+    "decision": "NO_DECISION_INCOMPLETE_EVIDENCE",
+    "gate": "requires full candidate coverage; no CRTC2 measurement and no comparable real transfer medians"
+  },
+  "limitations": [
+    "Three in-memory timing repetitions, single remote CPU-basic job",
+    "Alternative codec sizes are based on original Xet chunk boundaries and 8-byte Xorb-like headers, not official end-to-end Xet objects",
+    "Python BG4 inversion is not comparable with native decoder performance",
+    "No production transport measurements; no buyer mandate for this source",
+    "No paid transaction and no evidence of actual customer demand"
+  ]
+}
