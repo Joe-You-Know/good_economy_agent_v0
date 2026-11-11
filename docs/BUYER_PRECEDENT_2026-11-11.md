@@ -73,3 +73,14 @@ Relevant source: https://huggingface.co/docs/xet/xorb#picking-a-compression-sche
 ## Ethics and settlement
 
 This experiment remains compatible with `METHODOLOGY.md`: zero false buyer identities, no manufactured sales, no unauthorized expenditure, no economic wallet transfer, no false revenue, and separate positive benefit from negative ethics debt. Any future settled sale requires independent authorization, lawful opt-in value exchange, and recorded net costs.
+## Local verification of revised $4.99 / $0.99 offer
+
+Executed offline after the permanent-license price update (November 11, 2026):
+
+- `python -m unittest discover -s tests -p test_buyer_precedent.py -v`: **8/8 passed** in the local isolated experiment. This is not GitHub Actions CI and is not the complete repository test suite.
+- Replay against owner-provided **Windows** source-histories `summary(20261111-151328).json` + `shaped_trials(1).csv`, plus independently hash-checked representation artifacts: **72 recorded exact-source-verified trials**; independent gzip decoding verified; no independent CRTC2 decoder in the buyer script.
+- Four decisions using the example mandates: small → gzip; large → constructive (with opt-in updates); fast strict SLA → gzip; large with $20/month modeled integration overhead against $10/month recurring authority → gzip (not authorized).
+- Large scenario (100,000,000 hypothetical monthly downloads of the same 95,408-byte TSV): estimated monthly gzip cost $126.987167 versus constructive $108.884833, modeled savings **$18.102334/month** including $4.99/12 amortization and optional $0.99/month updates. No real-world purchase, customer demand, bandwidth bill or income established.
+- Exact file content correspondence for the buyer script and tests was checked using Git blob hashes; local files include a trailing newline not present in those two GitHub source blobs, with byte-identical content otherwise.
+
+**Selection precedent, not pricing validation:** Buyer rules were specified by the experimenter and replayed on a single structured workload. Do not interpret one synthetic positive decision as proof of conversion or product-market fit. Independent baseline comparison must include applicable Hugging Face Xet representations.
