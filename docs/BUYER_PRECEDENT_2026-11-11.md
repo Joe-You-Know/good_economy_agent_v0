@@ -14,28 +14,32 @@ The seller-side Good Economy Agent's `asset-discovery` identifies candidate owne
 - Buyer evaluator independently checks SHA-256 for all three supplied representation files and independently decompresses gzip to the exact source digest. It does **not** include a CRTC2 decoder and therefore audits, but does not independently reproduce, the CRTC2 decoding claim in the benchmark. The original test's verification records remain the source of that claim.
 - Transfer times and reconstruction/verification wall-time medians are recomputed from the CSV and checked against the supplied benchmark summary. The source manifest is locally trusted, not authenticated as a remotely obtained production artifact.
 
-## Explicitly synthetic buying mandates
+## Commercial offer chosen for this experiment (not published)
 
-All mandates in `examples/buyer_mandates_simulated.json` are illustrative; no prices, budgets, or projected copy counts are represented as observed customer behavior. Cost proxy: network egress at $0.09/GB, reconstruction-and-verification wall time multiplied by $0.03/core-hour, as a **rough** CPU-cost proxy (not CPU utilization evidence). The constructive license is a hypothetical $9/month, not a published quote for CRTC2. Integration costs are set by each mandate, and all alternative license fees are explicitly declared.
+- **$4.99 USD one-time, permanent license** to the purchased ConstructiveRT version. No recurring charge is required to continue using that version.
+- **$0.99 USD/month optional update subscription**, enabled only by express opt-in; default is off. If cancelled, the buyer keeps using the paid-for version and any updates already acquired while eligible; future updates cease. Terms, distribution, support and refund policy need approval before sale.
+- This is a *proposed* selling price, not a recorded sale or a published commercial listing. All buy-side mandates remain simulated.
+- The update subscription cannot be silently bundled into the perpetual-license price or represented as mandatory.
 
-| Synthetic mandate | Selected | Estimated monthly gzip | Estimated monthly selected | Interpretation |
-| --- | --- | ---: | ---: | --- |
-| Small: 1M downloads, bandwidth limited | gzip | $1.269872 | $1.269872 | $9 hypothetical license not justified |
-| Large: 100M downloads, bandwidth limited | constructive | $126.987167 | $116.479000 | $10.508167 modeled net saving after license; not actual demand |
-| Fast-clean, strict 210ms median SLA | gzip | $127.373833 | $127.373833 | Constructive misses median SLA (211.762ms) |
-| Large, extra $20/month setup with $20 spend limit | gzip | $126.987167 | $126.987167 | $29 license/setup exceeds synthetic authorization |
+## Buyer economics and synthetic mandates
 
-The 100M-download scenario repeats the *same 95KB example* at an assumed scale; it does not prove a real distribution exhibits that volume or codec benefit. No simulated buyer has funded authority, and no payment took place. Real income = $0.
+The buyer evaluates a declared **12-month horizon** in the included examples. A $4.99 one-time purchase contributes $4.99/12 = approximately **$0.415833/month** to the comparison *only as an analysis convention*, not as a monthly charge. Optional updates contribute $0 unless the buyer explicitly opts in; opting in adds $0.99/month. Alternatives retain their own explicit prices.
 
-## Decision rule and audit boundaries
+Cost inputs remain synthetic: $0.09/decimal GB transferred, $0.03/core-hour multiplied by observed reconstruction-and-verification wall time as an approximate CPU proxy, and workload frequency declared by each buyer. Actual CPU utilization, full production costs and demand are unverified.
 
-For eligible method `m` (sample size `B_m`, number of monthly transfers `N`, network cost per decimal GB `E`, reconstruction/verification wall time `R_m` in milliseconds, imputed CPU cost per hour `C`):
+Four hypothetical mandates are included:
+1. Small workload: reject the permanent license if its amortized value cannot beat free gzip.
+2. Large workload: consider purchasing ConstructiveRT and independently opting in to updates where modeled benefit exceeds both fees.
+3. Fast link with a strict 210ms median SLA: reject ConstructiveRT for latency regardless of price.
+4. Large workload with $20/month assumed integration cost: reject when monthly spending permission is exceeded.
 
-`estimated_monthly_cost_m = B_m*N*E/1e9 + R_m*N*C/3_600_000 + license_fee_m + amortized_integration_cost_m`
+For eligible method `m`, source size `B_m`, monthly transfers `N`, egress rate `E`, reconstruction-and-verification wall-time proxy `R_m`, CPU rate `C`, one-time purchase `P_m`, evaluation horizon `H`, optional update charge `U_m`, and recurring integration assumption `I_m`:
 
-Eligibility requires the measured scenario median transfer wall time `<= max_verified_transfer_ms` and the stated fee + integration `<= monthly_spend_authority_usd`. The method with the smallest modeled cost wins, tie-breaking by faster median wall time then method name.
+`modeled_monthly_cost_m = B_m*N*E/1e9 + R_m*N*C/3_600_000 + P_m/H + U_m + I_m`
 
-The model deliberately **omits** unmeasured production availability, native integration effort, encoding amortization, cache distribution, data-specific modeling losses, request overhead, HTTP/TLS retransmits, CPU utilization, vendor support, legal/license verification, and operational/security requirements. Those must be added for production procurement. Neither this rule nor source SHA verification constitutes a functioning payment authority.
+The buyer checks the *upfront purchase authority* against `P_m` separately from *monthly spending authority* against `U_m+I_m`, in addition to requiring the measured latency SLA. The buyer can select gzip, explicit, ConstructiveRT or no eligible method. The 12-month horizon is not an expiry of ownership and must not be confused with an update term.
+
+**Evidence boundary:** The original 72 transfers were measured on one structured TSV under localhost network shaping, not a wide-area Hugging Face workload. The code checks source hashes but does not independently decode CRTC2. Xet's existing schemes remain unmeasured. No independent purchase, product delivery or revenue occurred.
 
 ## Reproduction
 
