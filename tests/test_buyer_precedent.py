@@ -46,7 +46,9 @@ class BuyerPrecedentTest(unittest.TestCase):
                                      "total_wall_ms": time, "reconstruction_verified_ms": 2})
         self.mandate = {"name": "test-mandate", "profile": "test-net", "transfers_per_month": 2000,
                         "egress_usd_per_gb": 0.09, "cpu_usd_per_hour": 0.03,
-                        "monthly_spend_authority_usd": 10, "upfront_purchase_authority_usd": 10,\n                        "evaluation_horizon_months": 12, "max_verified_transfer_ms": 100,\n                        "opt_in_updates": False, "optional_update_subscription_usd_per_month": 0.99,
+                        "monthly_spend_authority_usd": 10, "upfront_purchase_authority_usd": 10,
+                        "evaluation_horizon_months": 12, "max_verified_transfer_ms": 100,
+                        "opt_in_updates": False, "optional_update_subscription_usd_per_month": 0.99,
                         "one_time_purchase_prices_usd": {"explicit": 0, "gzip": 0, "constructive": 4.99}}
 
     def test_exact_artifact_check_and_no_real_revenue(self):
