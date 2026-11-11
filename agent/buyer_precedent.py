@@ -103,7 +103,7 @@ def load_evidence(summary_path: Path, trial_path: Path, artifacts_dir: Path | No
                    "pre-encoding, storage, distribution infrastructure, and integration costs not measured",
                    "no independent CRTC decoder in this buyer script; .crtc exactness relies on benchmark verification records",
                    "Xet LZ4 / BG4-LZ4 are not measured in this evidence set",
-                   "synthetic prices and request volumes are not quotes or real customers",
+                   "synthetic workloads and cost rates are not real customers or quotes; $4.99 one-time price and optional $0.99/month update offer are proposed, not published",
                    "trusted benchmark manifest is not an authenticated production package"],
     }
 
@@ -121,30 +121,49 @@ def evaluate_mandate(evidence, mandate):
     cpu = _safe_float(mandate["cpu_usd_per_hour"], "cpu_usd_per_hour")
     budget = _safe_float(mandate["monthly_spend_authority_usd"], "monthly_spend_authority_usd")
     sla = _safe_float(mandate["max_verified_transfer_ms"], "max_verified_transfer_ms")
-    prices = mandate["license_fees_usd_per_month"]
+    # Perpetual purchase is not a recurring license. Amortization is a buyer
+    # analysis assumption over an explicit horizon, not a subscription.
+    horizon = _safe_float(mandate["evaluation_horizon_months"], "evaluation_horizon_months")
+    if horizon <= 0 or not horizon.is_integer():
+        raise ValueError("evaluation_horizon_months must be a positive integer")
+    prices = mandate["one_time_purchase_prices_usd"]
     if set(prices) != set(METHODS):
-        raise ValueError("All alternatives need explicit, separately disclosed synthetic prices")
+        raise ValueError("All alternatives need explicit one-time purchase prices")
+    upfront_authority = _safe_float(mandate["upfront_purchase_authority_usd"], "upfront_purchase_authority_usd")
+    subscription = _safe_float(mandate.get("optional_update_subscription_usd_per_month", 0),
+                               "optional_update_subscription_usd_per_month")
+    subscribe = mandate.get("opt_in_updates", False)
+    if type(subscribe) is not bool:
+        raise ValueError("opt_in_updates must be a boolean")
     fixed = mandate.get("integration_cost_usd_per_month", {})
     choices = []
     for method in METHODS:
         metrics = evidence["medians"][profile][method]
-        license_fee = _safe_float(prices[method], f"{method} license")
+        purchase = _safe_float(prices[method], f"{method} purchase")
         setup = _safe_float(fixed.get(method, 0), f"{method} integration")
+        updates = subscription if method == "constructive" and subscribe else 0.0
         network_cost = metrics["artifact_bytes"] * copies / 1e9 * egress
         reconstruction_cost = metrics["reconstruction_verified_ms"] * copies / 3_600_000 * cpu
-        monthly_cost = network_cost + reconstruction_cost + license_fee + setup
+        monthly_cost = network_cost + reconstruction_cost + purchase / horizon + updates + setup
         in_sla = metrics["wall_ms"] <= sla
-        in_budget = license_fee + setup <= budget
-        choices.append({"method": method, "eligible": in_sla and in_budget,
+        in_upfront_budget = purchase <= upfront_authority
+        in_monthly_budget = updates + setup <= budget
+        choices.append({"method": method, "eligible": in_sla and in_upfront_budget and in_monthly_budget,
                         "measured_median_wall_ms": metrics["wall_ms"],
                         "source_verified_trials": metrics["verified_trials"],
+                        "one_time_purchase_usd": round(purchase, 6),
+                        "evaluation_horizon_months": int(horizon),
+                        "monthly_amortized_purchase_usd": round(purchase / horizon, 6),
+                        "updates_opted_in": bool(method == "constructive" and subscribe),
+                        "monthly_optional_updates_usd": round(updates, 6),
+                        "perpetual_right_to_purchased_version": method == "constructive",
                         "monthly_network_usd": round(network_cost, 6),
                         "monthly_cpu_proxy_usd": round(reconstruction_cost, 6),
-                        "monthly_license_usd": round(license_fee, 6),
                         "monthly_integration_usd": round(setup, 6),
                         "total_estimated_monthly_usd": round(monthly_cost, 6),
                         "disqualification": (["latency_sla"] if not in_sla else []) +
-                                            (["purchase_authority"] if not in_budget else [])})
+                                            (["upfront_purchase_authority"] if not in_upfront_budget else []) +
+                                            (["monthly_spend_authority"] if not in_monthly_budget else [])})
     feasible = [c for c in choices if c["eligible"]]
     selected = min(feasible, key=lambda c: (c["total_estimated_monthly_usd"], c["measured_median_wall_ms"], c["method"])) if feasible else None
     gzip_choice = next(c for c in choices if c["method"] == "gzip")
@@ -168,10 +187,10 @@ def run(summary, trials, artifact_dir, mandates):
     return {"schema": "good-economy-agent.buyer-precedent.v1", "experiment": "independent_buyer_simulation",
             "simulation_only": True, "outside_payment_authority": False,
             "actual_revenue_usd": 0, "agent_no_preference_for_constructivert": True,
-            "selection_rule": "minimize estimated monthly cost among all SLA-eligible and synthetic-budget-eligible representations",
+            "selection_rule": "minimize monthly cost over declared amortization horizon among SLA-eligible choices passing upfront and recurring authorization separately",
             "evidence": evidence, "decisions": decisions,
             "unmeasured_competitors": ["HF Xet None", "HF Xet LZ4", "HF Xet BG4-LZ4"],
-            "real_purchase_status": "not offered / not performed; pricing, license, buyer authority and workload suitability unverified"}
+            "real_purchase_status": "not performed; proposed pricing not yet published; buyer authority and workload suitability unverified"}
 
 
 def main():
