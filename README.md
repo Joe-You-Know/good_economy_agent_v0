@@ -212,3 +212,7 @@ This scaffold intentionally avoids cold outreach, ads, faucets, affiliate farmin
 A separate ConstructiveRT C++20 runtime research snapshot has now been validated on Windows and in a fresh Linux source build. The [November 10 validation checkpoint](docs/constructivert-native-v023-2026-11-10.md) and [structured benchmark record](docs/constructivert-native-v023-checkpoint.json) preserve test boundaries and the balanced WAN comparisons: 36/36 independently SHA-256-verified transfers; curl median 1943.249 ms, native full GET 1988.228 ms, native ranges 1999.053 ms. No performance speedup is claimed.
 
 The dedicated ConstructiveRT source package is being prepared separately; **these records do not constitute a v0.23 source release**. The earlier native v0.22 source remains confined to the draft CI-only PR #4. The Good Economy Agent references ConstructiveRT as a candidate owned engineering asset, not as an automatically sold product or proof of revenue.
+
+## Buyer-side purchasing precedent (simulation only)
+
+[November 11 independent buyer-selection experiment](docs/BUYER_PRECEDENT_2026-11-11.md) adds an offline buyer-side cost/SLA/authorization selector and five synthetic CI-safe unit tests. The first private, local Windows evidence replay audited 72 reported exact-source transfers and produced both ConstructiveRT selections and explicit rejections under hypothetical buyer mandates. No independent customer, real payment, Xet compatibility claim, or earned revenue is established.
