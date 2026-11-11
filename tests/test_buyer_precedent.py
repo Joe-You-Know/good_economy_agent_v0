@@ -46,8 +46,8 @@ class BuyerPrecedentTest(unittest.TestCase):
                                      "total_wall_ms": time, "reconstruction_verified_ms": 2})
         self.mandate = {"name": "test-mandate", "profile": "test-net", "transfers_per_month": 2000,
                         "egress_usd_per_gb": 0.09, "cpu_usd_per_hour": 0.03,
-                        "monthly_spend_authority_usd": 10, "max_verified_transfer_ms": 100,
-                        "license_fees_usd_per_month": {"explicit": 0, "gzip": 0, "constructive": 9}}
+                        "monthly_spend_authority_usd": 10, "upfront_purchase_authority_usd": 10,\n                        "evaluation_horizon_months": 12, "max_verified_transfer_ms": 100,\n                        "opt_in_updates": False, "optional_update_subscription_usd_per_month": 0.99,
+                        "one_time_purchase_prices_usd": {"explicit": 0, "gzip": 0, "constructive": 4.99}}
 
     def test_exact_artifact_check_and_no_real_revenue(self):
         evidence = load_evidence(self.summary, self.trials, self.root)
@@ -61,9 +61,39 @@ class BuyerPrecedentTest(unittest.TestCase):
 
     def test_selects_constructive_when_economically_valid(self):
         evidence = load_evidence(self.summary, self.trials, self.root)
-        mandate = dict(self.mandate, license_fees_usd_per_month={"explicit": 0, "gzip": 0, "constructive": 0},
+        mandate = dict(self.mandate, one_time_purchase_prices_usd={"explicit": 0, "gzip": 0, "constructive": 0},
                        max_verified_transfer_ms=75)
         self.assertEqual(evaluate_mandate(evidence, mandate)["selected"], "constructive")
+
+
+    def test_perpetual_price_not_recurring_and_updates_opt_in(self):
+        evidence = load_evidence(self.summary, self.trials, self.root)
+        mandate = dict(self.mandate, max_verified_transfer_ms=75)
+        base = evaluate_mandate(evidence, mandate)
+        option = next(x for x in base["candidates"] if x["method"] == "constructive")
+        self.assertEqual(option["one_time_purchase_usd"], 4.99)
+        self.assertAlmostEqual(option["monthly_amortized_purchase_usd"], 4.99 / 12, places=5)
+        self.assertEqual(option["monthly_optional_updates_usd"], 0)
+        self.assertTrue(option["perpetual_right_to_purchased_version"])
+        updated = evaluate_mandate(evidence, dict(mandate, opt_in_updates=True))
+        paid = next(x for x in updated["candidates"] if x["method"] == "constructive")
+        self.assertEqual(paid["monthly_optional_updates_usd"], 0.99)
+        self.assertAlmostEqual(paid["total_estimated_monthly_usd"] - option["total_estimated_monthly_usd"], 0.99)
+
+    def test_purchased_version_remains_eligible_without_updates(self):
+        evidence = load_evidence(self.summary, self.trials, self.root)
+        mandate = dict(self.mandate, max_verified_transfer_ms=75,
+                       monthly_spend_authority_usd=0, opt_in_updates=False)
+        result = evaluate_mandate(evidence, mandate)
+        option = next(x for x in result["candidates"] if x["method"] == "constructive")
+        self.assertTrue(option["eligible"])
+        self.assertTrue(option["perpetual_right_to_purchased_version"])
+
+    def test_upfront_authority_independent_from_subscription(self):
+        evidence = load_evidence(self.summary, self.trials, self.root)
+        result = evaluate_mandate(evidence, dict(self.mandate, upfront_purchase_authority_usd=4))
+        option = next(x for x in result["candidates"] if x["method"] == "constructive")
+        self.assertIn("upfront_purchase_authority", option["disqualification"])
 
     def test_tampering_rejected(self):
         text = self.trials.read_text()
