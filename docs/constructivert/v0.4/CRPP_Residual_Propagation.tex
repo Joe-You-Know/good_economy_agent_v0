@@ -24,13 +24,13 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.13}
+\date{November 12, 2026\\Revision 0.14}
 
 \begin{document}
 \maketitle
 \begin{abstract}
 This note develops a sequence of conditional Constructive Residual Preservation and
-Propagation results (CRPP-1 through CRPP-14). The foundational goal is to determine
+Propagation results (CRPP-1 through CRPP-15). The foundational goal is to determine
 consequences from original property occurrences, witnessed evidence, and established
 joining relationships, without allocating independent absence-property operations or
 materializing hypothetical successful intermediate constructions. The results are
@@ -2214,6 +2214,136 @@ counterexamples across a bounded original
 joining grammar with shared simultaneous
 obligations, alternative proofs and
 irrelevant historical witnesses.
+
+
+\section{CRPP-15: bounded direct extraction versus an exhaustive independent evaluator}
+\label{sec:crpp15}
+
+\subsection{Reproducible bounded grammar and two evaluation paths}
+The executable source \texttt{bounded\_dependency\_verifier.js}
+in this research directory defines four candidate joining
+identities $A,B,C,D$. The original interface labels are
+distinct: $A$ requires ports $(p{:}L,q{:}T)$,
+$B$ requires $(p{:}L,r{:}R)$ and property token $X$,
+$C$ requires $(q{:}B,r{:}L)$, and
+$D$ requires $(p{:}\mathrm{aux},r{:}\mathrm{aux})$.
+Hence $A$ and $B$ cannot coexist because of their
+shared port $p{:}L$. A separately declared joint law
+requires $D$ whenever \emph{both} $A$ and $C$ are
+realized. This is an example law of the bounded
+grammar, not a newly derived universal physical law.
+
+The \emph{reference} evaluator constructs successful-join
+objects for each of the $2^4=16$ candidate subsets,
+then independently filters by witnessed positive and
+negative reports, explicitly absent required token
+$X$, duplicate port use, and the conjunctive joint
+obligation. It computes universally present and
+universally absent joins among the surviving models.
+The \emph{direct} evaluator does not enumerate subsets
+or construct hypothetical success objects: it starts
+with witnessed join facts, follows witnessed negative
+requirements, rules out candidates conflicting with
+already established join port uses, and propagates
+the jointly required $D$ when both $A$ and $C$ are
+established. It retains distinct proof reasons for
+each derived exclusion. Both evaluators share the
+\emph{declared grammar}, but their inference procedures
+are separate. This is an independent algorithmic
+cross-check, not evidence of independent laboratory
+replication.
+
+\subsection{Measurement contract}
+\emph{Hypothetical successful join materialization}
+means allocating an object containing a selected join
+identity and its participating interface identities
+while evaluating an unobserved candidate arrangement.
+The reference evaluator increments a counter each
+time such an object is constructed, including for
+arrangements later rejected. The direct evaluator
+contains no analogous object creation in these paths
+and reports zero. The direct evaluator \emph{does}
+retain candidate specifications, source facts, and
+proof-reason arrays. Therefore zero hypothetical
+success objects does \emph{not} mean zero allocations,
+zero indexed candidates, or zero algorithmic work.
+Packed representations or caches of full hypothetical
+success histories would count as materialization in
+any stronger experiment; this benchmark does not
+implement such a cache and makes no blanket claim
+about all possible symbolic representations.
+
+\subsection{Observed bounded results}
+The first six cases were executed in the tool's
+JavaScript runtime; a standalone Node.js entrypoint
+is committed for reproduction, but a separate Node.js
+invocation or GitHub Actions run has not been verified.
+The nonconflicting cases each enumerate 16 candidate
+subsets and create 32 hypothetical join objects,
+for 80 enumerated subsets and 160 join objects
+across five cases. The direct procedure creates
+zero hypothetical successful-join objects across
+those cases. In the contradictory-report case,
+both evaluators explicitly report conflict and
+do not enumerate a consistent model.
+
+\begin{center}
+\begin{tabular}{lrrl}
+\hline
+Case & Valid models & Ref.\ objects & Direct consequence\\
+\hline
+Shared conjunctive obligation & 1 & 32 & $A,C,D$ yes; $B$ no\\
+Alternative exclusion reasons & 1 & 32 & $B$ no (two proofs)\\
+Irrelevant blue history & 1 & 32 & $A,C,D$ yes; $B$ no\\
+Irrelevant red history & 1 & 32 & $A,C,D$ yes; $B$ no\\
+Unknown interface & 11 & 32 & None forced\\
+Contradictory reports & --- & 0 & Conflict retained\\
+\hline
+\end{tabular}
+\end{center}
+
+In these cases each direct positive or negative
+conclusion agrees with what is universally true
+in the independent reference models. This is a
+\emph{soundness comparison on these cases}, not a
+general completeness proof. The direct evaluator
+also records two distinct reasons for excluding
+$B$ in the alternative-proof case: $X$ is witnessed
+absent, and established $A$ uses shared port $p{:}L$.
+The blue and red cases yield the same consequences
+but have different original historical witnesses.
+The test round-trips the exact JSON case input
+unchanged; it does not yet test a compressed
+ConstructiveRT binary encoder or reconstruction
+from an intentionally reduced payload.
+
+\subsection{Limitations and stronger acceptance tests}
+The demonstrated zero materializations apply to
+the tested direct implementation. The reference
+deliberately enumerates candidate arrangements
+for exhaustive truth conditions. Neither the
+count difference nor this small case set
+establishes a speed, memory, energy, or scalability
+advantage. A full test should separately
+instrument allocations for candidate specifications,
+symbolic formulas, proof traces, compressed
+representations, and explicit or implicit
+hypothetical states; compare equivalent semantics;
+and perform exact source reconstruction after
+real serialization and decoding.
+
+The next expansion should enumerate entire families
+of bounded original ledgers, including source swaps,
+simultaneous mutually constraining obligations,
+independent alternative proofs, missing and
+conflicting observations, and causally different
+irrelevant histories. Each derived consequence
+must be checked for soundness, each omitted
+consequence checked against completeness claims,
+and every source distinction recovered. A runtime
+must not disguise full counterfactual success
+histories as packed bitsets and then describe
+them as unconstructed.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
