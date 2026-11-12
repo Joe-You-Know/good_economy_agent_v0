@@ -24,7 +24,7 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.4}
+\date{November 12, 2026\\Revision 0.5}
 
 \begin{document}
 \maketitle
@@ -682,6 +682,192 @@ measure whether the constructive evaluator avoids material
 intermediate hypothetical outcomes relative to an
 exhaustive verifier. This is a testable criterion, not a
 claim of a universal primitive interaction law.
+
+
+\section{CRPP-6: mutual constraint closure and unavoidable outcomes}
+\label{sec:crpp6}
+This section sharpens CRPP-4 and CRPP-5 by separating three
+questions: which outcomes remain admissible, whether the
+encounter must produce an outcome, and what actual evidence
+licenses the assertion that the outcome occurred.
+
+\subsection{Three independent requirements}
+A witnessed joint encounter $B$ is a realized \emph{contact}
+but not necessarily a realized closure. Let $\mathcal O(B)$
+denote the recoverable original joining obligations, and
+let $\mathcal A(B)$ be the outcomes admitted by the complete
+declared law, understood semantically rather than as an
+enumerated runtime table.
+
+\begin{definition}[Consistency, completeness, realization]
+A joint arrangement is \emph{consistent} when it violates no
+applicable witnessed necessary requirement. The specification
+is \emph{complete relative to the encounter scope} if every
+outcome-relevant original obligation and admissible arrangement
+is represented in the declared law. The specified \emph{closure}
+is realized only when an actual encounter witness or an
+established sufficient physical response law licenses that
+realization. Consistency and completeness alone do not imply
+realization.
+\end{definition}
+
+\begin{definition}[Outcome-producing obligation]
+An outcome-producing obligation $\operatorname{MustRespond}(B)$
+is a declared, scoped interaction requirement stating that
+the actual encounter must produce some result in
+$\mathcal A(B)$, including a nonbinding or residual-producing
+result if the law admits one. Such an obligation cannot be
+derived merely from a list of admissible results.
+\end{definition}
+
+\subsection{Anchored mutual constraint propagation}
+For each named original joining obligation $m$, distinguish
+a witnessed fact, an unmet requirement, and a conditional
+consequence of an established law. A \emph{forcing step}
+has the form
+\[
+  (B;\ w_1,\ldots,w_k;\ J)\ \vdash\ d
+\]
+where each $w_i$ is a previously established original
+witness or a previously justified consequence, $J$ is an
+unchanged applicable law, and $d$ is a named obligation
+fulfillment, incompatibility, or necessary participation
+relation. The step is sound only if $J$ establishes the
+implication under the actual scope and orientation.
+
+\begin{definition}[Grounded closure certificate]
+A grounded certificate for a proposed joint outcome $Y_*$ is
+a finite source-preserving derivation containing:
+\begin{enumerate}[label=(\alph*)]
+\item actual original witnesses for the participating encounter;
+\item explicitly scoped sound laws for each forcing step;
+\item a witnessed realization, or an established
+$\operatorname{MustRespond}(B)$ condition;
+\item sufficient fulfillment evidence for each requirement
+of the proposed closure, and typed residual evidence for
+each relevant unfulfilled requirement;
+\item a coverage argument proving that any causally distinct
+admitted outcome would violate an established necessity
+or conflict with a forced distinction;
+\item the provenance, source identities, orientation and
+relevant ordering required to reconstruct the original ledger.
+\end{enumerate}
+A dependency cycle with no independent original witness or
+independent sound grounding law does not certify itself.
+\end{definition}
+
+\begin{proposition}[Forced consequences survive mutual participation]
+Suppose a sequence of forcing steps is individually sound,
+all premises are original witnesses or earlier justified
+consequences, and all steps share compatible law and evidence
+scope. Every derived consequence holds in all constructions
+admitted by those original witnesses and laws, irrespective
+of the order in which an evaluator discovers the steps.
+\end{proposition}
+\begin{proof}
+Induct on the finite derivation order. Each base fact is an
+original witnessed distinction. For each subsequent step,
+its premises are already justified and its applicable
+law establishes the necessary consequence. Thus each
+consequence holds in every compatible construction.
+This proves soundness of the derived facts, not termination
+or completeness of an arbitrary evaluator.
+\end{proof}
+
+\begin{theorem}[CRPP-6: grounded unavoidable closure]
+Assume a witnessed joint encounter $B$, a sound and complete
+declared shared-contact law for its outcome-relevant scope,
+and a grounded closure certificate for $Y_*$. If the
+certificate establishes realization or
+$\operatorname{MustRespond}(B)$, proves sufficient closure
+conditions for $Y_*$, and excludes all causally distinct
+admitted responses through sound forced consequences,
+then the actual resulting joint construction is uniquely
+determined as $Y_*$ relative to that scope and law.
+Its residual consequences propagate under CRPP-1--CRPP-5,
+while every original source and witnessed causal distinction
+remains recoverable.
+\end{theorem}
+\begin{proof}
+The realization witness or outcome-producing obligation
+rules out a history in which the contact has no admissible
+result. Sufficient closure conditions justify $Y_*$ as
+a realized result under the specified law. For any other
+causally distinct proposed result, certificate coverage
+identifies a violated necessary requirement or contradiction
+with an established forced distinction. Soundness of those
+steps rules out that rival result. Hence $Y_*$ is the sole
+admitted realized result. Residual propagation follows
+from the sound prior laws, and exact recovery is imposed
+separately by Eq.~\eqref{eq:roundtrip}.
+\end{proof}
+
+\begin{remark}[Distinct meanings of unavoidable]
+The theorem concerns \emph{causal necessity conditional on
+the complete declared law and evidence}, not unconditional
+metaphysical necessity. The fact that one candidate remains
+after exclusion is not enough unless a result must occur.
+Nor does a grounded certificate automatically establish that
+the alleged interaction law is physically correct.
+\end{remark}
+
+\subsection{Concrete conditional examples}
+\begin{example}[Anchored three-participant obligation chain]
+A witnessed original occurrence $p$ supplies an orientation
+witness. A declared shared law requires $q$'s participating
+interface to be oriented relative to $p$, and a second
+declared shared law requires $r$'s interface to be oriented
+relative to the already witnessed $q$ relation. If these
+conditions fix all outcome-relevant interface distinctions
+and an established joint sufficiency law requires the
+resulting configuration to close, closure is forced.
+The orientation witness supplies the anchor; the two
+participation requirements supply justified propagation.
+The example does not derive these laws from mere presence.
+\end{example}
+
+\begin{example}[Unanchored mutual consistency]
+Suppose $p,q,r$ each require a compatible orientation
+relative to the next participant, but there is no
+independently witnessed orientation anchor or another
+established law distinguishing two mirror-related
+configurations. Both can satisfy the same circular
+requirements. Mutual consistency alone cannot select
+a realized mirror orientation. Assuming one would import
+an unobserved symmetry-breaking distinction.
+\end{example}
+
+\begin{example}[Necessity without a realized positive closure]
+Suppose a closed source-specific contact is witnessed and
+the original law proves that each possible complete
+three-way closure violates a required interface. It follows
+that complete three-way closure is unavailable; this
+does not imply an independently positive realized join.
+The surviving witness, exclusions, and remaining typed
+residual obligations constitute the justified consequence.
+\end{example}
+
+\subsection{No hypothetical intermediate history is needed}
+A grounded certificate may derive the impossibility of
+an alternative directly from a source-specific original
+obligation and actual contact evidence. It need not
+construct that alternative as a successful intermediate
+event. A direct entailment certificate can therefore be
+smaller than a tabulation of full hypothetical histories,
+but no general asymptotic or physical resource improvement
+follows without a separate complexity proof and measurement.
+
+\subsection{Outstanding derivations}
+The certificate theorem does not provide a universal
+complete shared-contact law, establish a universal
+$\operatorname{MustRespond}$ principle, or show that a
+grounded coverage certificate can always be obtained
+without global search. A complete constructive theory
+must still derive genuine joint sufficiency from original
+properties and observed simultaneous interaction, clarify
+source-dependent symmetry breaking, and handle cycles,
+contradiction, revisions, and nonnumerical shared constraints
+without circular self-justification.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
