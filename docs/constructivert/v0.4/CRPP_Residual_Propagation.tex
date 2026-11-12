@@ -24,7 +24,7 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.7}
+\date{November 12, 2026\\Revision 0.8}
 
 \begin{document}
 \maketitle
@@ -1105,6 +1105,162 @@ creation, termination, unknown-to-present observation,
 and contradictory reports. Exact reconstruction
 must preserve the complete prior and subsequent
 causal ledgers, including source and orientation.
+
+
+\section{CRPP-9: change propagation across shared original obligations}
+\label{sec:crpp9}
+\subsection{The new question}
+CRPP-8 yields necessary consequences when a known transition
+satisfies a declared propagation obligation. The stronger
+question is when one actual relational change constrains
+other relations in the \emph{same} witnessed encounter,
+without independently constructing their hypothetical
+successful intermediate states. Mere co-incidence does
+not suffice: the relations must share a \emph{relevant}
+original obligation or constraint.
+
+\begin{definition}[Joint-transition compatibility]
+Fix a witnessed encounter $B$, a source-consistent before/after
+comparison scope, and an unchanged declared shared law $J$.
+A joint-transition history $T$ is compatible if it preserves
+all original occurrence identities, actual contact and change
+witnesses, role orientations, scoped negative/unknown/conflicting
+reports, shared resource constraints, and law-required temporal
+or dependency relations. Write $\operatorname{Compatible}_{B,J}(T)$.
+This is a semantic predicate, not a request to construct every $T$.
+\end{definition}
+
+\begin{definition}[Necessary cross-relation consequence]
+Given a witnessed change $d$ in relation $\rho_{pq}$, a
+claim $K$ concerning another relation $\rho_{pr}$ is
+\emph{forced} by the shared encounter precisely when
+every compatible joint-transition history that preserves
+$d$ also satisfies $K$:
+\[
+ B,J,d\Vdash K \quad\Longleftrightarrow\quad
+ \forall T\,
+ ((\operatorname{Compatible}_{B,J}(T)\land T\models d)
+       \Rightarrow T\models K).
+\]
+For nonvacuous use as a physical result, at least one
+such compatible history must exist. The semantic definition
+alone supplies no direct efficient evaluation algorithm.
+\end{definition}
+
+\begin{proposition}[Grounded cross-relation forcing rule]
+Assume (i) a witnessed change $d$ establishes the satisfaction
+or violation of named requirement $m$, (ii) another relation's
+arrangement $a$ includes a necessary requirement $n$ that is
+incompatible with that established condition under the same
+source, orientation, encounter and capacity scope, and
+(iii) the shared law soundly entails that incompatibility.
+Then the arrangement $a$ is defeated in that scope.
+\end{proposition}
+\begin{proof}
+The original witness grounds $d$ and hence its specified
+effect on $m$. Any proposed realization of $a$ must
+fulfill $n$. The established shared constraint excludes
+simultaneous satisfaction of $n$ and the witnessed
+condition. Therefore no compatible joint-transition
+history realizes $a$. The conclusion concerns a
+\emph{candidate arrangement} and does not manufacture a
+negative observation about the original property.
+\end{proof}
+
+\subsection{Local propagation without constructing rivals}
+A \emph{forcing certificate} identifies the original witnessed
+change, the shared occurrence or relevant dependency, the
+law clause establishing the incompatible obligations, and
+the affected arrangement. Its validity is checked by
+replaying those source-specific facts against the declared
+law. It need not construct a hypothetical successful result
+for the defeated arrangement.
+
+\begin{example}[One actual change excludes a second join]
+An original occurrence $p$ has an exclusive interface
+in encounter scope $B$. Two candidate relationships
+$\rho_{pq}$ and $\rho_{pr}$ require it. At the subsequent
+witnessed boundary, an actual realization of $\rho_{pq}$
+commits all of that interface under the declared
+capacity law. A simultaneous candidate use by
+$\rho_{pr}$ is therefore defeated by its necessary
+capacity obligation. The theorem does \emph{not} infer
+that $r$ was absent or that $\rho_{pr}$ never existed
+in a different scope; those claims require independent
+witnesses.
+\end{example}
+
+\begin{example}[Shared relational consistency may force a value relation]
+Assume an established original-property relation $S$
+is an equivalence of a particular oriented, source-scoped
+interface value (not an identity of source occurrences).
+Suppose $S(p,q)$ and $S(p,r)$ are witnessed in the same
+compatible comparison context. By the declared symmetry
+and transitivity of \emph{that} property relationship,
+$S(q,r)$ is forced without witnessing or constructing
+a separate pairwise joining event between $q$ and $r$.
+This derived value relationship is not evidence that
+$q$ and $r$ physically contacted.
+\end{example}
+
+\begin{example}[Shared occurrence without an effective dependency]
+A witnessed change in $\rho_{pq}$ and a candidate
+$\rho_{pr}$ share original occurrence $p$, but the
+law admits independent ports and no applicable shared
+exclusion or forcing relationship. The witnessed change
+does not by itself establish a new state of $\rho_{pr}$.
+If its evidence is unknown, it stays unknown.
+\end{example}
+
+\subsection{Chains of justified consequences}
+\begin{theorem}[CRPP-9: conditional nonmaterialized consequence propagation]
+Let a finite source-preserving joint encounter admit
+a grounded sequence of witnessed changes and sound
+shared-obligation forcing steps. Every conclusion of
+this sequence is necessary in each compatible
+joint-transition history. The sequence may establish
+a defeated arrangement, required value relation,
+or fulfilled obligation without constructing a separate
+absent-counterpart operation or hypothetical successful
+intermediate joining history. It determines a
+\emph{complete next construction} only when existence,
+complete outcome coverage and causal uniqueness are
+separately established; otherwise the remaining
+distinctions stay as typed residuals.
+\end{theorem}
+\begin{proof}
+Base steps are actual scoped contact or change witnesses.
+Assume all predecessors of the next step hold in every
+compatible joint-transition history. The step's
+sound declared shared constraint entails its consequent
+whenever those predecessors hold. Hence the new conclusion
+also holds in every compatible history. Finite induction
+establishes soundness. No unrealized successful event
+is a premise. The separate uniqueness/existence
+condition for full closure follows CRPP-4 and CRPP-6;
+without it, only proved partial consequences follow.
+\end{proof}
+
+\begin{remark}[No automatic propagation from shared identity]
+Sharing an occurrence, geometrical proximity, a simultaneous
+timestamp or a common category of property does not
+itself justify any particular cross-relation change.
+The exact dependence must be witnessed or derived from
+a sound original joining law. Similarly, a contradiction
+cannot be replaced by a uniquely selected result.
+\end{remark}
+
+\subsection{What remains open}
+This theorem gives a sufficient form of direct consequence
+propagation from witnessed changes and established
+shared constraints. It does not derive a universal
+physical joint-response law solely from existence,
+prove that all globally necessary consequences admit
+short local certificates, or establish runtime speedup.
+A stronger result requires deriving the applicable
+shared constraint itself from primitive construction,
+and auditing source-dependent histories where local
+pairwise observations agree but joint outcomes differ.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
