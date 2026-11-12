@@ -24,7 +24,7 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.11}
+\date{November 12, 2026\\Revision 0.12}
 
 \begin{document}
 \maketitle
@@ -1747,6 +1747,210 @@ properties, simultaneous competing contacts, and
 contradictory reports. Only then can ConstructiveRT
 test a direct source-preserving property transfer
 against a separately constructed exhaustive verifier.
+
+
+\section{CRPP-13: minimal property-preserving consequence support}
+\label{sec:crpp13}
+
+\subsection{Preserve causal requirements, not surface similarity}
+A consequence $K$ of an encounter $B$ may depend on only some
+of its witnessed original distinctions. Transport to a new
+source does not require matching every incidental feature
+of $B$, but does require preserving each distinction needed
+to establish $K$ under its original scoped joining law.
+A proof basis is not the entire source ledger: even evidence
+not needed for $K$ remains exactly recoverable as history.
+
+\begin{definition}[Scoped distinction support]
+Fix a sound original joining law $J$, the scope and
+a target consequence $K$. Let $D_B$ be a finite collection
+of named, source-grounded property, participation, orientation,
+boundary, and evidence distinctions for the original
+encounter. A support $S\subseteq D_B$ is \emph{sufficient}
+for $K$ if every law-compatible construction satisfying
+the preserved distinctions $S$ also satisfies $K$,
+with at least one such construction existing. Write
+$S,J\Vdash K$. The source/witness provenance needed to
+verify $S$ is part of its certificate, even where not
+itself an outcome-determining property.
+\end{definition}
+
+\begin{definition}[Subset-minimal causal support]
+A sufficient support $S_*$ is subset-minimal relative
+to the fixed law, observation language, and admissible
+original distinction family when
+\[
+ S_*,J\Vdash K,\qquad
+ \forall s\in S_*:\ (S_*\setminus\{s\}),J\not\Vdash K.
+\]
+This is inclusion minimality, not necessarily fewest
+elements, least information, cheapest runtime, or a
+unique global support.
+\end{definition}
+
+\begin{proposition}[Removal requires a genuine nonentailment witness]
+When entailment is defined over all compatible constructions,
+$S\setminus\{s\}$ fails to entail $K$ only when there exists
+a compatible construction satisfying the reduced support
+in which $K$ does not hold. Failure of an incomplete proof
+search to derive $K$ is insufficient evidence for this.
+\end{proposition}
+\begin{proof}
+By the semantic definition, entailment requires $K$
+in all compatible constructions satisfying the support
+and requires nonempty compatibility. If a reduced
+support is satisfiable but does not entail $K$, at
+least one compatible construction violates $K$.
+A failed search without completeness cannot establish
+that counterexample. If removing a distinction makes
+the reduced support inconsistent, the original
+certificate must be re-examined: removing premises
+should not cause inconsistency in an ordinary
+conjunctive support semantics.
+\end{proof}
+
+\subsection{Transport is a structure-preserving correspondence}
+\begin{definition}[Consequence-relative original-property correspondence]
+A correspondence $\phi$ from a source support $S_*$ to
+a target encounter $B'$ associates each source
+\emph{property-role distinction} with a witnessed
+target distinction that preserves the exact joining
+requirements used by the proof of $K$: property kind,
+relevant value relation, incidence, orientation,
+causal scope, applicable law/version, and dependencies.
+It must preserve equalities of shared occurrence
+\emph{within the support} while not identifying
+different source occurrence IDs across encounters.
+It must not determine membership by first checking
+whether the desired $K$ occurred.
+\end{definition}
+
+\begin{definition}[Law-invariant consequence transport]
+A correspondence $\phi$ is certified for $K$ under $J$
+when every forcing step of a sound grounded derivation
+from $S_*$ to $K$ remains applicable to the corresponding
+target requirements, and the law warrants the same
+conclusion for the mapped distinctions. The resulting
+target consequence is denoted $\phi(K)$ where its
+source-specific identities and scopes are substituted
+in accordance with the proven correspondence.
+\end{definition}
+
+\begin{theorem}[CRPP-13: minimal-support consequence transport]
+Let $S_*$ be a satisfiable subset-minimal sufficient
+support of consequence $K$ under sound scoped law $J$.
+Let $B'$ be an independently witnessed target
+encounter with a source-preserving correspondence
+$\phi$ that verifies every support distinction and
+preserves each necessary rule application of a
+grounded proof of $K$. If $J$ is justified for the
+target scope and the corresponding target premises
+are jointly consistent, then $\phi(K)$ is entailed
+for $B'$. A separate hypothetical successful join
+for every absent counterpart is not required.
+The original and target source ledgers remain distinct.
+\end{theorem}
+\begin{proof}
+Each original support distinction is witnessed in
+the target through $\phi$ with the same role-relevant
+property and applicable scoped law. Induct on the
+finite grounded proof of $K$. Its base premises
+transfer by the verified correspondence. At each
+further step the same law clause remains applicable,
+so its mapped consequent follows. Thus the mapped
+conclusion $\phi(K)$ follows for the target.
+The induction concerns original witnessed distinctions
+and their justified implications; unrealized successful
+joining histories are unnecessary. Exact causal
+recovery requires both ledgers separately.
+Subset-minimality explains economy of the premises
+but is not needed for soundness of transfer.
+\end{proof}
+
+\subsection{Minimality, uniqueness and robustness differ}
+\begin{proposition}[Minimal support need not be unique]
+One and the same consequence can have two distinct
+subset-minimal supports under the same law.
+\end{proposition}
+\begin{proof}
+Suppose either independently witnessed condition $a$
+or independently witnessed condition $b$ suffices
+for $K$, and neither is implied by the empty support.
+Then $\{a\}$ and $\{b\}$ are two different
+subset-minimal sufficient supports. They need not
+be equivalent constructions or have the same provenance.
+\end{proof}
+
+An \emph{essential} distinction appears in every sufficient
+support within the specified finite language; a merely
+present distinction may be incidental, while a distinction
+in one minimal proof can be replaceable by a separate
+valid proof. The law, target consequence, observation
+language, and permitted domain must remain fixed
+when claiming minimality.
+
+\begin{example}[Only shared interface identity and incompatibility transfer]
+An original source-specific exclusion of simultaneous
+joins $J_{pq}$ and $J_{pr}$ is certified by (i) both
+joins requiring the same original interface respect,
+(ii) the conflicting oriented conditions $a,b$, and
+(iii) the established within-scope incompatibility
+of those conditions. A new source encounter can
+inherit that exclusion if these original
+property-role relationships and the sound law are
+witnessed in its own scope. Irrelevant source color,
+serial numbering, or unrelated independent interfaces
+need not be preserved for \emph{this} deduction.
+The new source identity is not erased or equated
+with the old one.
+\end{example}
+
+\begin{example}[Orientation cannot be discarded]
+The original incompatibility applies only to the
+same oriented face of an occurrence. A target
+encounter contains two different faces whose
+conditions can coexist. Omitting the face-identity
+and orientation distinction falsely transfers
+the exclusion. The target supplies a compatible
+counterexample to that smaller purported support.
+\end{example}
+
+\begin{example}[Alternative causal supports]
+Either a conclusively witnessed absent necessary
+interface or an independently proved shared
+incompatibility defeats a proposed arrangement.
+These are different sufficient explanations.
+Deleting one while retaining the other may
+preserve the conclusion; preserving neither
+need not. A unique minimal explanation is not
+guaranteed.
+\end{example}
+
+\subsection{Certified minimization versus general discovery}
+If a \emph{complete} entailment oracle for a fixed finite
+bounded grammar exists, one may verify a proposed support,
+remove a distinction, and require a compatible
+counterexample whenever the reduced support does not
+entail $K$. Repeating this process yields an
+inclusion-minimal support for that grammar.
+This is an optional audit procedure, not the
+primitive joining law and not a proof of efficient
+or unique global minimization. A merely sound
+incomplete derivation engine can certify sufficiency
+of an obtained proof, but cannot certify that
+an unproved reduced support is insufficient.
+
+\subsection{Limits and next necessary derivation}
+This is a conditional consequence-transport theorem:
+the original scoped law remains a premise. It
+does not derive all physical invariants from
+bare existence, prove that minimal supports
+are unique, or bound search complexity.
+Next derive a constructive method for extracting
+a property-dependency witness directly from
+the original simultaneous contact-response history,
+with an independent counterexample audit
+for every claimed necessary preserved distinction.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
