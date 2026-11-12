@@ -24,7 +24,7 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.1}
+\date{November 12, 2026\\Revision 0.2}
 
 \begin{document}
 \maketitle
@@ -257,6 +257,186 @@ The next proof must define:
 \end{enumerate}
 No unconditional global closure or universal efficiency theorem is
 claimed for those unresolved cases.
+
+
+\section{CRPP-3: constrained simultaneous joining}
+\label{sec:crpp3}
+\subsection{Admissibility is not realization}
+Let $e$ and $f$ be candidate oriented joining events under immutable,
+scoped laws. A candidate identifies its law, original participants,
+port roles, and potential resource obligations. Its admissibility
+$\Adm(e)$ is distinct from witnessed realization $\Real(e,w)$.
+In particular,
+\[
+\Adm(e)\land\Adm(f)\not\vdash\Real(e,w_e)\land\Real(f,w_f).
+\]
+A lack of a realization witness is not a witnessed negative report.
+
+\begin{definition}[Jointly feasible candidate arrangement]
+For a finite candidate collection $X$, a subcollection $T$
+is jointly feasible in original history $\Hist$ under laws $\Laws$
+when every member is individually admissible, every shared capacity
+and exclusion rule is satisfied jointly, and all source, orientation,
+causal-order and evidence requirements are satisfied. Write
+$\operatorname{Feasible}_{\Hist,\Laws}(T)$ for this judgment.
+The notation is logical: no implementation must construct every
+subset of $X$.
+\end{definition}
+
+If an original occurrence $p$ has a declared finite use-capacity
+$c_p$ in a specific scope, and event $e$ has declared resource use
+$u_p(e)$, then joint feasibility requires
+\begin{equation}\label{eq:jointcapacity}
+\sum_{e\in T}u_p(e)\leq c_p.
+\end{equation}
+This is bookkeeping for an explicitly established capacity law,
+not a claim that original property identities have scalar order or
+that every joining constraint is numerical. More general declared
+compatibility relations may replace Eq.~\eqref{eq:jointcapacity}.
+
+\begin{proposition}[Incompatibility without a chosen winner]
+If two candidates $e,f$ each use the whole exclusive capacity
+of an original occurrence $p$ in one scope, then no feasible
+realized arrangement contains both. Their individual admissibility
+alone does not imply which is realized or that either is realized.
+\end{proposition}
+\begin{proof}
+Joint realization violates the established shared-capacity
+constraint. With no separate witnessed realization or complete
+selection/progress law, the distinct histories realizing only
+$e$, only $f$, or neither are not excluded by exclusivity itself.
+\end{proof}
+
+\subsection{Determinate consequences and preserved alternatives}
+Let $\Omega(\Hist,\Laws)$ denote the logical family of histories
+consistent with the complete declared laws and witnessed evidence
+in the fixed scope. It is not a prescribed response table or a
+set that a runtime must enumerate.
+
+\begin{definition}[Determined consequence]
+A consequence $D$ is determined only when every compatible
+history in $\Omega(\Hist,\Laws)$ supports $D$. If distinct compatible
+histories support incompatible results, that result remains
+underdetermined by the construction.
+\end{definition}
+
+If a witnessed joining event $e$ consumes all capacity of $p$,
+any candidate requiring additional capacity of that same $p$
+in that scope has its relevant arrangement defeated. This defeat
+can propagate along the sound obligation dependencies of CRPP-1.
+The realized $e$ may fulfill earlier obligations only where their
+original laws recognize its actual witness, by CRPP-2.
+No such defeat is automatically inferred for a different
+capacity-bearing occurrence, a different source scope, or
+an independently admissible alternative.
+
+\begin{theorem}[CRPP-3: conditional constrained joining]
+Assume a finite declared joining system with sound capacity
+and compatibility constraints, scoped actual witnesses,
+sound fulfillment rules, and sound dependency relations.
+Then (i) any arrangement proven to violate a necessary
+joint constraint is unavailable; (ii) consequences of
+actually witnessed joins may satisfy earlier obligations
+only under their established fulfillment rules; (iii) these
+determined fulfillments and defeats propagate through
+sound dependency relations without independently constructed
+absent-counterpart operations or hypothetical successful
+intermediate join histories; and (iv) where distinct outcomes
+remain compatible with all laws and witnesses, the result must
+remain underdetermined.
+\end{theorem}
+\begin{proof}
+A violated necessary constraint excludes an arrangement,
+establishing (i). Apply each original fulfillment law to the
+actual witnessed join for (ii). Sound implication through
+existing declared dependencies yields (iii), without an
+unrealized event witness. Finally, if the evidence/laws admit
+different incompatible outcomes, no unique outcome is entailed
+by the definition of determination, establishing (iv).
+\end{proof}
+
+\begin{remark}[What is not established]
+This theorem proves sound consequence propagation, not complete
+global inference, a unique scheduler, or a polynomial-time
+algorithm for arbitrary competing joins. Global uniqueness,
+optimization, cycles and composition of genuine simultaneous
+physical interactions may require additional proof or search.
+The absence of a selected winner is not itself a new operation.
+\end{remark}
+
+\subsection{Conditional independence of joining order}
+\begin{proposition}[Commuting independent joins]
+Suppose two witnessed joins use independent capacity-bearing
+occurrences, do not alter each other's admissibility, and
+their declared ledger extensions commute while preserving all
+causally relevant source identities, witnesses and ordering.
+Then the two permitted realization orders yield equivalent
+final constructions relative to those declared distinctions.
+\end{proposition}
+\begin{proof}
+By noninterference each order remains admissible. By the
+assumed commutation of the ledger extensions, each final ledger
+recovers the same witnesses and causal relationships.
+Neither intermediate history is thereby identified with
+the other, nor is physical simultaneity inferred.
+\end{proof}
+
+\subsection{Counterexamples and recovery obligations}
+\begin{example}[One occurrence, two potential obligations]
+If occurrence $b$ could fulfill A's obligation through $e$
+or C's obligation through $f$ but cannot join both,
+the joint arrangement is defeated. With no selection law or
+witness, neither fulfillment follows. If $e$ is subsequently
+witnessed and consumes $b
+A future constructive evaluator should be independently checked
+against a reference evaluator on a fully specified bounded grammar.
+Report exact reconstruction, source/witness preservation,
+materialized hypothetical states, independently constructed absence
+operations, allocations, wall time, memory, and failure cases.
+The reference evaluator verifies results; it must not serve as an
+unacknowledged source of the constructive law.
+
+\end{document}
+s capacity, A's obligation may
+close under its declared law while C's arrangement using $b$
+is defeated. C's distinct source and pending or defeated
+history are not erased.
+\end{example}
+
+\begin{example}[Missing witness is not consumed capacity]
+If evidence does not establish whether $e$ occurred, the system
+may not treat $e$ as having consumed $b
+A future constructive evaluator should be independently checked
+against a reference evaluator on a fully specified bounded grammar.
+Report exact reconstruction, source/witness preservation,
+materialized hypothetical states, independently constructed absence
+operations, allocations, wall time, memory, and failure cases.
+The reference evaluator verifies results; it must not serve as an
+unacknowledged source of the constructive law.
+
+\end{document}
+s capacity. Equally,
+lack of a realization witness is not a witnessed absence of
+the underlying property of $b$.
+\end{example}
+
+For exact reconstruction, retain or recover original property,
+source and value identities, competing candidate obligations,
+scoped laws and capacity declarations, port orientations,
+witnessed realized events and their causal order where relevant,
+and the original positive, negative, unknown and contradictory
+reports. An implementation may avoid independently storing
+derived exclusion statuses, but it may not discard evidence
+required to distinguish two original histories.
+
+\subsection{Remaining derivation}
+A general original-property law for simultaneous interaction
+is not supplied by this scoped exclusion result. Next work
+must establish simultaneous shared participation without silently
+imported priority, treatment of nonnumeric capacities and
+competition, noncircular cyclic closure, and conditions for
+complete inference without exhaustive enumeration. Only after
+those results should runtime resource savings be measured.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
