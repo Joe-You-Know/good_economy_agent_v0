@@ -32,3 +32,7 @@ Separates mutually consistent requirements, complete shared-contact laws, and ac
 ## Revision 0.6: original-contact incidence sufficiency (CRPP-7)
 
 A witnessed common encounter with complete, compatible source-specific coverage of an independently specified incidence relation suffices for its **relational closure** without hypothetical intermediate joins. Pairwise contacts alone do not prove a common encounter; completed contact does not determine subsequent physical dynamics. Keeps later obligations typed as pending, defeated, or conflicting, and preserves exact causal provenance. Next: derive whether independently witnessed changes in original participation relationships entail specific physical consequences without assuming a response law.
+
+## Revision 0.7: propagation of witnessed relational change (CRPP-8)
+
+Distinguishes persistent original relationships, verified absent-to-present changes, and unknown-to-present observations that do not prove creation. Adds source-scoped transition witnesses, sound propagation obligations, grounded partial-consequence certificates and a conditional criterion for uniquely determined subsequent constructions. Before/after correlation does not independently establish a causal mechanism. The complete primitive transition law and runtime efficiency remain open.
