@@ -1,0 +1,270 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}[definition]{Example}
+\newcommand{\Req}{\operatorname{Req}}
+\newcommand{\Sat}{\operatorname{Sat}}
+\newcommand{\Def}{\operatorname{Def}}
+\newcommand{\Adm}{\operatorname{Adm}}
+\newcommand{\Real}{\operatorname{Real}}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\Hist}{\mathcal{H}}
+\newcommand{\Obs}{\mathcal{E}}
+\newcommand{\Laws}{\mathcal{J}}
+
+\title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
+\large Conditional Formalization and Open Proof Obligations}
+\author{Joseph Fredrickson\\Working mathematical research notes}
+\date{November 12, 2026\\Revision 0.1}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+This note formalizes the first two proposed Constructive Residual Preservation and
+Propagation results (CRPP-1 and CRPP-2). The foundational goal is to determine
+consequences from original property occurrences, witnessed evidence, and established
+joining relationships, without allocating independent absence-property operations or
+materializing hypothetical successful intermediate constructions. The results are
+\emph{conditional}, applying only within complete, explicitly declared joining laws.
+They do not establish a universal physical interaction grammar or a speed advantage
+over conventional evaluation.
+\end{abstract}
+
+\section{Scope and interpretive commitments}
+An original property identity is not a scalar index, a linearly ordered value,
+or a shorthand for a traditional arithmetic object. In particular,
+distinct original occurrences and distinct construction histories remain
+distinct even where a declared operation yields the same status.
+The symbols in this note are names for distinctions and entailments; they do
+not assume classical multiplication or numerical subtraction.
+
+For each named original property $Q$, distinguish witnessed positive evidence
+$1_Q$, witnessed negative evidence $0_Q$, unknown evidence $?_Q$,
+and conflicting positive/negative reports $\top_Q$. The negative
+reference $0_Q$ is \emph{of the original $Q$}, not a second primitive.
+Unknown is never silently taken as absence; contradiction is never silently
+resolved. Evidence is source- and context-scoped.
+
+The construction includes a recoverable source ledger, declarations of
+orientation, versioned joining laws, and witnessed realized relationships.
+Possibility or admissibility is not itself a witnessed realization.
+
+\section{Primitive observational domain}
+\begin{definition}[Original occurrence]
+An occurrence has an original property identity, a value-property identity
+where applicable, a source, orientation/role information, observed witnesses,
+and provenance. Equality of value-property payloads never by itself merges
+distinct occurrence or source identities.
+\end{definition}
+
+\begin{definition}[Evidence state]
+For a fixed property, source, and observation context, an evidence state is
+one of $\{\mathrm{present},\mathrm{absent},\mathrm{unknown},\mathrm{conflict}\}$.
+The judgments below use an uncontested witnessed absence only where the
+relevant negative report is established and no conflicting positive report
+is ignored. Historical reports remain in the ledger even when new reports
+change the currently licensed conclusions.
+\end{definition}
+
+\begin{definition}[Joining law and obligation]
+A joining law $J$ specifies version, scope, port identities and orientations,
+source/value admissibility conditions, closure arrangements, witnessed
+fulfillment conditions, and any capacity or exclusivity constraints.
+An obligation $m$ is a named requirement of an arrangement under $J$,
+not an independent operation allocated for the absence of its required
+property.
+\end{definition}
+
+\begin{definition}[Residual condition]
+Relative to an established law and observation snapshot, a residual
+condition records what is \emph{not yet fulfilled}: conclusively
+defeated, pending, or unresolved through conflicting evidence.
+Its recoverable meaning is determined by original occurrences, applicable
+laws, witnessed observations and prior realized joins. A residual condition
+need not have a separately allocated runtime object.
+\end{definition}
+
+\section{CRPP-1: preservation and consequence propagation}
+Fix an obligation $m$ belonging to an arrangement $a$ of a closure $M$.
+Assume its declared law requires uncontested presence of original property
+$Q$ in the relevant context. For a witnessed negative report on that very
+requirement, soundness of the requirement yields
+\begin{equation}\label{eq:defeat}
+  0_Q\land\Req(m,Q)\ \vdash\ \Def(m).
+\end{equation}
+This does not entail the disappearance of the original surviving occurrences,
+nor that every alternative arrangement for $M$ is defeated.
+
+\begin{proposition}[Arrangement-sensitive nonclosure]
+Suppose the law enumerates a \emph{complete} family $\mathcal A_M$
+of alternative closure arrangements, and each arrangement has sound
+declared necessary obligations. Then
+\[
+ \bigl(\forall a\in\mathcal A_M,\ \Def(a)\bigr)
+ \ \Longrightarrow\ \operatorname{Unavailable}(M).
+\]
+Here $\Def(a)$ requires evidence conclusively defeating at least one
+necessary condition of $a$. The converse requires a separate completeness
+condition asserting that every way for $M$ to close appears in
+$\mathcal A_M$ with the relevant adequacy of its requirements.
+\end{proposition}
+\begin{proof}
+Every admitted closure must realize one arrangement in the complete family.
+By hypothesis each such arrangement violates an established necessary
+condition. Therefore none of the admitted arrangements can close. This
+conclusion is relative to the law's declared scope and evidence snapshot.
+\end{proof}
+
+\begin{theorem}[CRPP-1: conditional residual propagation]
+Let a finite acyclic network of joining dependencies contain
+sound requirement implications, scoped witnesses, complete arrangement
+declarations wherever total nonclosure is claimed, and all relevant
+source/orientation/capacity conditions. A conclusively defeated
+obligation propagates defeat only to dependent arrangements whose
+necessary conditions include it. Every downstream nonclosure obtained
+by these sound steps is justified by the original witnesses and laws
+without construction of an independent absent-counterpart operation
+or hypothetical successful intermediate joins.
+\end{theorem}
+\begin{proof}
+At the first dependency, the requirement semantics justify
+Eq.~\eqref{eq:defeat}. For an acyclic network, take a topological
+ordering. If a predecessor's required arrangement is conclusively
+defeated, each dependent arrangement requiring that predecessor is
+defeated by its declared necessary condition. A closure is unavailable
+only after all its admitted arrangements have been conclusively
+defeated. Induction along the ordering preserves soundness.
+The deduction uses established conditions, not unrealized output
+histories.
+\end{proof}
+
+\begin{remark}[No elimination of evidence]
+A defeated obligation is not the same as a missing observation,
+and an unavailable \emph{particular} closure is not proof that all
+other constructions using the surviving occurrences are unavailable.
+A change in relevant law version or evidence scope invalidates the
+old consequence unless renewed or independently warranted.
+\end{remark}
+
+\section{CRPP-2: joining surviving residual distinctions}
+Consider original histories $A$ and $B$, surviving occurrences
+$a\in A$, $b\in B$, and a further declared law $J_3$.
+
+\begin{definition}[Admissibility and realization]
+$\Adm(J_3,a,b)$ means the orientations, source/value types, scope, capacity,
+and evidence constraints admit this oriented participation.
+$\Real(J_3,a,b,w)$ means a witness $w$ establishes that this relationship
+\emph{actually occurred}. Admissibility does not imply realization.
+\end{definition}
+
+\begin{definition}[Fulfillment certificate]
+A declared law for a prior obligation $m$ specifies when a realized
+join witness supplies the required evidence. Denote this by
+$\Sat(m\mid J_3,a,b,w)$. It is not inferred merely from similar
+property names.
+\end{definition}
+
+\begin{proposition}[Scoped obligation fulfillment]
+If a realized $J_3(a,b)$ has a witness satisfying the declared
+fulfillment condition of a prior obligation $m$, then $m$ is
+fulfilled in the resulting construction. Fulfillment of a distinct
+obligation $n$ requires its own declared justification.
+\end{proposition}
+\begin{proof}
+This is the soundness condition of $m$'s original fulfillment law.
+The realized witness supplies the relevant evidence. No conclusion
+about $n$ follows until its own conditions are established.
+\end{proof}
+
+\begin{theorem}[CRPP-2: conditional residual joining]
+Let $A,B$ have recoverable original ledgers, and suppose $J_3$ is
+admissible and \emph{witnessed realized}. Under complete scoped
+fulfillment rules, all earlier obligations fulfilled by that witness
+may be determined separately from the applicable laws; all remaining
+defeated, pending, or conflicting residual conditions are preserved;
+and no distinct source history is equated with another. The outcome
+does not require independently materializing counterfactual successful
+joins for previously unmatched obligations.
+\end{theorem}
+\begin{proof}
+Extend the witnessed ledger with the realized join, participants,
+orientation and witness. Each applicable obligation law determines
+whether its condition is met by this evidence; other obligations
+retain the state justified by their evidence and constraints.
+Recoverability of the original ledger distinguishes earlier
+nonfulfillment from later fulfillment. All determinations follow
+from actual witnesses and laws, not from hypothetical successful
+histories.
+\end{proof}
+
+\begin{example}[Reciprocal but distinct fulfillment]
+$A$ has occurrence $p_A$ and a pending admissible-$Q$ obligation;
+$B$ has occurrence $q_B$ and a pending admissible-$P$ obligation.
+If the original laws explicitly allow a realized $J_3(p_A,q_B,w)$
+to fulfill both, both obligations are satisfied. The sources
+and original joining histories remain distinct. If $A$ instead
+required a specifically absent $q_A$ of source $S_A$, a later
+$q_B$ does not retroactively witness $q_A$'s existence unless
+the law permits an alternative fulfillment path.
+\end{example}
+
+\section{Information needed for recovery}
+Let $\Hist$ be the complete declared original construction ledger.
+For a proposed exact representation $E$ and decoder $D$, require
+\begin{equation}\label{eq:roundtrip}
+       D(E(\Hist))\equiv_{\mathrm{causal}}\Hist.
+\end{equation}
+The recoverable distinctions include original occurrence/value/source
+identities; reports and their contexts; ordering where causally relevant;
+law fingerprints and versions; port orientation; witnessed realized joins
+and participating occurrences; and source-specific residual obligations.
+Derivable statuses may be omitted as \emph{stored objects} if the decoder
+recovers them from sufficient retained causes and relations.
+Two histories with identical final closure statuses can still differ
+causally and must not be merged. For an exact byte-encoding application,
+Eq.~\eqref{eq:roundtrip} additionally requires byte-for-byte reconstruction.
+
+\section{Nonconstruction claim and limitations}
+The formal claims above establish \emph{logical sufficiency} of existing
+law/witness relationships for certain consequences. They do not assert
+the absence of all physical transitions or that compiled inference
+necessarily outperforms optimized branching, symbolic logic,
+incremental evaluation, or a compressed representation.
+Instruction count, allocations, memory and energy are experimental
+questions distinct from the entailments.
+
+\section{Open derivation: constrained simultaneous joining}
+The current results do not determine which of two simultaneously
+admissible joins is realized when they compete for the same finite
+capacity or change each other's admissibility.
+The next proof must define:
+\begin{enumerate}[label=(\roman*)]
+\item witnessed simultaneity and distinct orientation/causal order;
+\item allocation or exclusivity of shared occurrences;
+\item composition laws for mutually constraining obligations;
+\item necessary and sufficient closure criteria under alternatives;
+\item fixed-point semantics for cyclic dependencies that do not assume their own conclusions;
+\item exact causal-ledger inversion after joint outcomes.
+\end{enumerate}
+No unconditional global closure or universal efficiency theorem is
+claimed for those unresolved cases.
+
+\section{Experimental contract for a later implementation}
+A future constructive evaluator should be independently checked
+against a reference evaluator on a fully specified bounded grammar.
+Report exact reconstruction, source/witness preservation,
+materialized hypothetical states, independently constructed absence
+operations, allocations, wall time, memory, and failure cases.
+The reference evaluator verifies results; it must not serve as an
+unacknowledged source of the constructive law.
+
+\end{document}
