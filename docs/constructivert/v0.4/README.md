@@ -4,7 +4,7 @@ Canonical source: [CRPP-1 and CRPP-2](CRPP_Residual_Propagation.tex).
 
 **Status:** working conditional derivation; not a universal physical joining theorem or a performance claim.
 
-The note establishes a scoped formulation for witnessed absence, residual preservation, arrangement-sensitive propagation, residual joining through a newly witnessed relationship, and causal-ledger invertibility. Competitive simultaneous joins, general completeness, and quantitative benefits remain open.
+The note establishes a scoped formulation for witnessed absence, residual preservation, arrangement-sensitive propagation, residual joining through a newly witnessed relationship, and causal-ledger invertibility. Revision 0.2 adds CRPP-3: scoped exclusivity/capacity, the distinction between admissible and witnessed joins, constrained propagation, preserved underdetermination, and conditional independence of noninterfering joins. A universal simultaneous-joining law, global completeness, and quantitative benefits remain open.
 
 ## Compilation
 
