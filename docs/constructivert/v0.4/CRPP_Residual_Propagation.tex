@@ -24,13 +24,13 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.12}
+\date{November 12, 2026\\Revision 0.13}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-This note formalizes the first two proposed Constructive Residual Preservation and
-Propagation results (CRPP-1 and CRPP-2). The foundational goal is to determine
+This note develops a sequence of conditional Constructive Residual Preservation and
+Propagation results (CRPP-1 through CRPP-14). The foundational goal is to determine
 consequences from original property occurrences, witnessed evidence, and established
 joining relationships, without allocating independent absence-property operations or
 materializing hypothetical successful intermediate constructions. The results are
@@ -1951,6 +1951,269 @@ a property-dependency witness directly from
 the original simultaneous contact-response history,
 with an independent counterexample audit
 for every claimed necessary preserved distinction.
+
+
+\section{CRPP-14: dependency extraction from original constructive witnesses}
+\label{sec:crpp14}
+
+\subsection{Separate the ledger, a consequence, and its proof}
+Let $\Hist$ denote the complete recoverable original ledger
+of source-specific occurrences, witnessed incidences,
+orientation, temporal scope, evidence status, and construction
+history. A particular conclusion $K$ need not depend on
+every distinction in $\Hist$. This fact licenses a smaller
+\emph{proof support}, not deletion of the remaining historical
+distinctions needed for exact inversion.
+
+\begin{definition}[Witness-grounded rule instance]
+A rule instance $e=(J,\mathcal P,c,\tau)$ consists of an
+independently established original joining law $J$, a
+finite collection of already established antecedent
+distinctions $\mathcal P$ with their actual original
+occurrence identities, a required consequent $c$, and
+a certificate $\tau$ of source, orientation, evidence
+status, law version, and applicable observation scope.
+The antecedents must be jointly satisfied by actual
+witnesses or previously justified conclusions. A
+candidate but unexecuted joining operation is not an
+original witness.
+\end{definition}
+
+\begin{definition}[Constructive dependency step]
+The dependency step of $e$ is the justified relationship
+$\mathcal P\Rightarrow_J c$ with its provenance.
+The antecedents together may be necessary for that
+specific rule instance; this is a \emph{multi-premise}
+relationship and need not decompose into independently
+sufficient pairwise steps. Several alternative rule
+instances may justify the same consequent, and they
+must not be silently merged.
+\end{definition}
+
+\begin{definition}[Grounded proof trace and support]
+A grounded proof trace $\pi_K$ is a finite acyclic
+sequence of original witnessed distinctions followed
+by sound scoped rule instances leading to consequence
+$K$. Its \emph{support} $S(\pi_K)$ contains precisely
+the original witness distinctions used at leaves of
+this proof and the source-scoped law premises needed
+to replay each rule instance. Its trace records every
+intermediate dependency and the relevant source identity.
+Intermediate justified consequences are not asserted to
+have been independent physically realized events.
+\end{definition}
+
+\subsection{Extract from witnessed construction}
+Starting with an actual original witness, a direct
+extraction step follows an applicable original joining
+requirement to its consequent and records the
+provenance of the jointly required antecedents.
+When a consequent becomes an antecedent of another
+established rule, its already grounded dependency
+is carried forward. This is \emph{forward provenance
+propagation}, not a scheduler of hypothetical successful
+outcomes. At a target $K$, tracing the actually used
+rule instances backwards yields its proof support.
+This conceptual construction does not require
+building the entire family of hypothetical
+joint-transition histories.
+
+\begin{proposition}[Sufficiency of extracted proof support]
+Under sound source-scoped rule instances and valid original
+witnesses, any grounded proof trace $\pi_K$ establishes
+$S(\pi_K),\Laws\Vdash K$ for the relevant declared
+law semantics, provided those premises are jointly
+satisfiable. Consequently all original distinctions
+outside this trace can be omitted \emph{from this
+specific proof support} without invalidating that
+proof.
+\end{proposition}
+\begin{proof}
+Induct over the finite trace. Every leaf is an
+actual source-specific witnessed distinction.
+For each following step, all of its antecedents
+are original leaves or consequences justified
+earlier in the trace, and its sound applicable
+law entails the consequent. Thus each derived
+consequence, including $K$, holds in every
+compatible construction satisfying the leaf
+support and law premises. Other original
+ledger distinctions are not premises of this
+proof; their absence from the \emph{support}
+does not discard their historical evidence.
+\end{proof}
+
+\subsection{Proof relevance is not global necessity}
+\begin{proposition}[One proof does not identify all essential properties]
+A witness in $S(\pi_K)$ can be necessary for the
+chosen proof trace but unnecessary for $K$ under
+the complete law, because a different grounded
+proof may establish $K$ without it.
+\end{proposition}
+\begin{proof}
+Let witnessed conditions $a$ and $b$ each
+independently suffice for $K$ under sound
+distinct rule instances. A trace using $a$
+contains $a$ as a leaf, but another trace
+using $b$ proves $K$ without $a$. Hence
+proof support and globally essential
+distinctions are different concepts.
+\end{proof}
+
+\begin{definition}[Essential original distinction]
+Relative to a fixed scope, law, admissible
+original-distinction language and target $K$,
+a witnessed distinction $w$ is \emph{essential
+for all sufficient supports} only if every
+satisfiable sufficient support for $K$
+contains the corresponding original
+property-role requirement. Its source
+occurrence identity may be replaced
+across encounters only through an explicitly
+justified consequence-preserving correspondence.
+The claim of global essentiality needs
+complete proof coverage or a logically
+equivalent semantic argument, not a
+single proof trace.
+\end{definition}
+
+\subsection{Minimality certificates}
+A grounded trace establishes sufficiency, but its
+support may contain redundant witnesses, including
+ones carried through a nonminimal proof.
+To certify subset-minimality as in CRPP-13, for
+each retained witness $w$, exhibit a sound
+compatible construction satisfying the reduced
+support $S\setminus\{w\}$ in which $K$ fails,
+or an equivalent complete entailment proof.
+Such a counterexample establishes that $w$
+cannot be removed \emph{from that sufficient
+support}. It need not prove $w$ belongs to
+every alternative sufficient support.
+A merely incomplete search that fails to find
+another proof does not certify necessity.
+
+\subsection{Source-preserving two-layer representation}
+\begin{definition}[Ledger and derived consequence certificate]
+A correct representation consists of a recoverable
+original-ledger component $\mathcal H_{\mathrm{exact}}$
+and a derived certificate component
+$\mathcal P_K=(K,\pi_K,S(\pi_K),J\text{-versions},
+\text{source mappings})$. The certificate may
+be recomputed from the original ledger and sound
+laws when doing so is deterministic and
+version-correct. It may be stored explicitly
+when needed for audit or efficiency. It is
+not a substitute for unrecoverable original
+historical distinctions.
+\end{definition}
+
+\begin{theorem}[CRPP-14: direct dependency support with exact history]
+Assume a finite sound witnessed original construction,
+immutable or correctly versioned scoped joining
+laws, and an acyclic grounded proof trace for
+consequence $K$. Then:
+\begin{enumerate}[label=(\roman*)]
+\item the dependency antecedents of that trace can
+be extracted directly from the original witnessed
+rule applications without constructing all
+hypothetical successful intermediate joins;
+\item the extracted original witness support,
+together with the necessary scoped laws, is
+sufficient for $K$;
+\item evidence irrelevant to this proof may
+be excluded from the consequence support,
+but not from the exact recoverable ledger;
+\item transferring the proof to another encounter
+requires a witness-backed, law-preserving
+correspondence of every used property-role
+requirement, rather than equality of source IDs;
+\item no global minimum, globally essential
+property set, or universal runtime advantage
+follows without further proof and measurement.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+The witness and rule records of the finite
+grounded trace supply each dependency and
+its provenance, establishing (i).
+Inductive soundness of each step yields (ii).
+The complete ledger remains a separate
+invertible representation, establishing (iii)
+provided all original distinctions are retained
+or exactly recoverable. Apply the sound
+correspondence-preserving step induction
+of CRPP-13 for (iv). Distinct alternative
+proofs and possible computational search
+costs prevent the conclusions in (v).
+\end{proof}
+
+\subsection{Examples and falsifying cases}
+\begin{example}[Shared property exclusion as a short proof]
+Two proposed joining obligations refer to
+one original oriented interface. Their
+source-specific required conditions $a,b$
+are independently proven incompatible
+in one encounter scope. The target conclusion
+is that their joint fulfillment is unavailable.
+The proof depends on shared occurrence
+identity, both requirements, the encounter
+scope, and the incompatibility witness.
+An unrelated property $r$ may exist in
+the original construction but need not
+belong to this consequence support.
+It remains in the recoverable source ledger.
+\end{example}
+
+\begin{example}[Alternative proof defeats a necessity claim]
+A particular join is defeated both by
+witnessed absence of a required interface
+and independently by a shared-property
+incompatibility. A trace built from the
+absence witness is valid but that witness
+is not globally essential to the defeat
+because the incompatibility proof survives
+without it.
+\end{example}
+
+\begin{example}[Joint antecedents cannot be separated]
+A rule requires witnesses $a$ \emph{and} $b$
+in the same encountered orientation to
+force result $K$. Neither $a$ nor $b$
+alone licenses $K$. Replacing their joint
+premise by two independently sufficient
+pairwise implications would be unsound.
+\end{example}
+
+\begin{example}[Reconstruction failure from support alone]
+Two original encounter histories share
+the exact same minimal sufficient proof
+of $K$ but differ in an unrelated witnessed
+orientation of $r$. Keeping only the
+support yields identical encodings of
+different original histories, contradicting
+exact inversion. The remaining ledger
+information must be preserved or made
+deterministically recoverable.
+\end{example}
+
+\subsection{Open extraction complexity and primitive law}
+Witness-grounded traces may be obtained directly
+when an original rule application exposes its
+actual dependencies. This does not show that
+every causally necessary original relationship
+has a short acyclic proof, that cycles can
+be safely closed without independent grounding,
+or that finding a subset-minimal support is
+efficient. Nor does it derive a universal
+physical joining law from primitive existence.
+The next falsifiable test is to compare
+trace extraction, exact source recovery,
+and independently verified nonentailment
+counterexamples across a bounded original
+joining grammar with shared simultaneous
+obligations, alternative proofs and
+irrelevant historical witnesses.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
