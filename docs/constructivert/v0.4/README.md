@@ -48,3 +48,7 @@ Shows how a local exclusion can be **derived without a primitive numeric capacit
 ## Revision 0.10: witnessed resistance and scoped causal constraint (CRPP-11)
 
 Distinguishes a pending/unfulfilled join from an actually witnessed joining attempt with conclusively observed nonfulfillment. Such evidence yields a **scoped obstruction and typed residual**, not an automatic force law or universal incompatibility. A transferable cross-join exclusion requires a separate, independently justified original-property dependency. Includes attempted-participation witnesses, resistance certificates, causal-attribution limits, controlled-contrast and noncontact counterexamples. Next: derive warranted property-specific coexistence limits from contact-response contrasts.
+
+## Revision 0.11: transferable property-specific constraints (CRPP-12)
+
+Separates repeated observed contact-response patterns, causal identification by controlled original-property contrasts, and **scoped transport** of the established response condition to new original occurrences. Proves a conditional transfer theorem only where an independently justified sound invariance law and a non-outcome-defined encounter-domain correspondence hold. Distinguishes observed recurrence, defeasible empirically supported prediction, and deductively certified transfer; documents hidden-condition and scope-changing counterexamples. Exact source and witness histories remain distinct. Next: derive/test constructive invariance directly from original face-to-face joining obligations.
