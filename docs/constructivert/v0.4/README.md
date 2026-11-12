@@ -28,3 +28,7 @@ Formalizes a witnessed multilateral contact as a distinct incidence from individ
 ## Revision 0.5: grounded unavoidable outcome (CRPP-6)
 
 Separates mutually consistent requirements, complete shared-contact laws, and actual outcome realization. Defines a finite grounded forcing certificate from original witnesses and scoped laws, with source-preserving coverage of causally distinct rivals; proves a **conditional** uniquely determined joint closure when a result is required/realized and sufficient closure conditions hold. Includes anchored and unanchored three-participant examples, and a no-positive-closure residual case. Universal physical sufficiency, symmetry breaking, and global proof-search bounds remain open.
+
+## Revision 0.6: original-contact incidence sufficiency (CRPP-7)
+
+A witnessed common encounter with complete, compatible source-specific coverage of an independently specified incidence relation suffices for its **relational closure** without hypothetical intermediate joins. Pairwise contacts alone do not prove a common encounter; completed contact does not determine subsequent physical dynamics. Keeps later obligations typed as pending, defeated, or conflicting, and preserves exact causal provenance. Next: derive whether independently witnessed changes in original participation relationships entail specific physical consequences without assuming a response law.
