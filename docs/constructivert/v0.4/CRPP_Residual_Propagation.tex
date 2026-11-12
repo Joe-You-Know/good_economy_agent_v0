@@ -24,7 +24,7 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.8}
+\date{November 12, 2026\\Revision 0.9}
 
 \begin{document}
 \maketitle
@@ -1261,6 +1261,138 @@ A stronger result requires deriving the applicable
 shared constraint itself from primitive construction,
 and auditing source-dependent histories where local
 pairwise observations agree but joint outcomes differ.
+
+
+\section{CRPP-10: deriving shared constraint from original incompatibility}
+\label{sec:crpp10}
+\subsection{Original identity before assumed capacity}
+Let $p$ be one original occurrence in witnessed encounter $B$.
+Candidate joins $J_{pq}$ and $J_{pr}$ refer to the same $p$
+in the same encounter scope. This common identity prohibits
+silently substituting two independent copies of $p$, but
+does not by itself establish exclusivity or finite capacity.
+
+\begin{definition}[Scoped co-requirements]
+A required condition $a$ for join $J_{pq}$ and condition
+$b$ for join $J_{pr}$ are \emph{co-requirements} when both
+constrain the very same original property respect of $p$,
+source, orientation and common encounter scope. Different
+names for $a,b$ do not imply they are incompatible.
+\end{definition}
+\begin{definition}[Established incompatibility]
+Co-requirements $a,b$ are incompatible only when a source-
+grounded observation or independently justified original
+property law establishes that they cannot both be fulfilled
+in the same respect and scope. Incomplete negative reports,
+unknown evidence and unresolved contradiction do not
+establish that incompatibility.
+\end{definition}
+
+\begin{proposition}[Joint exclusion without capacity counting]
+If two candidate joins require incompatible conditions
+of the same original property respect and encounter scope,
+then their joint realization in that scope is unavailable
+even without a separately declared numerical capacity.
+\end{proposition}
+\begin{proof}
+The assumed simultaneous fulfillment would require the
+source-identical original property to satisfy both
+conditions. The independently established incompatibility
+excludes that simultaneous state. The joint arrangement
+therefore violates a necessary joining requirement.
+Neither candidate is thereby excluded individually.
+\end{proof}
+
+\begin{proposition}[Observed noncoincidence does not prove a law]
+One observation in which two attempted joins fail to
+co-realize does not establish a permanent or universal
+incompatibility relation.
+\end{proposition}
+\begin{proof}
+That observation is consistent with actual incompatibility
+but also with unmet independent prerequisites, source-
+specific context, timing, an unobserved perturbation, or
+missing evidence. Their future causal implications can
+differ. One joint failure alone cannot distinguish them.
+\end{proof}
+
+\begin{definition}[Grounded shared-exclusion certificate]
+A certificate for a defeated joint arrangement retains
+the common original occurrence and property identity,
+the two necessary requirements, a witnessed or independently
+justified incompatibility, the shared scope and orientation,
+and the specific excluded arrangement. It does not infer
+absence of either original property from absence of a
+successful realized join.
+\end{definition}
+
+\begin{theorem}[CRPP-10: derived shared-obligation exclusion]
+For a finite witnessed joint encounter with source-preserving
+occurrence identities, every jointly required pair of
+conditions proven incompatible on the same original
+property respect and scope defeats any arrangement requiring
+both. The derived defeats may propagate through sound
+dependencies of CRPP-1 and CRPP-9 without constructing
+hypothetical successful counterpart joins or intermediate
+outcome histories. This neither realizes a winner nor
+establishes that all physical shared constraints take
+the form of such pairwise incompatibilities.
+\end{theorem}
+\begin{proof}
+Apply the preceding joint-exclusion proposition to
+each grounded incompatible co-requirement pair.
+The sound dependency rules transfer those proven
+defeats to downstream arrangements requiring them.
+Induction over a finite grounded propagation sequence
+preserves source-specific validity, without hypothetical
+successful rival histories.
+\end{proof}
+
+\subsection{Minimal causal incompatibility}
+A minimal incompatibility witness is a collection of
+jointly imposed original requirements and established
+constraints that cannot all hold, while no proper
+subcollection yields that particular contradiction.
+This is a minimal \emph{explanation}, not a claim about
+optimal runtime or a guarantee that a minimal witness
+can always be found without search.
+
+\begin{example}[One original oriented interface]
+A source-identical original interface of $p$ has
+one alignment property in encounter scope $B$.
+The $p$--$q$ relation requires alignment $a$ and
+the $p$--$r$ relation requires alignment $b$
+in that same respect. If independently established
+evidence says $a$ and $b$ cannot coexist, the
+joint realization is defeated without imposing a
+separate numerical capacity-one primitive.
+\end{example}
+\begin{example}[Distinct interfaces may coexist]
+$p$ has two distinguishable interfaces and each
+join requires one different interface. The shared
+identity of $p$ does not defeat their coexistence:
+an additional cross-interface dependency would
+have to be established from original evidence.
+\end{example}
+\begin{example}[Failure with missing evidence]
+Two attempted joins are not jointly witnessed
+successful, but a required orientation is unknown.
+No universal exclusivity follows. The applicable
+unresolved obligation is retained as a typed
+residual until a conclusive witness or relevant
+law establishes its status.
+\end{example}
+
+\subsection{Remaining foundational gap}
+The incompatibility of different conditions has not
+been derived merely from distinguishability: a single
+original occurrence can sustain multiple values,
+relations and interfaces. The further research task
+is to derive particular coexistence limits through
+original witnessed causal construction, retaining
+counterexamples and full provenance. This is not
+a universal physical contact-response law or
+a measured efficiency theorem.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
