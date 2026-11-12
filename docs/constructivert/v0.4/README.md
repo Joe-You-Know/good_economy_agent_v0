@@ -64,3 +64,19 @@ Separates the **complete exact original causal ledger**, **target-specific suffi
 ## Revision 0.14: reproducible bounded verification (CRPP-15)
 
 Added [`bounded_dependency_verifier.js`](./bounded_dependency_verifier.js). Run with `node docs/constructivert/v0.4/bounded_dependency_verifier.js` from the repository root. It compares **two different evaluators** over one explicitly declared four-join grammar: (1) a reference exhaustive enumerator that constructs hypothetical successful join objects for 16 subsets, and (2) direct witness-grounded constraint propagation without those objects. Six initial cases were executed in the JavaScript tool runtime (separate Node/GitHub CI execution not yet verified), including multi-premise simultaneous obligation, two independent exclusion proofs, two distinct irrelevant-history ledgers, unknown evidence, and contradictory reports. All six checks passed. Across five nonconflicting cases reference allocated **160 hypothetical join objects** over **80 candidate subsets**, while the direct procedure allocated **zero such objects**. This measures only this object class, **not total allocations, memory, time, global completeness or ConstructiveRT speedups**. Exact JSON-case roundtrip was checked; a real codec/decoder inversion test remains outstanding.
+
+## Revision 0.15: broader verification with serialization and resources (CRPP-16)
+
+Reproducible test files:
+- [CRPP16_broader_verifier.js](./CRPP16_broader_verifier.js): `node docs/constructivert/v0.4/CRPP16_broader_verifier.js`
+- [CRPP16_isolated_bench.js](./CRPP16_isolated_bench.js): run in separate processes with `node --expose-gc docs/constructivert/v0.4/CRPP16_isolated_bench.js direct` and repeat with `oracle`, each five times.
+
+Evaluated locally using Node 22.16.0 on Linux x64: 10 joins, four conjunctive obligations, 243 deterministic ledgers (240 generated, three focused). Three initially missing negative entailments were addressed by grounded joint-obligation contrapositive propagation. In the final local run there were zero unsound, zero missing and zero JSON/DEFLATE roundtrip failures.
+
+Direct: zero hypothetical successful join objects, zero hypothetical model masks; 3,907 candidate specifications examined, 5,535 rule checks and 535 proof nodes. Exhaustive: 246,784 subsets, 1,233,920 hypothetical join objects, 246,784 subset masks, and 67,358 accepted models.
+
+Compressed bytes over 243 separately compressed cases: original ledgers only 37,663; original ledgers plus direct proof certificates 81,639; original ledgers plus exhaustive accepted model masks 207,370. These wire packets use JSON/Base64/DEFLATE, NOT the native ConstructiveRT codec; the exhaustive baseline also stores more information.
+
+Five isolated process runs median: direct 5.10 ms, exhaustive 195.22 ms; peak process RSS approximately 27.7 MiB versus 39.5 MiB; approximate sampled heap increases 1.04 MiB versus 2.71 MiB. Memory measurements are coarse and the exhaustive reference is intentionally expensive. No superiority over a competent symbolic/SAT baseline, native ConstructiveRT codec, or general physical joint laws is established.
+
+The JavaScript benchmark was executed locally before commit; no separate GitHub Actions or downloaded-commit execution is claimed.
