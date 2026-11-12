@@ -44,3 +44,7 @@ Derives sound forcing from witnessed relational change plus a genuinely shared o
 ## Revision 0.9: shared constraints from incompatible original co-requirements (CRPP-10)
 
 Shows how a local exclusion can be **derived without a primitive numeric capacity counter** when two proposed joins require independently established incompatible conditions on the same original property respect, source and encounter scope. Includes an explicit non-inference result: one observed failure of simultaneous joining cannot prove a general coexistence law. Source-preserving exclusion certificates, a minimal incompatibility explanation and counterexamples for independent interfaces and unknown observations are included. Deriving incompatibility itself from physical primitive construction and global runtime benefits remains open.
+
+## Revision 0.10: witnessed resistance and scoped causal constraint (CRPP-11)
+
+Distinguishes a pending/unfulfilled join from an actually witnessed joining attempt with conclusively observed nonfulfillment. Such evidence yields a **scoped obstruction and typed residual**, not an automatic force law or universal incompatibility. A transferable cross-join exclusion requires a separate, independently justified original-property dependency. Includes attempted-participation witnesses, resistance certificates, causal-attribution limits, controlled-contrast and noncontact counterexamples. Next: derive warranted property-specific coexistence limits from contact-response contrasts.
