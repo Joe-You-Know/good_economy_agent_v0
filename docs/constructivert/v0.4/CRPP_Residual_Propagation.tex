@@ -24,7 +24,7 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.2}
+\date{November 12, 2026\\Revision 0.3}
 
 \begin{document}
 \maketitle
@@ -387,17 +387,7 @@ If occurrence $b$ could fulfill A's obligation through $e$
 or C's obligation through $f$ but cannot join both,
 the joint arrangement is defeated. With no selection law or
 witness, neither fulfillment follows. If $e$ is subsequently
-witnessed and consumes $b
-A future constructive evaluator should be independently checked
-against a reference evaluator on a fully specified bounded grammar.
-Report exact reconstruction, source/witness preservation,
-materialized hypothetical states, independently constructed absence
-operations, allocations, wall time, memory, and failure cases.
-The reference evaluator verifies results; it must not serve as an
-unacknowledged source of the constructive law.
-
-\end{document}
-s capacity, A's obligation may
+witnessed and consumes $b$'s capacity, A's obligation may
 close under its declared law while C's arrangement using $b$
 is defeated. C's distinct source and pending or defeated
 history are not erased.
@@ -405,17 +395,7 @@ history are not erased.
 
 \begin{example}[Missing witness is not consumed capacity]
 If evidence does not establish whether $e$ occurred, the system
-may not treat $e$ as having consumed $b
-A future constructive evaluator should be independently checked
-against a reference evaluator on a fully specified bounded grammar.
-Report exact reconstruction, source/witness preservation,
-materialized hypothetical states, independently constructed absence
-operations, allocations, wall time, memory, and failure cases.
-The reference evaluator verifies results; it must not serve as an
-unacknowledged source of the constructive law.
-
-\end{document}
-s capacity. Equally,
+may not treat $e$ as having consumed $b$'s capacity. Equally,
 lack of a realization witness is not a witnessed absence of
 the underlying property of $b$.
 \end{example}
@@ -437,6 +417,90 @@ imported priority, treatment of nonnumeric capacities and
 competition, noncircular cyclic closure, and conditions for
 complete inference without exhaustive enumeration. Only after
 those results should runtime resource savings be measured.
+
+
+\section{CRPP-4: simultaneous participation and determined outcome}
+\label{sec:crpp4}
+CRPP-3 excludes incompatible joint arrangements but does not
+select which is realized. A genuinely simultaneous joint encounter
+must therefore be distinguished from arbitrarily ordered
+pairwise candidate joins.
+
+\begin{definition}[Witnessed joint boundary]
+A boundary $B$ records the original participating occurrences
+with source and value-property identities, their orientations,
+actual encounter witnesses, shared conditions and causally
+relevant timing. A set of admissible candidates is not by
+itself evidence of a joint realized encounter.
+\end{definition}
+\begin{definition}[Joint response relation]
+An established joint law $J^{[n]}$ admits a resulting construction
+$Y$ from the witnessed boundary $B$ when
+$\Gamma_{J^{[n]}}(B,Y)$ holds. The result preserves source
+identities, realized joins, relevant orientation, and typed
+residuals. The relation need not be reducible to pairwise joins,
+total, or single-valued.
+\end{definition}
+\begin{definition}[Determined result]
+An outcome $Y_*$ is determined only if a result exists and
+every result admitted by the complete declared joint law for
+the observed boundary is causally equivalent to $Y_*$ under
+the explicitly source-preserving notion of equivalence.
+This is semantic quantification, not a runtime requirement
+to construct each hypothetical result.
+\end{definition}
+\begin{proposition}[Exclusion does not select a winner]
+Individually admissible but mutually exclusive candidate joins
+do not, solely by virtue of their incompatibility, determine
+which join is realized or whether either occurs.
+\end{proposition}
+\begin{proof}
+The histories realizing only the first, only the second,
+or neither may all respect exclusivity unless additional
+established conditions or an actual witness distinguish them.
+\end{proof}
+\begin{theorem}[CRPP-4: conditional joint determination]
+Assume a witnessed joint encounter boundary containing every
+outcome-relevant distinction for a sound and complete established
+joint law. If a causally distinct result exists and is unique,
+the original joint relationship determines that result without
+an arbitrarily imposed pairwise evaluation order. Its fulfillment,
+nonfulfillment and residual consequences propagate through
+the sound declared dependencies of CRPP-1 and CRPP-2 without
+independently constructed absent-counterpart operations or
+hypothetical successful intermediate join histories.
+All original identities, witnesses, orientation and relevant
+history must remain recoverable.
+\end{theorem}
+\begin{proof}
+Existence and uniqueness give the determined joint result.
+Applying each original fulfillment and dependency condition
+yields only its licensed consequences. Those entailments
+require no hypothetical successful intermediate histories.
+The independent invertibility requirement is
+Eq.~\eqref{eq:roundtrip}.
+\end{proof}
+\begin{example}[Unresolved exclusive choice]
+Occurrence $b$ could fulfill $A$ or $C$, but not both.
+Without a determining joint interaction law or witnessed
+outcome, mutual exclusion proves no particular winner.
+\end{example}
+\begin{example}[Conditional three-way closure]
+A complete sound joint law might determine a specific
+three-participant closure and a remaining typed residual
+for the witnessed encounter of $P,Q,R$ without pairwise
+intermediate successes. Mere simultaneous presence of those
+properties does not establish the law or that closure.
+\end{example}
+\begin{remark}[Unresolved foundational question]
+A universal sound joint law has not been derived from bare
+distinguishable existence. Missing physically relevant
+properties may invalidate a purportedly unique response,
+and semantic uniqueness does not guarantee an efficient
+direct execution method. The next task is to derive an
+original-property joint interaction law and prove its
+existence, uniqueness and recovery conditions.
+\end{remark}
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
