@@ -24,3 +24,7 @@ Distinguishes a witnessed **joint encounter boundary** from individually admissi
 ## Revision 0.4: witnessed contact and shared constraint (CRPP-5)
 
 Formalizes a witnessed multilateral contact as a distinct incidence from individual pairwise admissibilities. Derives that contact and necessary shared constraints alone do **not** select closure, while a complete, sound jointly sufficient response law with existence and uniqueness does conditionally determine closure and typed residuals. Includes the cases of incompatible exclusive-port reuse, partially fulfilled joint interfaces, and underdetermined outcomes. The missing universal primitive response law and direct nonenumerative execution remain open.
+
+## Revision 0.5: grounded unavoidable outcome (CRPP-6)
+
+Separates mutually consistent requirements, complete shared-contact laws, and actual outcome realization. Defines a finite grounded forcing certificate from original witnesses and scoped laws, with source-preserving coverage of causally distinct rivals; proves a **conditional** uniquely determined joint closure when a result is required/realized and sufficient closure conditions hold. Includes anchored and unanchored three-participant examples, and a no-positive-closure residual case. Universal physical sufficiency, symmetry breaking, and global proof-search bounds remain open.
