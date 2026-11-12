@@ -80,3 +80,16 @@ Compressed bytes over 243 separately compressed cases: original ledgers only 37,
 Five isolated process runs median: direct 5.10 ms, exhaustive 195.22 ms; peak process RSS approximately 27.7 MiB versus 39.5 MiB; approximate sampled heap increases 1.04 MiB versus 2.71 MiB. Memory measurements are coarse and the exhaustive reference is intentionally expensive. No superiority over a competent symbolic/SAT baseline, native ConstructiveRT codec, or general physical joint laws is established.
 
 The JavaScript benchmark was executed locally before commit; no separate GitHub Actions or downloaded-commit execution is claimed.
+
+
+## Revision 0.16: CRPP-17 causal-complexity falsification and repair
+
+An independently implemented Python CNF/DPLL verifier tested **240 new native C++ cases** across 8/16/32/64 joins and five source-scoped causal families: overlapping exclusive ports, alternative joint obligations, chains, cyclic implications, and incompatible forks of mandatory consequences.
+
+**Unpatched v0.24 was not complete** for the new family: it missed 16 necessary negative conclusions out of 240 cases, all in the fork-conflict tests. This prompted a source-grounded law: if jointly required antecedents would force two mutually incompatible original joining consequences, the conjunction of those antecedents is unavailable. A particular unestablished antecedent can be excluded when all the others are witnessed; no hypothetical successful joins need be materialized.
+
+A small additive C++ experimental patch implements this local conflict rule. After the patch: 240/240 native results match the independent SAT oracle, with zero byte-recovery failures. The prior 243 native-vs-JS-vs-symbolic-vs-exhaustive cases still pass, with no proof discrepancies, as do all five Linux native test suites.
+
+**Scope:** This is a bounded theorem and experimental correction, not a complete general-purpose inference engine or established speed advantage over optimized SAT. Native elapsed timings include process startup; Python SAT timings do not. The executable source package and `Run_CRPP17_Windows.cmd` were delivered as a separate Windows-ready ZIP in the conversation; **this patch has not yet been independently compiled on Windows**.
+
+See the `CRPP-17` section of [CRPP_Residual_Propagation.tex](./CRPP_Residual_Propagation.tex) for the theorem, proof, counterexample, and limitations.
