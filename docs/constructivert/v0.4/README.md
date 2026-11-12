@@ -40,3 +40,7 @@ Distinguishes persistent original relationships, verified absent-to-present chan
 ## Revision 0.8: cross-relation propagation within one encounter (CRPP-9)
 
 Derives sound forcing from witnessed relational change plus a genuinely shared original obligation. Includes a formal compatible-transition semantics, a local proof certificate, an exclusive-interface example, derived consistency of a scoped value relationship without claiming physical contact, and a nonforcing shared-occurrence counterexample. Excluding a candidate arrangement does not witness absence of its original property. Global completeness, an unconditional primitive joint-response law, and runtime benefits remain unproved.
+
+## Revision 0.9: shared constraints from incompatible original co-requirements (CRPP-10)
+
+Shows how a local exclusion can be **derived without a primitive numeric capacity counter** when two proposed joins require independently established incompatible conditions on the same original property respect, source and encounter scope. Includes an explicit non-inference result: one observed failure of simultaneous joining cannot prove a general coexistence law. Source-preserving exclusion certificates, a minimal incompatibility explanation and counterexamples for independent interfaces and unknown observations are included. Deriving incompatibility itself from physical primitive construction and global runtime benefits remains open.
