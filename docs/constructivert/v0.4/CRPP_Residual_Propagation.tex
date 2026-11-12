@@ -24,13 +24,13 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.14}
+\date{November 12, 2026\\Revision 0.15}
 
 \begin{document}
 \maketitle
 \begin{abstract}
 This note develops a sequence of conditional Constructive Residual Preservation and
-Propagation results (CRPP-1 through CRPP-15). The foundational goal is to determine
+Propagation results (CRPP-1 through CRPP-16). The foundational goal is to determine
 consequences from original property occurrences, witnessed evidence, and established
 joining relationships, without allocating independent absence-property operations or
 materializing hypothetical successful intermediate constructions. The results are
@@ -2344,6 +2344,177 @@ and every source distinction recovered. A runtime
 must not disguise full counterfactual success
 histories as packed bitsets and then describe
 them as unconstructed.
+
+
+\section{CRPP-16: broader verification with real serialization and resources}
+\label{sec:crpp16}
+
+\subsection{Scope and independent reference}
+A broader executable experiment extends the CRPP-15
+four-join example to ten candidate joins $A$--$J$ and
+four conjunctive original joining obligations:
+$A\wedge C\Rightarrow D$,
+$D\wedge F\Rightarrow G$,
+$E\wedge H\Rightarrow I$, and
+$B\wedge F\Rightarrow J$.
+Original interface $p{:}x$ is shared by $A$ and $B$,
+and the source-scoped prerequisite tokens $X$ and $Y$
+can be present, conclusively absent, or unknown.
+The generated 240 cases vary witnessed positive and negative
+joins, property evidence, orientation, source labels, and
+irrelevant history. Three focused additional cases test
+independent exclusion proofs and distinct blue/red source
+histories with equivalent consequences.
+
+The direct procedure derives only source-grounded consequences:
+witnessed join and negative reports, conclusive missing
+requirements, occupied original ports, and forward
+conjunctive obligation closure. It also propagates the
+sound joint-obligation contrapositive: if the necessary
+joint conclusion is conclusively unavailable, and all
+but one of its antecedents are established, the last
+antecedent cannot hold. This is constraint entailment,
+not construction of a hypothetical successful join.
+
+The separate exhaustive reference instantiates a
+concrete hypothetical successful-join record for every
+selected candidate join of every one of $2^{10}=1024$
+candidate subsets, then filters by the declared grammar
+and computes the consequences holding across all valid
+joint arrangements. Conflicting reports are preserved as
+conflict rather than interpreted by explosion.
+The reference is algorithmically independent of the
+direct derivation, but shares the specified grammar.
+
+\subsection{Measured completeness correction}
+The initial direct experiment had no unsound conclusions,
+but missed three entailed negative joining facts.
+The reason was that a negative conclusion of a joint
+multi-premise obligation, combined with one established
+antecedent, excludes the remaining antecedent.
+Adding that sound constraint-propagation step restored
+complete agreement for the observed bounded cases
+without materializing hypothetical successful joins.
+This is a bounded empirical check, not a general proof
+of complete inference for arbitrary constraint families.
+
+\subsection{Observed verification results}
+On Node.js 22.16.0, Linux x64, the 243 evaluated cases
+comprised 239 consistent cases, two explicitly
+contradictory-evidence cases, and two inconsistent
+constraint instances. For all tested cases the
+direct status and asserted positive/negative
+consequences agreed exactly with the exhaustive
+reference. The experiment recorded zero unsound
+conclusions, zero missing entailed conclusions,
+and zero failed serialized ledger roundtrips.
+
+The reference visited 246,784 candidate subsets
+and created 1,233,920 hypothetical successful-join
+objects, including candidates later rejected.
+It also retained 246,784 hypothetical-state mask
+representations and found 67,358 accepted models
+in total. The direct procedure created zero such
+hypothetical successful-join objects or model
+bitsets. It nonetheless examined 3,907 candidate
+specifications, performed 5,535 recorded rule
+checks, and accumulated 535 proof-node records.
+It is therefore false to describe the direct
+procedure as computation-free or allocation-free.
+
+\subsection{Real serialized source-ledger recovery}
+Each case's original source ledger was encoded as
+UTF-8 JSON bytes. A direct consequence packet
+contains the exact original ledger bytes as Base64
+plus status, derived signed consequences, and
+their proof reasons. The packet was serialized
+as JSON, compressed with Node's
+\texttt{deflateRawSync} at level 6, decompressed,
+parsed, and its embedded ledger decoded.
+Exact original-byte equality, SHA-256 equality,
+and preservation of the signed consequence arrays
+were verified for all 243 packets, including
+distinct unrelated blue/red historical details.
+
+Total size over the separately compressed cases:
+\begin{center}
+\begin{tabular}{lr}
+\hline
+Payload & Compressed bytes\\
+\hline
+Original source ledgers only & 37,663\\
+Original ledgers + direct proof certificates & 81,639\\
+Original ledgers + all exhaustive accepted masks & 207,370\\
+\hline
+\end{tabular}
+\end{center}
+The direct packets before compression occupy
+105,961 bytes; the exhaustive-model packets
+occupy 354,303 uncompressed bytes. The exhaustive
+wire baseline encodes complete surviving model
+masks, which are not the same information product
+as a consequence certificate. This comparison
+therefore demonstrates the representational cost
+of exhaustive model storage, not superiority over
+every fair compact alternative. The direct packet
+is also larger than a ledger-only compressed stream:
+provenance certificates have a measurable cost.
+
+\subsection{Runtime and memory measurements}
+Five standalone process runs were made for
+\emph{each evaluator} with the same 243 cases
+and Node's garbage collector enabled. The
+median evaluation elapsed times were 5.10 ms
+(direct) and 195.22 ms (exhaustive).
+Median process peak RSS was approximately
+27.7 MiB and 39.5 MiB respectively; median
+increase in sampled heap usage above its starting
+value was approximately 1.04 MiB and 2.71 MiB.
+A combined-run measurement observed roughly
+4.59 ms direct evaluation, 184.80 ms exhaustive
+evaluation, and 28.72 ms for encoding,
+compression, decompression and recovery checks.
+The combined-run timings are not independent
+isolated medians. The process-wide RSS includes
+Node startup and runtime overhead; sampled
+heap peaks are approximate, not instrumented
+per-object allocation measurements.
+
+\subsection{Nonconstruction audit and limitations}
+This is a positive, bounded demonstration of
+\emph{actual nonconstruction} of hypothetical
+successful-join records and hypothetical model
+masks by the direct path. It is not a relocation
+of full success histories into a packed bitset:
+the direct code does not enumerate model masks
+and retains only original candidate specifications,
+witnesses and derived proof reasons. The
+independent exhaustive path deliberately
+creates success records and model masks.
+The count claims refer to these explicit
+semantic object classes; full allocation
+tracing was not performed, and proof-node
+objects are real allocations.
+
+Crucially, this experiment uses JSON/Base64 and
+DEFLATE, \emph{not} the production ConstructiveRT
+native codec. It does not demonstrate advantages
+for the existing CRTC1/CRTCG1 codecs, physical
+energy use, general scaling, or arbitrary physical
+simultaneous joining laws. The measured speed
+difference is strongly influenced by comparing
+forward propagation against exhaustive enumeration,
+not against the best alternative symbolic solver.
+The grammar and cases were authored together,
+and independent external replication is outstanding.
+
+The next escalation must compare against a
+competent symbolic/SAT-style baseline implementing
+the same semantics, use actual ConstructiveRT
+encoder/decoder with byte-for-byte ledger recovery,
+instrument total allocations and representations,
+and test grammars containing cycles, alternative
+minimal proof supports, and varied causal history.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
