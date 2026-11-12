@@ -36,3 +36,7 @@ A witnessed common encounter with complete, compatible source-specific coverage 
 ## Revision 0.7: propagation of witnessed relational change (CRPP-8)
 
 Distinguishes persistent original relationships, verified absent-to-present changes, and unknown-to-present observations that do not prove creation. Adds source-scoped transition witnesses, sound propagation obligations, grounded partial-consequence certificates and a conditional criterion for uniquely determined subsequent constructions. Before/after correlation does not independently establish a causal mechanism. The complete primitive transition law and runtime efficiency remain open.
+
+## Revision 0.8: cross-relation propagation within one encounter (CRPP-9)
+
+Derives sound forcing from witnessed relational change plus a genuinely shared original obligation. Includes a formal compatible-transition semantics, a local proof certificate, an exclusive-interface example, derived consistency of a scoped value relationship without claiming physical contact, and a nonforcing shared-occurrence counterexample. Excluding a candidate arrangement does not witness absence of its original property. Global completeness, an unconditional primitive joint-response law, and runtime benefits remain unproved.
