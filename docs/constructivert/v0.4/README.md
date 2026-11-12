@@ -20,3 +20,7 @@ This research branch does not modify the Good Economy Agent runtime, any codec, 
 ## Revision 0.3: simultaneous joint determination (CRPP-4)
 
 Distinguishes a witnessed **joint encounter boundary** from individually admissible competing candidates. A complete, sound joint response law with an existing unique causally distinguishable outcome is sufficient for conditional determination without imposing a pairwise order. Exclusivity alone cannot select a winner. The actual primitive joint response law, unconditional uniqueness, global completeness, and performance benefits remain open. Revision 0.3 also repairs accidental duplicated text in the prior LaTeX document.
+
+## Revision 0.4: witnessed contact and shared constraint (CRPP-5)
+
+Formalizes a witnessed multilateral contact as a distinct incidence from individual pairwise admissibilities. Derives that contact and necessary shared constraints alone do **not** select closure, while a complete, sound jointly sufficient response law with existence and uniqueness does conditionally determine closure and typed residuals. Includes the cases of incompatible exclusive-port reuse, partially fulfilled joint interfaces, and underdetermined outcomes. The missing universal primitive response law and direct nonenumerative execution remain open.
