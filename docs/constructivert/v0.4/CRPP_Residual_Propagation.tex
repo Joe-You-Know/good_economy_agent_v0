@@ -24,13 +24,13 @@
 \title{ConstructiveRT v0.4: Original-Property Residual Preservation, Propagation, and Joining\\
 \large Conditional Formalization and Open Proof Obligations}
 \author{Joseph Fredrickson\\Working mathematical research notes}
-\date{November 12, 2026\\Revision 0.15}
+\date{November 12, 2026\\Revision 0.16}
 
 \begin{document}
 \maketitle
 \begin{abstract}
 This note develops a sequence of conditional Constructive Residual Preservation and
-Propagation results (CRPP-1 through CRPP-16). The foundational goal is to determine
+Propagation results (CRPP-1 through CRPP-17). The foundational goal is to determine
 consequences from original property occurrences, witnessed evidence, and established
 joining relationships, without allocating independent absence-property operations or
 materializing hypothetical successful intermediate constructions. The results are
@@ -2515,6 +2515,121 @@ encoder/decoder with byte-for-byte ledger recovery,
 instrument total allocations and representations,
 and test grammars containing cycles, alternative
 minimal proof supports, and varied causal history.
+
+
+\section{CRPP-17: incompatibility of mandatory consequence joins}
+\label{sec:crpp17}
+
+\subsection{Falsification of locally incomplete propagation}
+The first native v0.24 evaluator matched all 243 existing CRPP-16
+examples, but CRPP-17 generated a broader original-property grammar
+at 8, 16, 32 and 64 joins in five independent families:
+overlapping ports, alternative derivations, deeper chains,
+cyclic obligations and incompatible consequence forks.
+An independent Python CNF/DPLL verifier found 16 missing
+negative conclusions in 240 tests of the unpatched native
+evaluator (four misses at each join count, all in the
+incompatible-fork family). These were \emph{omissions},
+not positive assertions contradicted by the reference.
+This counterexample defeats any general completeness
+claim inferred from the 243 prior passing cases.
+
+\begin{definition}[Shared antecedent obligation collision]
+Let two sound, source-specific original joining implications
+have the form
+\[
+ \bigwedge_{u\in U}u \Longrightarrow P,
+ \qquad
+ \bigwedge_{v\in V}v \Longrightarrow Q.
+\]
+Here $U,V$ are finite sets of requirements, not independent
+hypothetical realized joins. Suppose $P$ and $Q$ are
+incompatible in a witnessed common encounter scope,
+because they require exclusive conditions of the same
+identified original interface. The two implications and
+the incompatibility evidence must be independently grounded.
+\end{definition}
+
+\begin{theorem}[CRPP-17: exclusion from incompatible mandatory consequences]
+Under the sound scoped obligations above, their combined
+antecedent $U\cup V$ cannot be jointly fulfilled.
+If all members of $U\cup V$ except one named requirement
+$x$ are established satisfied in that same scope,
+then the proposed arrangement requiring $x$ is excluded.
+If all combined antecedents are established satisfied,
+the declared joint requirements are inconsistent.
+Neither result determines a winning join, proves the
+absence of an original occurrence, nor requires
+constructing a successful intermediate joining history.
+\end{theorem}
+\begin{proof}
+If all combined antecedents held, soundness of both
+original obligations would require $P$ and $Q$ together.
+Their independently established original-property
+incompatibility forbids that joint outcome. Thus
+the conjunction of all antecedents is unavailable.
+When all but $x$ are already established, admitting
+$x$ would complete that contradictory conjunction,
+so $x$ is excluded within the declared encounter scope.
+This is a consequence of existing obligations and
+their incompatibility, not a materialized hypothetical
+successful sequence of physical join events.
+\end{proof}
+
+\begin{example}[One requirement, two incompatible results]
+A single original arrangement $A$ requires both $B$ and $C$
+through distinct independently established joining laws.
+The required interfaces of $B$ and $C$ coincide on one
+exclusive original port within the same encounter.
+Therefore $A$ cannot be realized as proposed, even if
+neither $B$ nor $C$ has been witnessed realized in that
+encounter. An evaluator limited to positive witness
+forward chaining can fail to derive this exclusion.
+\end{example}
+
+\subsection{Bounded implementation and counterexample audit}
+The experimental native patch adds a local pass over pairs
+of rule consequences with witnessed shared exclusive
+ports. For each incompatible pair, it considers the union
+of their necessary antecedents: when all but one are
+established, it emits a source-scoped exclusion with a
+proof reason identifying both conflicting mandatory heads
+and their shared interface. It does not enumerate complete
+successful-join assignments or store them as masks.
+This is a \emph{sound local propagation rule}, not an
+algorithm proven complete for arbitrary constraint
+languages. The coarse hypothetical-object counter is
+not a whole-program allocator trace.
+
+The independently implemented Python CNF/DPLL verifier
+was applied to the same deterministic 240 cases.
+After the patch, all 240 native statuses and signed
+conclusions matched the oracle, and each emitted original
+JSONL ledger was recovered with byte equality.
+The original 243-case JS direct / CNF-DPLL / exhaustive
+native crosscheck still passed, with no proof discrepancies,
+and all five Linux native regression suites passed.
+The corrected patch has \emph{not} yet been compiled
+or measured on Windows.
+
+\subsection{Scaling evidence is not yet a speedup theorem}
+The scaling study runs 12 cases per cell at 8, 16, 32,
+and 64 joins for each of five families. It checks correctness
+and native source recovery. Native elapsed times include
+process startup, whereas Python SAT timings are in-process,
+so their ratio is \emph{not} a fair algorithmic speed
+comparison. An industrial SAT solver, equal work and timing
+boundaries, systematic allocator instrumentation, adversarial
+graph families, and greater original-history complexity
+are necessary before general efficiency claims.
+
+The essential milestone is an independently detected
+inferential omission, a formally grounded additional
+consequence rule, and successful re-verification of
+the original and extended cases. The original witnesses,
+orientation, distinct provenance and unresolved
+evidence remain explicitly separate from the derived
+consequence certificate.
 
 \section{Experimental contract for a later implementation}
 A future constructive evaluator should be independently checked
